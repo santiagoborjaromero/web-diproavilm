@@ -1,3 +1,16 @@
+document.addEventListener("readystatechange", function () {
+	switch (document.readyState) {
+		case "complete":
+			setTimeout(function(){
+				initial();
+			},800)
+			break;
+	}
+});
+
+
+
+
 // Variables Globales
 let apiPathBase = "http://localhost/apidiproavilm/";
 let apiToken = '';
@@ -14,6 +27,7 @@ let headersAuth = {
     // 'Access-Control-Allow-Headers': "Origin, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
     "Authorization": "Bearer " . apiToken,
 };
+lstMenu = [];
 
 // var cookie_options = {
 //     expires: 365,
@@ -21,20 +35,34 @@ let headersAuth = {
 //     domain: 'webdiproavilm.dev.com',
 //     secure: true
 // };
+function initial(){
+    /**
+     * Verificar si tiene iniciado la session
+     */
+    let logueado = sessionGet("logged");
+    let page = "";
+    if (logueado){
+        page = "admin";
+    }else{
+        page = "login";
+    }
+    let pagina = `/src/Views/${page}/${page}.php`;
+    $("#mainPage").load(pagina);
 
-/**
- * Verificar si tiene iniciado la session
- */
-let logueado = sessionGet("logged");
-let page = "";
-if (logueado){
-    page = "admin";
-}else{
-    page = "login";
+    /**
+     * Pagina por defecto
+     */
+    if (!["login"].includes(page)){
+        setTimeout(function(){
+            let ruta = sessionGet("route");
+            if (!ruta){
+                ruta = lstMenu[0].child[0].route;
+            }
+            selectRuta(ruta);
+        },1000)
+    }
+
 }
-let pagina = `/src/Views/${page}/${page}.php`;
-$("#mainPage").load(pagina);
-
 
 function consumirApiWT(method, url, params = null) {
     // console.log(params)
@@ -108,6 +136,36 @@ function sessionGet(key = ""){
     return conv;
 }
 
-function ruta(route){
-    console.log("ruta", route)
+
+
+async function selectRuta(route, args = ''){
+    // console.log("Ruta", route)
+    sessionSet("route", route);
+
+    /**
+     * Breadcrumbs
+     */
+    let parent = "";
+    let path = [];
+    let title = "";
+
+    lstMenu.forEach( e => {
+        parent = e.name;
+        e.child.forEach(ch=>{
+            if (route == ch.route){
+                path.push(parent);
+                path.push(ch.name);
+                title = ch.name;
+            }
+        })
+    });
+    $("#path").html(path.join(" / "))
+
+    /**
+     * Llamar al controlador especifico
+     */
+    // controller = `/src/Controllers/${route}Controller.php?args=125`;
+    // $("#divbody").load(controller)
+    controller = `/src/Controllers/BaseController.php?cont=${route}&title=${title}&args=${args}`;
+    $("#divbody").load(controller)
 }

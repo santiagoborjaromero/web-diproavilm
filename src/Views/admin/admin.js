@@ -4,7 +4,7 @@ let menu = user.menu;
 cargaMenu();
 
 function cargaMenu(){
-    let lstMenu = [];
+    lstMenu = [];
     let html = `<ul class="nav nav-pills">`;
 
     menu.forEach( e => {
@@ -25,7 +25,7 @@ function cargaMenu(){
         if (e.child.length == 0){
             html += `
             <li class="nav-item ">
-                <a class="nav-link" onclick="ruta('${e.route}')" href="javascript: void(0)">
+                <a class="nav-link" onclick="selectRuta('${e.route}')" href="javascript: void(0)">
                     <i class="${e.icon} mr-2 text-secondary"></i><span>${e.name}</span>
                 </a>
             </li>`;
@@ -41,7 +41,7 @@ function cargaMenu(){
                 `;
             e.child.forEach(c => {
                 html += `<li>
-                    <a class="dropdown-item" href="javascript: void(0)" onclick="ruta('${c.route}')">
+                    <a class="dropdown-item" href="javascript: void(0)" onclick="selectRuta('${c.route}')">
                         <i class="${c.icon} mr-2 text-secondary t12"></i><span>${c.name}</span>
                     </a>
                 </li>`

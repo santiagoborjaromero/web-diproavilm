@@ -3,7 +3,7 @@
 class ErrorHandler{
 
     public static function handleException(Throwable $exception): void {
-        echo json_encode([
+        $errArr = [
             "status" => "error",
             "message" => [
                 "code" => $exception->getCode(),
@@ -11,7 +11,9 @@ class ErrorHandler{
                 "file" => $exception->getFile(),
                 "line" => $exception->getLine()
             ]
-        ]);
+        ];
+        print_r($errArr);
+
     }
 
 }

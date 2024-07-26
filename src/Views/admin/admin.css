@@ -1,3 +1,11 @@
+:root{
+    --size-header: 65px;
+    --size-menu: 43px;
+    --size-footer: 50px;
+    --size-breadcrumbs: 40px;
+    --size-screen: calc( 100vh - (var(--size-header) + var(--size-menu) + var(--size-footer) + var(--size-breadcrumbs)) );
+}
+
 .contenedor{
     display: flex;
     min-height: 100vh;
@@ -57,6 +65,8 @@ ul>li{
 
 .menu{
     background-color: #e6e6e6;
+    min-height: var(--size-menu) ;
+    height: var(--size-menu) ;
     /* background-color: #f79648; */
     box-shadow: calc(clamp(0px, var(--horiz), 2px)) calc(clamp(0px, var(--vert), 2px)) 2px calc(var(--spread)) rgba(0, 0, 0, 0.233), calc(2 * var(--horiz)) calc(2 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.20), calc(3 * var(--horiz)) calc(3 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.123), calc(5 * var(--horiz)) calc(5 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.076), calc(8 * var(--horiz)) calc(8 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.047), calc(13 * var(--horiz)) calc(13 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.028);
     border: 1px solid rgba(0, 0, 0, 0.068);
@@ -85,4 +95,39 @@ ul>li{
 }
 .dropdown-item:hover{
     background-color: #e6e6e6;
+}
+
+.header{
+    background-color: #fff;
+    min-height: var(--size-header) ;
+    height: var(--size-header) ;
+}
+.breadcrumbs{
+    background-color: #fff;
+    color: #585858;
+    min-height: var(--size-breadcrumbs) ;
+    height: var(--size-breadcrumbs) ;
+    padding-top: 10px;
+    font-weight: 600;
+    font-size: .9em;
+}
+
+.screen{
+    background-color: #fff;
+    min-height: var(--size-screen) ;
+    height: var(--size-screen) ;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.footer{
+    background-color: var(--azul-oficial);
+    color: #e6e6e6;
+    height: var(--size-footer) ;
+    min-height: var(--size-footer) ;
+    padding-top: 10px;
+    font-weight: 400;
+    font-size: .7em;
 }

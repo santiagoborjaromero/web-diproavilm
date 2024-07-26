@@ -9,7 +9,7 @@
 
 
 <div class="container-fluid">
-    <div class="row p-1">
+    <div class="row p-1 header">
         <div class="col-12 col-md-2 "><img src="/logo.png"></div>
         <div class="col-12 col-md-5 mt-3 bold t18">SGA - Software de Gestión de Almacén</div>
         <div class="col-12 col-md-5 text-end diviconos">
@@ -20,6 +20,19 @@
     </div>
     <div class="row">
         <div class="col-12 col-md-12 menu" id="divmenu"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 breadcrumbs" >
+            <i class="far fa-map"></i> <span id="path" class=""></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 screen" id="divbody"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 footer" id="footer">
+            <i class="far fa-map mr-2"></i> <span>Mapa del Sitio</span>
+        </div>
     </div>
 </div>
 

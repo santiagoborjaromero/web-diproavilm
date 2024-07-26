@@ -13,15 +13,15 @@
   */
 session_start();
 
-error_reporting(E_ERROR);
+error_reporting(E_ALL);
 
 date_default_timezone_set ("America/Guayaquil");
 
-spl_autoload_register(function ($class){
-    require __DIR__ . "/src/Controllers/$class.php";
-});
+// spl_autoload_register(function ($class){
+//     require __DIR__ . "/src/Controllers/$class.php";
+// });
 
-set_exception_handler("ErrorHandler::handleException");
+// set_exception_handler("ErrorHandler::handleException");
 
 // new RouterController();
 // $p = HomeController::setPage() ;
