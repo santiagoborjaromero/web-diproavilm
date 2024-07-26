@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 imagenGranja"></div>
-        <div class="col-md-9 texto">
+        <div class="col-md-9 texto mt-3">
             <div class="col-12 col-md-7">
                 <h3 class="special t20 bold" id="nameApp"></h3>
                 <span id="versionApp"></span>
