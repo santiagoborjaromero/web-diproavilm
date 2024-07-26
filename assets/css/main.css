@@ -34,6 +34,16 @@ body{
     font-weight: 300;
     font-style: normal;
     background-color: rgb(240, 240, 240);
+    padding: 0;
+    margin: 0;
+}
+
+
+.special{
+    font-family: "Edu AU VIC WA NT Hand", "Roboto", Arial;
+    /* font-family: "Oswald", "Roboto", Arial; */
+    /* font-family: "Roboto", "Roboto", Arial; */
+    font-weight: 400;
 }
 
 .text-oficial { color: var(--azul-oficial)}
@@ -48,18 +58,11 @@ body{
 .text-danger { color: var(--danger) !important; }
 .text-warning { color: var(--warning) !important; }
 
+.bg-primary { background-color: var(--primary) !important; }
 .bg-success { background-color: var(--success) !important; }
 .bg-danger { background-color: var(--danger) !important; }
 .bg-warning { background-color: var(--warning) !important; }
 
-.login-container{
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    align-items: center;
-    vertical-align: middle;
-    justify-content: center;
-}
 
 .btn-block{
     width: 100%;
@@ -69,11 +72,11 @@ body{
     font-weight: 700;
 }
 
-.mr-1 {margin-right: 2px;}
-.mr-2 {margin-right: 4px;}
-.mr-3 {margin-right: 6px;}
-.mr-4 {margin-right: 8px;}
-.mr-5 {margin-right: 10px;}
+.mr-1 {margin-right: 4px;}
+.mr-2 {margin-right: 8px;}
+.mr-3 {margin-right: 12px;}
+.mr-4 {margin-right: 16px;}
+.mr-5 {margin-right: 20px;}
 
 
 .t10 {font-size: 10px;}
@@ -94,8 +97,20 @@ body{
 .t90 {font-size: 90px;}
 .t100 {font-size: 100px;}
 
+
+.login-container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+
+
 .login-screen{
-    width: 500px;
+    /* width: 500px; */
     background-color: rgb(255, 255, 255);
     /* border: 1px solid #c2c2c2; */
     border-radius: 5px;
@@ -104,6 +119,8 @@ body{
     padding-top: 50px;
     padding-bottom: 30px;
 }
+
+
 
 @media (max-width: 450px) {
     .login-screen{
@@ -119,3 +136,5 @@ body{
         /* width: 100%; */
     }
 }
+
+

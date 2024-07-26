@@ -1,3 +1,10 @@
+
+
+$("#nameApp").html(config.appname);
+$("#versionApp").html(config.version);
+
+
+
 $("#btnLogin").on("click", async function(){
 
     //Validacion
@@ -48,7 +55,13 @@ $("#btnLogin").on("click", async function(){
                 sessionSet("user", "");
                 sessionSet("token", "");
                 // sendMessage(resp.message ?? resp, "{{Title}}", "error");
-                console.log("Error", resp.message )
+                // console.log("Error", resp.message )
+ 
+                swal({
+                    title: "Autorizacion",
+                    text: resp.message,
+                    icon: "error",
+                });
             } else {
                 data = resp.message[0];
                 // console.log(data)

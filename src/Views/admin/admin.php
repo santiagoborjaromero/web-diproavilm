@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="row p-1 header">
         <div class="col-12 col-md-2 "><img src="/logo.png"></div>
-        <div class="col-12 col-md-5 mt-3 bold t18">SGA - Software de Gestión de Almacén</div>
+        <div class="col-12 col-md-5 special t20 mt-3" id="nameApp"></div>
         <div class="col-12 col-md-5 text-end diviconos">
             <button id="btnNot" class="btn btn-link t20 text-secondary bold" title="Notificaciones"><i class="fa fa-bell"></i></button>
             <button id="btnUserInfo" class="btn btn-link t20 text-secondary bold" title="Informacion del Usuario"><i class="fas fa-user"></i></button>
@@ -31,6 +31,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-md-12 footer" id="footer">
+            <span class="t14" id="versionApp"></span> | 
             <i class="far fa-map mr-2"></i> <span>Mapa del Sitio</span>
         </div>
     </div>

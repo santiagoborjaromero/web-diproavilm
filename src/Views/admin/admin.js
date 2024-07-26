@@ -1,6 +1,11 @@
 let user = sessionGet("user");
 let menu = user.menu;
 
+$("#nameApp").html(config.appname);
+$("#versionApp").html(config.version);
+
+
+
 cargaMenu();
 
 function cargaMenu(){

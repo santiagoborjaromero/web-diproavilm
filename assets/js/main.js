@@ -8,25 +8,18 @@ document.addEventListener("readystatechange", function () {
 	}
 });
 
-
+let config = {};
+fetch('/config.json')
+    .then((response) => response.json())
+    .then((json) => {
+        config = json;
+        sessionSet("config", json);
+    });
 
 
 // Variables Globales
 let apiPathBase = "http://localhost/apidiproavilm/";
 let apiToken = '';
-let headers = {
-    // "Content-Type": "application/json"
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, OPTIONS, DELETE, PATCH',
-    // 'Access-Control-Allow-Headers': "Origin, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
-};
-let headersAuth = {
-    // "Content-Type": "application/json",
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, OPTIONS, DELETE, PATCH',
-    // 'Access-Control-Allow-Headers': "Origin, Content-Type, Authorization, Accept, Accept-Language, X-Authorization",
-    "Authorization": "Bearer " . apiToken,
-};
 lstMenu = [];
 
 // var cookie_options = {
@@ -35,6 +28,7 @@ lstMenu = [];
 //     domain: 'webdiproavilm.dev.com',
 //     secure: true
 // };
+
 function initial(){
     /**
      * Verificar si tiene iniciado la session
@@ -70,8 +64,6 @@ function consumirApiWT(method, url, params = null) {
         $.ajax({
             url: `${apiPathBase}${url}`,
             type: method,
-            // headers: headers,
-            // dataType: 'json',
             data: params,
             success: function (resp, status, xhr) {
                 resolve(resp);
@@ -88,7 +80,7 @@ function consumirApi(method, url, params = null) {
         $.ajax({
             url: `${apiPathBase}${url}`,
             type: method,
-            headers: headersAuth,
+            headers: {"Authorization": "Bearer " . apiToken},
             data: params,
             success: function (resp, status, xhr) {
                 resolve(resp);
