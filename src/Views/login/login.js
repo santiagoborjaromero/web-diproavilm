@@ -51,7 +51,7 @@ $("#btnLogin").on("click", async function(){
                 console.log("Error", resp.message )
             } else {
                 data = resp.message[0];
-                console.log(data)
+                // console.log(data)
                 apiToken = data.token;
                 sessionSet("user", data);
                 sessionSet("token", apiToken);
