@@ -62,9 +62,7 @@ function cargaMenu(){
 }
 
 $("#btnSalir").on("click", function(){
-    sessionSet("user", "");
-    sessionSet("token", "");
-    sessionSet("logged", false);
+    proccessCleanMemory();
     window.location.reload();
 });
 

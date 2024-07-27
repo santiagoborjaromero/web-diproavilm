@@ -77,12 +77,12 @@ ul>li{
     border: 1px solid rgba(0, 0, 0, 0.068);
 }
 
-
 .nav-link{
     color: var(--azul-oficial) !important;
     font-size: 0.9em;
     border-radius: 0;
 }
+
 .nav-link:hover{
     color: #fff !important;
     background-color: #002039;

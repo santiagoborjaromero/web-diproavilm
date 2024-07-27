@@ -129,6 +129,13 @@ function sessionGet(key = ""){
 }
 
 
+function proccessCleanMemory(){
+    sessionSet("user", "");
+    sessionSet("token", "");
+    sessionSet("route", "");
+    sessionSet("logged", false);
+}
+
 
 async function selectRuta(route, args = ''){
     // console.log("Ruta", route)
