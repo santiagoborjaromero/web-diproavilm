@@ -21,7 +21,7 @@
                         <input type="password" class="form-control text-centerxx" id="password" name="password" placeholder="*********"/>
                     </div>
                     <div class="col-12 col-md-12 mt-3">
-                        <button id="btnLogin" class="btn btn-primary btn-block">Ingresar</button>
+                        <button id="btnLogin" class="btn btn-info btn-block">Ingresar</button>
                     </div>
                 </div>
                 <br>
