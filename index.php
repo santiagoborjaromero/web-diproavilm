@@ -60,6 +60,15 @@ date_default_timezone_set ("America/Guayaquil");
 <body>
   <div id="mainPage"></div>
 
+  <div id="spinner" class="rotate_div">
+    <div class="rotate_child">
+      <div class="rotate">
+        <img src="/assets/images/icono6UG8Blanco.png">
+      </div>
+      <span id="spinner-text">Cargando</span>
+    </div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -78,6 +87,8 @@ date_default_timezone_set ("America/Guayaquil");
 
 
   <script src="/assets/js/main.js"></script>
-
+  <script>
+    $("#spinner").removeClass("rotate_div");
+  </script>
 </body>
 </html>

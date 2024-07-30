@@ -16,11 +16,20 @@ fetch('/config.json')
         sessionSet("config", json);
     });
 
+$("#spinner").addClass("hide");
 
 // Variables Globales
 let apiPathBase = "http://localhost/apidiproavilm/";
 let apiToken = '';
 lstMenu = [];
+let gridOptions = {};
+let gridApi;
+let idSelect ="";
+let idSelectName ="";
+let lstUsers = [];
+
+
+
 
 // var cookie_options = {
 //     expires: 365,
@@ -53,6 +62,9 @@ function initial(){
                 ruta = lstMenu[0].child[0].route;
             }
             selectRuta(ruta);
+
+            apiToken = sessionGet("token");
+            // console.log(apiToken);
         },1000)
     }
 
@@ -168,3 +180,26 @@ async function selectRuta(route, args = ''){
     controller = `/src/Controllers/BaseController.php?cont=${route}&title=${title}&args=${args}`;
     $("#divbody").load(controller)
 }
+
+
+function sendMessage(type, titulo, message){
+    swal({
+        title: titulo,
+        text: message,
+        icon: type,
+        allowEscapeKey: false,
+        // showLoaderOnConfirm: true
+    });
+}
+
+function showLoading(text="Cargando"){
+    $("#spinner").removeClass("hide");
+    $("#spinner").addClass("rotate_div");
+    $("#spinner-text").html(text);
+}
+
+function closeLoading(){
+    $("#spinner").addClass("hide");
+    $("#spinner").removeClass("rotate_div");
+}
+
