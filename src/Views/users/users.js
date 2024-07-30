@@ -6,6 +6,22 @@ setTimeout(function(){
 
 lstUsers = [];
 
+/** 
+ * Verificar los permisos (scope) de los usuarios
+ */
+if (scopeUser.includes("W")) {
+    $("btmNuevo").removeClass("hide");
+    $("btmEdit").removeClass("hide");
+}else{
+    $("btmNuevo").addClass("hide");
+    $("btmEdit").addClass("hide");
+}
+if (scopeUser.includes("D")) {
+    $("btmDelete").removeClass("hide");
+}else{
+    $("btmDelete").addClass("hide");
+}
+
 async function loadData(){
     showLoading("Cargando");
 

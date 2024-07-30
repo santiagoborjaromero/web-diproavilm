@@ -1,10 +1,11 @@
 let user = sessionGet("user");
 let menu = user.menu;
+apiToken = sessionGet("token");
+scopeUser = user.role[0].scope;
 
 $("#nameApp").html(config.appname);
 $("#versionApp").html(config.version);
-
-
+$("#nombreUsuario").html(user.fullname);
 
 cargaMenu();
 

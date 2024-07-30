@@ -27,8 +27,7 @@ let gridApi;
 let idSelect ="";
 let idSelectName ="";
 let lstUsers = [];
-
-
+let scopeUser = "";
 
 
 // var cookie_options = {
@@ -62,8 +61,6 @@ function initial(){
                 ruta = lstMenu[0].child[0].route;
             }
             selectRuta(ruta);
-
-            apiToken = sessionGet("token");
             // console.log(apiToken);
         },1000)
     }
