@@ -29,17 +29,16 @@ async function loadData(){
     
     let metodo = "GET";
     let url = "users";
-    await consumirApiWT(metodo, url)
+    await consumirApi(metodo, url)
         .then( resp=>{
             closeLoading();
             try {
                 resp = JSON.parse(resp);
-            } catch (ex) {
-            }
+            } catch (ex) {}
 
-            if (resp.status && resp.status == 'error') {
-                sendMessage("error", "Usuarios", err);
-            } else {
+            // console.log(resp)
+
+            if (resp.status && resp.status == 'ok') {
                 lstUsers = resp.message;
                 // console.log(lstUsers)
                 // lstUsers.forEach( e=>{
@@ -52,12 +51,14 @@ async function loadData(){
                 // // };
                 gridApi.setGridOption("rowData", lstUsers);
                 gridApi.sizeColumnsToFit();
+            } else {
+                sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
             }
         })
         .catch( err => {
             closeLoading();
-            console.log(err);
-            sendMessage("error", "Usuarios", err);
+            console.log("ERR", err);
+            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
         });
 }
 

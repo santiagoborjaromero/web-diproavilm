@@ -89,7 +89,9 @@ function consumirApi(method, url, params = null) {
         $.ajax({
             url: `${apiPathBase}${url}`,
             type: method,
-            headers: {"Authorization": "Bearer " . apiToken},
+            headers: {
+                "Authorization": "Bearer " + apiToken, 
+            },
             data: params,
             success: function (resp, status, xhr) {
                 resolve(resp);
@@ -184,7 +186,7 @@ function sendMessage(type, titulo, message){
         title: titulo,
         text: message,
         icon: type,
-        allowEscapeKey: false,
+        // allowEscapeKey: false,
         // showLoaderOnConfirm: true
     });
 }
