@@ -15,26 +15,17 @@ session_start();
 
 
 error_reporting(E_ALL);
-
+define('BASE_URL', 'http://localhost/web6ug8/');
 date_default_timezone_set ("America/Guayaquil");
-
-// spl_autoload_register(function ($class){
-//     require __DIR__ . "/src/Controllers/$class.php";
-// });
-
-// set_exception_handler("ErrorHandler::handleException");
-
-// new RouterController();
-// $p = HomeController::setPage() ;
-// $pagina = "/src/Views/{$p}/{$p}.php";
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <base href= "<?php echo BASE_URL;?>" > 
   <title>Diproavilm - Admin</title>
-  <link rel="icon" type="image/x-icon" href="/assets/images/icono.ico">
+  <link rel="icon" type="image/x-icon" href="assets/images/icono.ico">
   <meta name="description" content="Diproavilm Admistrador">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="robots" CONTENT="noindex">
@@ -55,7 +46,7 @@ date_default_timezone_set ("America/Guayaquil");
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 </head>
 <body>
   <div id="mainPage"></div>
@@ -63,7 +54,7 @@ date_default_timezone_set ("America/Guayaquil");
   <div id="spinner" class="rotate_div">
     <div class="rotate_child">
       <div class="rotate">
-        <img src="/assets/images/icono6UG8Blanco.png">
+        <img src="assets/images/icono6UG8Blanco.png">
       </div>
       <span id="spinner-text">Cargando</span>
     </div>
@@ -86,7 +77,7 @@ date_default_timezone_set ("America/Guayaquil");
   <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
 
 
-  <script src="/assets/js/main.js"></script>
+  <script src="assets/js/main.js"></script>
   <script>
     $("#spinner").removeClass("rotate_div");
   </script>

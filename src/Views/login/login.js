@@ -4,7 +4,6 @@ $("#nameApp").html(config.appname);
 $("#versionApp").html(config.version);
 
 
-
 $("#btnLogin").on("click", async function(){
 
     //Validacion
@@ -29,9 +28,9 @@ $("#btnLogin").on("click", async function(){
         error = true;
     }
 
-
     if (error){
         console.log(errMsg)
+        sendMessage("error", "Autorizacion", errMsg);
         return;
     }
 

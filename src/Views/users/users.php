@@ -35,8 +35,8 @@
 
 
 
-<script src="/src/Views/users/users.js"></script>
-<link rel="stylesheet" href="/src/Views/users/users.css">
+<script src="src/Views/users/users.js"></script>
+<link rel="stylesheet" href="src/Views/users/users.css">
 
 
 

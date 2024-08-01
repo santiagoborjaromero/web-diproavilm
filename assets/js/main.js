@@ -9,7 +9,7 @@ document.addEventListener("readystatechange", function () {
 });
 
 let config = {};
-fetch('/config.json')
+fetch('config.json')
     .then((response) => response.json())
     .then((json) => {
         config = json;
@@ -19,7 +19,7 @@ fetch('/config.json')
 $("#spinner").addClass("hide");
 
 // Variables Globales
-let apiPathBase = "http://localhost/apidiproavilm/";
+let apiPathBase = "http://localhost/api6ug8/";
 let apiToken = '';
 lstMenu = [];
 let gridOptions = {};
@@ -48,7 +48,7 @@ function initial(){
     }else{
         page = "login";
     }
-    let pagina = `/src/Views/${page}/${page}.php`;
+    let pagina = `src/Views/${page}/${page}.php`;
     $("#mainPage").load(pagina);
 
     /**
@@ -174,9 +174,9 @@ async function selectRuta(route, args = ''){
     /**
      * Llamar al controlador especifico
      */
-    // controller = `/src/Controllers/${route}Controller.php?args=125`;
+    // controller = `src/Controllers/${route}Controller.php?args=125`;
     // $("#divbody").load(controller)
-    controller = `/src/Controllers/BaseController.php?cont=${route}&title=${title}&args=${args}`;
+    controller = `src/Controllers/BaseController.php?cont=${route}&title=${title}&args=${args}`;
     $("#divbody").load(controller)
 }
 

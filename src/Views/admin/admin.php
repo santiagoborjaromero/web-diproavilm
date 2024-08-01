@@ -1,16 +1,7 @@
-<!-- <div class="contenedor">
-    <div class="divmenu" id="divmenu">
-        menu
-    </div>
-    <div class="divcuerpo" id="divbody">
-        cuerpo
-    </div>
-</div> -->
-
 
 <div class="container-fluid">
     <div class="row p-1 header">
-        <div class="col-12 col-md-2 "><img src="/logo.png"></div>
+        <div class="col-12 col-md-2 "><img src="logo.png"></div>
         <div class="col-12 col-md-5 special t20 mt-3 " id="nameApp"></div>
         <div class="col-12 col-md-5 text-end diviconos">
             <button id="btnNot" class="btn btn-white t20 text-secondary bold" title="Notificaciones"><i class="fa fa-bell"></i></button>
@@ -38,5 +29,5 @@
 </div>
 
 
-<script src="/src/Views/admin/admin.js"></script>
-<link rel="stylesheet" href="/src/Views/admin/admin.css">
+<script src="src/Views/admin/admin.js"></script>
+<link rel="stylesheet" href="src/Views/admin/admin.css">
