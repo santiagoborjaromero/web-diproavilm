@@ -13,10 +13,13 @@
   */
 session_start();
 
-
 error_reporting(E_ALL);
-define('BASE_URL', 'http://localhost/web6ug8/');
-date_default_timezone_set ("America/Guayaquil");
+
+$jsonString = file_get_contents(__DIR__."/config.json");
+$config = json_decode($jsonString, true);
+
+define('BASE_URL', $config["webpath"]);
+date_default_timezone_set ($config["timezone"]);
 
 ?>
 <!DOCTYPE html>
@@ -85,9 +88,6 @@ date_default_timezone_set ("America/Guayaquil");
 
 
   <script src="assets/js/main.js"></script>
-  <script>
-    $("#spinner").removeClass("rotate_div");
-    $("#DivForm").removeClass("modal-form");
-  </script>
+
 </body>
 </html>

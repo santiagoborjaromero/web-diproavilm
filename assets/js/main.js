@@ -8,6 +8,9 @@ document.addEventListener("readystatechange", function () {
 	}
 });
 
+$("#spinner").removeClass("rotate_div");
+$("#DivForm").removeClass("modal-form");
+
 // Variables Globales
 var apiPathBase = "";
 var config = {};
@@ -69,7 +72,6 @@ function initial(){
 }
 
 function consumirApiWT(method, url, params = null) {
-    console.log(`${apiPathBase}${url}`)
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `${apiPathBase}${url}`,

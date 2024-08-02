@@ -28,4 +28,4 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="src/views/error/error.css">
+<link rel="stylesheet" href="src/Views/error/error.css">

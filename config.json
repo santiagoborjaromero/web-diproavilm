@@ -1,5 +1,7 @@
 {
     "appname": "Software de Gestión de Almacén",
     "version": "0.0.1-alpha",
-    "apipath": "http://localhost/api6ug8/"
+    "webpath": "http://localhost/web6ug8/",
+    "apipath": "http://localhost/api6ug8/",
+    "timezone": "America/Guayaquil"
 }
