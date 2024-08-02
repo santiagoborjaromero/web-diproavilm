@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
     <div class="row p-1 header">
         <div class="col-12 col-md-2 "><img src="logo.png"></div>
@@ -13,7 +12,7 @@
         <div class="col-12 col-md-12 menuXXX" id="divmenu"></div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-12 breadcrumbs" >
+        <div class="col-12 col-md-12 breadcrumbs">
             <i class="far fa-map"></i> <span id="path" class=""></span>
         </div>
     </div>
@@ -24,6 +23,23 @@
         <div class="col-12 col-md-12 footer" id="footer">
             <span class="t14" id="versionApp"></span> &nbsp;&nbsp; | &nbsp;&nbsp;
             <i class="far fa-map mr-2"></i> <span>Mapa del Sitio</span>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body" id="MessagemyModal">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>

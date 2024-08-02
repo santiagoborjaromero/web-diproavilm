@@ -209,3 +209,25 @@ body{
         transform: rotate(360deg);
     }
 }
+
+
+.modal-form {
+    position: absolute;
+    /* display: flex; */
+    top:0;
+    left:0;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    z-index:99999;
+    align-items: center;
+    justify-items: center;
+    vertical-align: middle;
+}
+
+.modal-body{
+    position: fixed;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 20px;
+}

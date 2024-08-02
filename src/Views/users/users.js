@@ -231,8 +231,38 @@ function estructuraGrid(){
     gridApi.sizeColumnsToFit();
 }
 
-$("#btmUsers").on("click", function(){
-    console.log("Hola")
+function cleanRecords(){
+    $("#iduser").val(-1);
+    $("#username").val("adfasd");
+    $("#fullname").val("");
+    $("#rol").val("-");
+    $("#idioma").val("es");
+    $("#status").val(1);
+}
+
+$("#btmNew").on("click", function(){
+    // $('#myModal').modal('show');
+    // return;
+    cleanRecords();
+
+    let object ={
+        icon: "",
+        title: "Edición de Usuarios",
+        content: $("#form").html(),
+        width: "900px",
+    };
+    openForm(object);
+});
+
+$("#btmSave").on("click", function(){
+    console.log("btmSave");
+    $("#DivForm").addClass("hide");
+
+});
+
+$("#btmCancel").on("click", function(){
+    console.log("btmCancel");
+    $("#DivForm").addClass("hide");
 });
 
 $("#btmEdit").on("click", function(){
@@ -244,10 +274,10 @@ $("#btmDelete").on("click", function(){
 });
 
 $("#btmRefresh").on("click", function(){
-    
     loadData();
-
 });
+
+
 
 
 function estadoBotones(opc = false){
