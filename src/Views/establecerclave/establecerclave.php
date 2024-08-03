@@ -6,19 +6,13 @@
                 <h3 class="special t20 bold" id="nameApp"></h3>
                 <span id="versionApp"></span>
                 <br>
-                <h4>Cambio de Contraseña</h4>
-                <!-- Ingrese su usuario y clave personal para continuar -->
+                <h4>Establecer Contraseña</h4>
+                Debe establecer una clave para su usuario 
                 <br>
                 <div class="row">
                     <div class="col-12 col-md-6 mt-3">
                         <label for="" class="form-label bold">Usuario</label>
                         <input type="text" class="form-control text-centerxx" id="username" name="username" placeholder="Nombre de Usuario"/>
-                    </div>
-                <!-- </div>
-                <div class="row"> -->
-                    <div class="col-12 col-md-6 mt-3">
-                        <label for="" class="form-label bold">Contraseña anterior</label>
-                        <input type="password" class="form-control text-centerxx" id="password_old" name="password_old" placeholder="*********"/>
                     </div>
                 </div>
                 <div class="row">
@@ -28,8 +22,6 @@
                         <div id="fortalezaPassword" class="ml-2 barra nivel-0"></div>
                         <div id="fortalezaPasswordDesc" class="ml-1"></div>
                     </div>
-                <!-- </div>
-                <div class="row"> -->
                     <div class="col-12 col-md-6 mt-3">
                         <label for="" class="form-label bold">Contraseña confirmación</label>
                         <input type="password" class="form-control text-centerxx" id="password_confirmacion" name="password_confirmacion" placeholder="*********"/>
@@ -37,7 +29,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-12 mt-3">
-                        <button id="btnCambio" class="btn btn-info btn-block">Cambiar contraseña</button>
+                        <button id="btnEstablecer" class="btn btn-info btn-block">Establecer contraseña</button>
                         <div class="row">
                             <div class="col-6">
                                 <!-- <button id="btnForgot" class="btn btn-link t12">¿Olvidó la constraseña?</button> -->
@@ -61,5 +53,5 @@
     </div>
 </div>
 
-<script src="src/Views/change/change.js"></script>
-<link rel="stylesheet" href="src/Views/change/change.css">
+<script src="src/Views/establecerclave/establecerclave.js"></script>
+<link rel="stylesheet" href="src/Views/establecerclave/establecerclave.css">

@@ -52,14 +52,27 @@ $("#btnLogin").on("click", async function(){
                 sessionSet("logged", false);
                 sessionSet("user", "");
                 sessionSet("token", "");
-                // sendMessage(resp.message ?? resp, "{{Title}}", "error");
-                // console.log("Error", resp.message )
- 
-                swal({
-                    title: "Autorizacion",
-                    text: resp.message,
-                    icon: "error",
-                });
+
+                if (resp.message == "establecer clave"){
+                    //textMsg = "La contraseña debe cer establecida"
+                    swal({
+                        title: "Autorizacion",
+                        text:  "Debe establecer una clave para su usuario",
+                        icon: "error",
+                    });
+                    setTimeout(function(){
+                        let pagina = `src/Views/establecerclave/establecerclave.php`;
+                        $("#mainPage").load(pagina);
+                    }, 2000);
+
+                } else { 
+                    swal({
+                        title: "Autorizacion",
+                        text: resp.message,
+                        icon: "error",
+                    });
+                }
+                
             } else {
                 data = resp.message[0];
                 // console.log(data)

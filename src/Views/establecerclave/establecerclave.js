@@ -12,23 +12,8 @@ var arrSecurity = [
     {id: "fuerza", caption: "Fortaleza", value:"Poco Segura"},
 ];
 
-
 leyenda();
 
-
-/*
-{
-    "contains": [
-        "lowercase",
-        "uppercase",
-        "number",
-        "symbol"
-    ],
-    "length": 12,
-    "id": 3,
-    "value": "Strong"
-}
-*/
 function chkPasswordStrength(pwd){
     return checkPasswordStrength.passwordStrength(pwd);
 }
@@ -113,11 +98,9 @@ function leyenda() {
 }
 
 
-$("#btnCambio").on("click", async function(){
-
+$("#btnEstablecer").on("click", async function(){
     //Validacion
     let username = $.trim($("#username").val());
-    let password_old = $.trim($("#password_old").val());
     let password_new = $.trim($("#password_new").val());
     let password_confirmacion = $.trim($("#password_confirmacion").val());
 
@@ -131,11 +114,6 @@ $("#btnCambio").on("click", async function(){
 
     if (!error && username == ""){
         errMsg = "Debe ingresar el nombre del usuario";
-        error = true;
-    }
-
-    if (!error && password_old == ""){
-        errMsg = "Debe ingresar la contraseña anterior del usuario";
         error = true;
     }
 
@@ -154,6 +132,7 @@ $("#btnCambio").on("click", async function(){
         error = true;
     }
 
+
     let fuerza = chkPasswordStrength(password_new);
 
     if (!error && (fuerza.length < minLength || fuerza.contains.length < 4 || !["Medium","Strong"].includes(fuerza.value) )){
@@ -169,18 +148,20 @@ $("#btnCambio").on("click", async function(){
 
     let record = {
         username,
-        password_old,
         password_new
     };
 
     metodo = "POST";
-    url = "cambioclave";
+    url = "establecerclave";
 
     await consumirApiWT(metodo, url, record)
         .then(resp => {
             try {
                 resp = JSON.parse(resp);
-            } catch (ex) {}
+            } catch (ex) {
+            }
+
+            console.log(resp)
             
             if (resp.status && resp.status == 'error') {
                 swal({
@@ -206,7 +187,6 @@ $("#btnCambio").on("click", async function(){
     
 
 });
-
 
 $("#btnReturn").on("click", () => {
     let pagina = `src/Views/login/login.php`;
