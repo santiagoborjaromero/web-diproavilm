@@ -86,6 +86,8 @@ date_default_timezone_set ($config["timezone"]);
   <!-- AGGRID -->
   <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
 
+  <!-- PASSWORD STRENGTH -->
+  <script src="https://unpkg.com/check-password-strength/dist/umd.js"></script>
 
   <script src="assets/js/main.js"></script>
 

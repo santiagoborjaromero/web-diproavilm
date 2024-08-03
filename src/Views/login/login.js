@@ -1,5 +1,4 @@
 
-
 $("#nameApp").html(config.appname);
 $("#versionApp").html(config.version);
 
@@ -78,3 +77,11 @@ $("#btnLogin").on("click", async function(){
     
 
 });
+
+
+$("#btnChange").on("click", () => {
+    let pagina = `src/Views/change/change.php`;
+    $("#mainPage").load(pagina);
+});
+
+

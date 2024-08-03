@@ -1,0 +1,37 @@
+.imagenGranja{
+    height: 100vh;
+    background-image: url("../../../assets/images/granja.jpg");
+    background-position: middle left;
+    background-size: cover;
+    background-color: #00a3ff;
+    overflow: hidden;
+}
+
+.texto{
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+
+
+.barra{
+    width: 95%;
+    /* border-top: 5px solid #dadada; */
+    /* background-color: rgba(255, 0, 0, 0.349); */
+    /* background-color: rgba(21, 255, 0, 0.349); */
+    height: 5px;
+}
+
+.nivel-0{
+    background-color: rgba(255, 0, 0, 0.473);
+}
+.nivel-1{
+    background-color: rgba(255, 72, 0, 0.349);
+}
+.nivel-2{
+    background-color: rgba(255, 115, 0, 0.349);
+}
+.nivel-3{
+    background-color: rgba(21, 255, 0, 0.349);
+}

@@ -33,14 +33,6 @@ var idSelectName ="";
 var lstUsers = [];
 var scopeUser = "";
 
-
-// var cookie_options = {
-//     expires: 365,
-//     path: '/',
-//     domain: 'webdiproavilm.dev.com',
-//     secure: true
-// };
-
 function initial(){
     /**
      * Verificar si tiene iniciado la session

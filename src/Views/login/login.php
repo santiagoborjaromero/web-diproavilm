@@ -22,6 +22,14 @@
                     </div>
                     <div class="col-12 col-md-12 mt-3">
                         <button id="btnLogin" class="btn btn-info btn-block">Ingresar</button>
+                        <div class="row">
+                            <div class="col-6">
+                                <!-- <button id="btnForgot" class="btn btn-link t12">¿Olvidó la constraseña?</button> -->
+                            </div>
+                            <div class="col-6 text-end">
+                                <button id="btnChange" class="btn btn-link t12">Cambiar la contraseña</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
