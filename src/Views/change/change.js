@@ -162,7 +162,6 @@ $("#btnCambio").on("click", async function(){
     }
 
     if (error){
-        console.log(errMsg)
         sendMessage("error", "Cambio de Contraseña", errMsg);
         return;
     }
@@ -203,8 +202,6 @@ $("#btnCambio").on("click", async function(){
             console.log(err);
             // sendMessage(err, "{{Title}}");
         });
-    
-
 });
 
 

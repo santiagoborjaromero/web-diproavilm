@@ -141,7 +141,6 @@ $("#btnEstablecer").on("click", async function(){
     }
 
     if (error){
-        console.log(errMsg)
         sendMessage("error", "Cambio de Contraseña", errMsg);
         return;
     }
