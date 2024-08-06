@@ -12,10 +12,7 @@ $("#btnLogin").on("click", async function(){
     let error = false;
     let errMsg = "";
 
-    let pattern = /^[a-zA-Z0-9]$/;
-    if (!pattern.test(username)) {
-        resp = false;
-    }
+    
 
     if (!error && username == ""){
         errMsg = "Debe ingresar el nombre del usuario";
@@ -54,23 +51,14 @@ $("#btnLogin").on("click", async function(){
                 sessionSet("token", "");
 
                 if (resp.message == "establecer clave"){
-                    //textMsg = "La contraseña debe cer establecida"
-                    swal({
-                        title: "Autorizacion",
-                        text:  "Debe establecer una clave para su usuario",
-                        icon: "error",
-                    });
+                    sendMessage("error", "Autorizacion", "Debe establecer una clave para su usuario")
                     setTimeout(function(){
                         let pagina = `src/Views/establecerclave/establecerclave.php`;
                         $("#mainPage").load(pagina);
-                    }, 2000);
+                    }, 3000);
 
                 } else { 
-                    swal({
-                        title: "Autorizacion",
-                        text: resp.message,
-                        icon: "error",
-                    });
+                    sendMessage("error", "Autorizacion", resp.message)
                 }
                 
             } else {

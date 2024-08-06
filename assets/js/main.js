@@ -85,7 +85,7 @@ function consumirApi(method, url, params = null) {
             url: `${apiPathBase}${url}`,
             type: method,
             headers: {
-                "Authorization": "Bearer " + apiToken, 
+                "Authorization": "Bearer " + apiToken 
             },
             data: params,
             success: function (resp, status, xhr) {
@@ -177,14 +177,42 @@ async function selectRuta(route, args = ''){
 
 
 function sendMessage(type, titulo, message){
-    swal({
-        title: titulo,
-        text: message,
-        icon: type,
-        // allowEscapeKey: false,
-        // showLoaderOnConfirm: true
-    });
+    if (typeof message === "array"){
+        sendMessageObj(type, titulo, message)
+    } else{
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            title: titulo,
+            text: message,
+            icon: type,
+            footer: "DIPROAVILM",
+        })
+    }
 }
+
+function sendMessageObj(type, titulo, obj){
+    let html = "<table class='table table-striped'>";
+    if (obj.hasOwnProperty("code")) html += `<tr><th class="text-end">Codigo:</th><td class="text-start">${obj.code}</td></tr>` ;
+    if (obj.hasOwnProperty("file")) html += `<tr><th class="text-end">Archivo:</th><td class="text-start">${obj.file}</td></tr>` ;
+    if (obj.hasOwnProperty("line")) html += `<tr><th class="text-end">Linea:</th><td class="text-start">${obj.line}</td></tr>` ;
+    if (obj.hasOwnProperty("message")) html += `<tr><th class="text-end">Mensaje:</th><td class="text-start">${obj.message}</td></tr>` ;
+    html += "</table>"
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        title: titulo,
+        html: html,
+        icon: type,
+        width: "900px", 
+        footer: "DIPROAVILM",
+    })
+}
+
+function help(message){
+    sendMessage("question", "Ayuda", message);
+}
+
 
 function showLoading(text="Cargando"){
     $("#spinner").removeClass("hide");
@@ -192,11 +220,18 @@ function showLoading(text="Cargando"){
     $("#spinner-text").html(text);
 }
 
+function checkSoloLetrasNumeros(palabra){
+    const pattern = new RegExp('^[A-Z0-9]+$', 'i');
+    return pattern.test(palabra)
+}
+
+
+
+
 function closeLoading(){
     $("#spinner").addClass("hide");
     $("#spinner").removeClass("rotate_div");
 }
-
 
 function openForm(obj) {
 	let icon = "info";
@@ -238,7 +273,7 @@ function openForm(obj) {
 	`;
 
 	// let div = "DivForm";
-	let div = "myModal";
+	let div = "DivForm";
 
     
     // $(`#${div}`).removeClass('hide');
@@ -247,10 +282,10 @@ function openForm(obj) {
 	// $(`#Message${div}`).css("width", obj.width);
 	$(`#${div}`).css("width", obj.width);
 
+    positionModal($(`#${div}`));
     $(`#${div}`).modal('show');
 
     // positionModal($(`#Message${div}`));
-    positionModal($(`#${div}`));
 
 }
 
@@ -268,4 +303,30 @@ function positionModal (obj, sus=0, fixed=true, center=true){
 
     obj.closest("div[role='dialog']").css("margin-top", resp.y );
     return;
+}
+
+
+function formatoTitulo(text) {
+    let palabras = text.split("");
+    let convertirPalabra = "";
+    let aplicarMayuscula = true;
+    palabras.forEach(e=>{
+        if (aplicarMayuscula && e != " "){
+            aplicarMayuscula = false;
+            convertirPalabra += e.toUpperCase();
+        }else{
+            if (e == " " && aplicarMayuscula){
+                aplicarMayuscula = true;
+            }else{
+                if (e == " " && !aplicarMayuscula){
+                    aplicarMayuscula = true;
+                    convertirPalabra += e;
+                }else{
+                    aplicarMayuscula = false;
+                    convertirPalabra += e.toLowerCase();
+                }
+            }
+        }
+    })
+    return convertirPalabra;
 }

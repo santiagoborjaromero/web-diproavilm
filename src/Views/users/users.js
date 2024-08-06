@@ -1,10 +1,15 @@
 
 setTimeout(function(){
+    $("#Title").html("Usuarios");
     estructuraGrid();
     loadData();
+    loadRoles();
+    showDivs(0);
 },800)
 
 lstUsers = [];
+lstRoles = [];
+userSelected = {};
 
 /** 
  * Verificar los permisos (scope) de los usuarios
@@ -25,7 +30,7 @@ if (scopeUser.includes("D")) {
 async function loadData(){
     showLoading("Cargando");
 
-    estadoBotones(false);
+    habilitarBotones(false);
     
     let metodo = "GET";
     let url = "users";
@@ -51,6 +56,37 @@ async function loadData(){
                 // // };
                 gridApi.setGridOption("rowData", lstUsers);
                 gridApi.sizeColumnsToFit();
+            } else {
+                sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+        });
+}
+
+async function loadRoles(){
+
+    let metodo = "GET";
+    let url = "roles";
+
+    await consumirApi(metodo, url)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            // console.log("ROLES", resp)
+
+            if (resp.status && resp.status == 'ok') {
+                lstRoles = resp.message;
+
+                lstRoles.forEach( e => {
+                    $("#idrole").append(`<option value='${e.idrole}'>${e.name}</option>`)
+                });
             } else {
                 sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
             }
@@ -99,9 +135,10 @@ function estructuraGrid(){
             return params.data.iduser;
         },
         onRowClicked: (event) => {
+            userSelected = event.data;
             idSelect = event.data.iduser;
             idSelectName = event.data.username;
-            estadoBotones(true);
+            habilitarBotones(true);
         },
         columnDefs: [
             {
@@ -197,17 +234,6 @@ function estructuraGrid(){
                     html += `<kbd class='${color}'><i class="${cls}"></i></kbd>`;
                     return html;
                 },
-                // cellStyle: (params) =>{
-                //     let data = params.value;
-                //     let bcolor = "";
-    
-                //     if (data == 1) {
-                //         bcolor = "2bac61";
-                //     }else {
-                //         bcolor = "cb3d2d";
-                //     }
-                //     return {textAlign: 'center', backgroundColor: `#${bcolor}`, color: "#fff"};
-                // },
             },
             {
                 headerName: "Actualizado",
@@ -220,7 +246,7 @@ function estructuraGrid(){
                 headerName: "Inactivado",
                 flex: 1, 
                 field: "deleted_at",
-                filter: false,
+                filter: true,
                 cellClass: "text-start",
             },
         ]
@@ -231,69 +257,300 @@ function estructuraGrid(){
     gridApi.sizeColumnsToFit();
 }
 
-function cleanRecords(){
-    $("#iduser").val(-1);
-    $("#username").val("adfasd");
-    $("#fullname").val("");
-    $("#rol").val("-");
-    $("#idioma").val("es");
-    $("#status").val(1);
+function cleanRecords(record=null){
+    let iduser = -1;
+    let username = "";
+    let fullname = "";
+    let idrole = "-";
+    let lang = "es";
+    let status = "0";
+    $("#username").prop("readonly", false);
+    $("#username").prop("disabled", false);
+
+    if(record){
+        iduser = record.iduser;
+        username = record.username;
+        fullname = record.fullname;
+        idrole = record.idrole;
+        lang = record.lang;
+        status = record.status.toString();
+        $("#username").prop("readonly", true);
+        $("#username").prop("disabled", true);
+    }
+
+    $("#iduser").val(iduser);
+    $("#username").val(username);
+    $("#fullname").val(fullname);
+    $("#idrole").val(idrole);
+    $("#lang").val(lang);
+    $("#status").val(status);
+}
+
+showDivs = (que = 0) => {
+    switch(que){
+        case 0:
+            //Grid o listado 
+            $("#Title").html("Usuarios");
+            $("#btmNew").removeClass("hide");
+            $("#btmEdit").removeClass("hide");
+            $("#btmDelete").removeClass("hide");
+            $("#btmRefresh").removeClass("hide");
+            $("#btmReset").removeClass("hide");
+            $("#btmUpUser").removeClass("hide");
+            $("#btmSave").addClass("hide");
+            $("#btmCancel").addClass("hide");
+            habilitarBotones(false);
+
+            $("#myGrid").removeClass("hide");
+            $("#FormDiv").addClass("hide");
+            break;
+        case 1:
+            //Formulario de edicion o nuevo
+            $("#Title").html("Edición de Usuarios");
+            $("#btmNew").addClass("hide");
+            $("#btmEdit").addClass("hide");
+            $("#btmDelete").addClass("hide");
+            $("#btmRefresh").addClass("hide");
+            $("#btmReset").addClass("hide");
+            $("#btmUpUser").addClass("hide");
+            $("#btmSave").removeClass("hide");
+            $("#btmCancel").removeClass("hide");
+
+            $("#myGrid").addClass("hide");
+            $("#FormDiv").removeClass("hide");
+            break;
+        case 2:
+            break;
+    }
 }
 
 $("#btmNew").on("click", function(){
-    // $('#myModal').modal('show');
-    // return;
     cleanRecords();
-
-    let object ={
-        icon: "",
-        title: "Edición de Usuarios",
-        content: $("#form").html(),
-        width: "900px",
-    };
-    openForm(object);
+    showDivs(1);
 });
 
 $("#btmSave").on("click", function(){
-    console.log("btmSave");
-    $("#DivForm").addClass("hide");
-
+    saveData();
+    // showDivs(0);
 });
 
+
+async function saveData(){
+    let iduser = $("#iduser").val();
+    let username = $.trim($("#username").val());
+    let fullname = $.trim($("#fullname").val());
+    let idrole = parseInt($("#idrole").val());
+    let lang = $("#lang").val();
+    let status = parseInt($("#status").val());
+
+    let error = false;
+    let errMsg = "";
+    
+    if (username == "") {
+        error = true;
+        errMsg = "Debe ingresar el nombre del usuario";
+    }
+    
+    if (!error & !checkSoloLetrasNumeros(username)) {
+        error = true;
+        errMsg = "El Usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.";
+    }
+    
+    if (!error && fullname == "") {
+        error = true;
+        errMsg = "Debe ingresar el nombre completo del usuario";
+    }
+
+    if (!error && idrole == "-") {
+        error = true;
+        errMsg = "Debe seleccionar un rol para asignar al usuario";
+    }
+
+    if (error){
+        // console.log(errMsg)
+        sendMessage("error", "Usuarios", errMsg);
+        return;
+    }
+
+    let params = {
+        fullname,
+        idrole,
+        lang,
+        status
+    };
+
+    console.log(params)
+
+    let method = "PUT";
+    // let method = "POST";
+    if (iduser == -1){
+        method = "POST";
+        params["username"] = username;
+    }
+    let url = `saveUser&id=${iduser}`;
+    
+    await consumirApi(method, url, params)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp){
+                if (resp.status && resp.status == 'ok') {
+                    showDivs(0);
+                    loadData();
+                } else {
+                    sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+                }
+            } else {
+                sendMessage("error", "Usuarios", "La respuesta es nula");
+            }
+
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+        });
+
+}
+
 $("#btmCancel").on("click", function(){
-    console.log("btmCancel");
-    $("#DivForm").addClass("hide");
+    showDivs(0);
 });
 
 $("#btmEdit").on("click", function(){
-
+    cleanRecords(userSelected);
+    $("#username").addClass("disabled");
+    showDivs(1);
 });
 
 $("#btmDelete").on("click", function(){
-
+    hacerPregunta("Eliminar un Usuario", "eliminar", "deleteUser");
 });
+
+$("#btmReset").on("click", function(){
+    hacerPregunta("Resetear la clave de un usuario", "resetear", "resetearclave");
+});
+
+$("#btmUpUser").on("click", function(){
+    hacerPregunta("Recuperar un Usuario eliminado", "recuperar", "recuperarUsuario");
+});
+
+function hacerPregunta(action='', keyword='', queFuncionEjecuto=''){
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        icon: 'question',
+        title: 'Usuarios',
+        text: `Para ${action}, debe escribir ${keyword}.`,
+        input: "text",
+        showCancelButton: true,
+        inputPlaceholder: keyword,
+        confirmButtonColor: '#f63c3a',
+        confirmButtonText: formatoTitulo(keyword),
+        cancelButtonColor: '#33a0d6',
+        cancelButtonText: 'Cancelar',
+        inputValidator: text => {
+            return new Promise(resolve => {
+              if (text.trim() !== '' && text.trim() ==  keyword) {
+                resolve('');
+              } else {
+                resolve(
+                  `Para ${action}, debe ingresar la palabra ${keyword}.`
+                );
+              }
+            });
+        }
+    }).then(res => {
+        if (res.isConfirmed) {
+            if (queFuncionEjecuto!=''){
+                eval(`realizarAccion('${queFuncionEjecuto}')`);
+            }
+        }
+    });
+}
+
+async function realizarAccion(ruta=""){
+    let method = ruta == "deleteUser" ? "DELETE" : "POST";
+    let url = `${ruta}&id=${idSelect}`;
+
+    await consumirApi(method, url)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            // console.log(resp)
+
+            if (resp.status && resp.status == 'ok') {
+                sendMessage("success", "Usuarios", resp.message );
+                showDivs(0);
+                loadData();
+            } else {
+                sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+        });
+
+}
 
 $("#btmRefresh").on("click", function(){
     loadData();
 });
 
-
-
-
-function estadoBotones(opc = false){
-    if (opc){
+function habilitarBotones(opc = false){
+    // console.log(opc, userSelected.deleted_at);
+    if (opc && !userSelected.deleted_at ){
         $("#btmEdit").removeClass("disabled");
         $("#btmEdit").removeClass("btn-secondary");
         $("#btmEdit").addClass("btn-info");
+        
         $("#btmDelete").removeClass("disabled");
         $("#btmDelete").removeClass("btn-secondary");
         $("#btmDelete").addClass("btn-danger");
-    }else{
+
+        $("#btmReset").removeClass("disabled");
+        $("#btmReset").removeClass("btn-secondary");
+        $("#btmReset").addClass("btn-info");
+        
+        if (userSelected.deleted_at){
+            $("#btmUpUser").removeClass("disabled");
+            $("#btmUpUser").removeClass("btn-secondary");
+            $("#btmUpUser").addClass("btn-info");
+        }else{
+            $("#btmUpUser").addClass("disabled");
+            $("#btmUpUser").removeClass("btn-info");
+            $("#btmUpUser").addClass("btn-secondary");
+        }
+    } else {
         $("#btmEdit").addClass("disabled");
         $("#btmEdit").removeClass("btn-info");
         $("#btmEdit").addClass("btn-secondary");
+
         $("#btmDelete").addClass("disabled");
         $("#btmDelete").removeClass("btn-danger");
         $("#btmDelete").addClass("btn-secondary");
+        
+        $("#btmReset").addClass("disabled");
+        $("#btmReset").removeClass("btn-info");
+        $("#btmReset").addClass("btn-secondary");
+        
+        if (userSelected.deleted_at){
+            $("#btmUpUser").removeClass("disabled");
+            $("#btmUpUser").removeClass("btn-secondary");
+            $("#btmUpUser").addClass("btn-info");
+        }else{
+            $("#btmUpUser").addClass("disabled");
+            $("#btmUpUser").removeClass("btn-info");
+            $("#btmUpUser").addClass("btn-secondary");
+
+        }
     }
 }

@@ -160,20 +160,12 @@ $("#btnEstablecer").on("click", async function(){
             } catch (ex) {
             }
 
-            console.log(resp)
-            
+            // console.log(resp)
+
             if (resp.status && resp.status == 'error') {
-                swal({
-                    title: "Autorizacion",
-                    text: resp.message,
-                    icon: "error",
-                });
+                sendMessage("error", "Autorizacion", resp.message)
             } else {
-                swal({
-                    title: "Autorizacion",
-                    text: resp.message,
-                    icon: "success",
-                });
+                sendMessage("success", "Autorizacion", resp.message)
                 setTimeout(function(){
                     window.location.reload();
                 },2000);
