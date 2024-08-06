@@ -32,6 +32,7 @@ var idSelect ="";
 var idSelectName ="";
 var lstUsers = [];
 var scopeUser = "";
+var title = "";
 
 function initial(){
     /**
