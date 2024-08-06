@@ -178,7 +178,7 @@ async function selectRuta(route, args = ''){
 
 
 function sendMessage(type, titulo, message){
-    if (typeof message === "array"){
+    if (typeof message === "array" || typeof message === "object" ){
         sendMessageObj(type, titulo, message)
     } else{
         Swal.fire({

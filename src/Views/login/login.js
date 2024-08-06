@@ -25,7 +25,7 @@ $("#btnLogin").on("click", async function(){
     }
 
     if (error){
-        console.log(errMsg)
+        // console.log(errMsg)
         sendMessage("error", "Autorizacion", errMsg);
         return;
     }
@@ -44,6 +44,8 @@ $("#btnLogin").on("click", async function(){
                 resp = JSON.parse(resp);
             } catch (ex) {
             }
+
+            // console.log(resp)
 
             if (resp.status && resp.status == 'error') {
                 sessionSet("logged", false);
