@@ -2,7 +2,15 @@ let user = sessionGet("user");
 let menu = user.menu;
 apiToken = sessionGet("token");
 scopeUser = user.role[0].scope;
+let permisosLectura = true;
+let permisosEscritura = true;
+let permisosBorrado = true;
 
+let mensajeNoPermisoLectura = "No tiene los permisos para acceder a este recurso, contacte con el administrador.";
+
+if (!scopeUser.includes("R")) permisosLectura = false;
+if (!scopeUser.includes("W")) permisosEscritura = false;
+if (!scopeUser.includes("D")) permisosBorrado = false;
 
 $("#nameApp").html(config.appname);
 $("#versionApp").html(config.version);

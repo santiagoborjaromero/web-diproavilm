@@ -7,7 +7,7 @@
             </span>
         </span>
     </div>
-    <div class="col-12  col-md-8 text-end">
+    <div class="col-12  col-md-8 text-end" id="btmDivs">
         <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
             <i class="fa fa-plus"></i>
             Nuevo

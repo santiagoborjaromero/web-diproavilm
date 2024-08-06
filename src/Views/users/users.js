@@ -1,30 +1,27 @@
 
 setTimeout(function(){
     $("#Title").html("Usuarios");
-    estructuraGrid();
-    loadData();
-    loadRoles();
-    showDivs(0);
+    if (permisosLectura){
+        estructuraGrid();
+        loadData();
+        loadRoles();
+        showDivs(0);
+    } else{
+        $("#btmDivs").addClass("hide");
+        sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
+    }
 },800)
 
 lstUsers = [];
 lstRoles = [];
 userSelected = {};
 
-/** 
- * Verificar los permisos (scope) de los usuarios
- */
-if (scopeUser.includes("W")) {
-    $("btmNuevo").removeClass("hide");
-    $("btmEdit").removeClass("hide");
-}else{
-    $("btmNuevo").addClass("hide");
-    $("btmEdit").addClass("hide");
-}
 if (scopeUser.includes("D")) {
     $("btmDelete").removeClass("hide");
+    permisosBorrado = true;
 }else{
     $("btmDelete").addClass("hide");
+    permisosBorrado = false;
 }
 
 async function loadData(){
@@ -291,14 +288,14 @@ showDivs = (que = 0) => {
         case 0:
             //Grid o listado 
             $("#Title").html("Usuarios");
-            $("#btmNew").removeClass("hide");
-            $("#btmEdit").removeClass("hide");
-            $("#btmDelete").removeClass("hide");
-            $("#btmRefresh").removeClass("hide");
-            $("#btmReset").removeClass("hide");
-            $("#btmUpUser").removeClass("hide");
-            $("#btmSave").addClass("hide");
-            $("#btmCancel").addClass("hide");
+            $("#btmNew").removeClass("disabled");
+            $("#btmEdit").removeClass("disabled");
+            $("#btmDelete").removeClass("disabled");
+            $("#btmRefresh").removeClass("disabled");
+            $("#btmReset").removeClass("disabled");
+            $("#btmUpUser").removeClass("disabled");
+            $("#btmSave").addClass("disabled");
+            $("#btmCancel").addClass("disabled");
             habilitarBotones(false);
 
             $("#myGrid").removeClass("hide");
@@ -307,14 +304,14 @@ showDivs = (que = 0) => {
         case 1:
             //Formulario de edicion o nuevo
             $("#Title").html("Edición de Usuarios");
-            $("#btmNew").addClass("hide");
-            $("#btmEdit").addClass("hide");
-            $("#btmDelete").addClass("hide");
-            $("#btmRefresh").addClass("hide");
-            $("#btmReset").addClass("hide");
-            $("#btmUpUser").addClass("hide");
-            $("#btmSave").removeClass("hide");
-            $("#btmCancel").removeClass("hide");
+            $("#btmNew").addClass("disabled");
+            $("#btmEdit").addClass("disabled");
+            $("#btmDelete").addClass("disabled");
+            $("#btmRefresh").addClass("disabled");
+            $("#btmReset").addClass("disabled");
+            $("#btmUpUser").addClass("disabled");
+            $("#btmSave").removeClass("disabled");
+            $("#btmCancel").removeClass("disabled");
 
             $("#myGrid").addClass("hide");
             $("#FormDiv").removeClass("hide");
@@ -507,7 +504,25 @@ $("#btmRefresh").on("click", function(){
 
 function habilitarBotones(opc = false){
     // console.log(opc, userSelected.deleted_at);
+    if (permisosEscritura){
+        $("#btmNew").removeClass("hide");
+        $("#btmEdit").removeClass("hide");
+        $("#btmReset").removeClass("hide");
+        $("#btmUpUser").removeClass("hide");
+    } else {
+        $("#btmNew").addClass("hide");
+        $("#btmEdit").addClass("hide");
+        $("#btmReset").addClass("hide");
+        $("#btmUpUser").addClass("hide");
+    }
+    if (permisosBorrado){
+        $("#btmDelete").removeClass("hide");
+    } else{
+        $("#btmDelete").addClass("hide");
+    }
+
     if (opc && !userSelected.deleted_at ){
+
         $("#btmEdit").removeClass("disabled");
         $("#btmEdit").removeClass("btn-secondary");
         $("#btmEdit").addClass("btn-info");
