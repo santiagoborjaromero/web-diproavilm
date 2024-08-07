@@ -35,11 +35,12 @@
     </div>
 </div>
 
-<div class="row mt-2" id="GridDiv">
-    <div class="col-12">
-        <div id="myGrid" class="ag-theme-quartz" style="height: 500px; min-height: 500px;"></div>
+<div class="row mt-2 justify-content-md-center" id="GridDiv">
+    <div class="col-12 col-md-11 align-items-center">
+        <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
     </div>
 </div>
+
 
 <!-- Formulario -->
 <div id="FormDiv" class="hide">

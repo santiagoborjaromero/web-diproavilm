@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root{
@@ -27,6 +26,22 @@
     --spread: -1.4px;
     --horiz: 0.8619260654559223px;
     --vert: 1.1032150550494102px;
+
+    
+    --color-datagrid-bg-header: #9fdee2;
+    --color-datagrid-bg-header-hover: #ffffff9d;
+    --color-datagrid-bg-header-bg-hover: #ffffff1a;
+    --color-datagrid-header-font-color: #ffffff;
+    --color-datagrid-row-impar: #d1d1d1;
+    --color-datagrid-row-impar-border: #f5f5f5;
+    --color-datagrid-font-color: rgb(0, 0, 0);
+}
+.ag-theme-quartz {
+    --ag-foreground-color: #000;
+    --ag-background-color: #fff;
+    --ag-header-background-color: var(--color-datagrid-bg-header);
+    --ag-header-foreground-color: #000;
+    --ag-font-size: 14px;
 }
 
 
@@ -171,7 +186,9 @@ body{
 }
 
 .border-down{
-    border-bottom: 1px dashed #999999;
+    /* border-bottom: 1px solid #999999; */
+    box-shadow: calc(clamp(0px, var(--horiz), 2px)) calc(clamp(0px, var(--vert), 2px)) 2px calc(var(--spread)) rgba(0, 0, 0, 0.233), calc(2 * var(--horiz)) calc(2 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.20), calc(3 * var(--horiz)) calc(3 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.123), calc(5 * var(--horiz)) calc(5 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.076), calc(8 * var(--horiz)) calc(8 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.047), calc(13 * var(--horiz)) calc(13 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.028);
+    margin-bottom: 30px;
 }
 
 .hide {
@@ -238,3 +255,7 @@ body{
     border-radius: 20px;
 }
 
+.text-dark-400 { font-weight: 400; }
+.text-dark-500 { font-weight: 500; }
+.text-dark-600 { font-weight: 600; }
+.text-dark-700 { font-weight: 700; }

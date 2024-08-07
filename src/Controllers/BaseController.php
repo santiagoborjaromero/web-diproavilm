@@ -6,23 +6,15 @@ spl_autoload_register(function ($class){
 
 set_exception_handler("ErrorHandler::handleException");
 
-// require_once("ErrorHandler.php");
+//TODO: Proceso generico para activar las vistas
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $contmethod = $_GET["cont"];
+    //TODO: Captura de datos y inclusion del archivo de la vista correspondiente
+
+    $view = $_GET["cont"];
     $title = $_GET["title"];
     $args = @$_GET["args"];
 
-    $cont = explode(":", $contmethod);
-    $controller = $cont[0];
-    $action = $cont[1];
-
-    $record = [
-        "title" => $title,
-        "args" => $args
-    ];
-    require($controller.".php");
-    $controllerInstance = new $controller;
-    $controllerInstance->$action($record);
+    require(__DIR__ . "/../Views/{$view}/{$view}.php");
 }
 ?>

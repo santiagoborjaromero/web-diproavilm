@@ -232,13 +232,13 @@ function estructuraGrid(){
                     return html;
                 },
             },
-            {
-                headerName: "Actualizado",
-                flex: 1, 
-                field: "udated_at",
-                filter: false,
-                cellClass: "text-start",
-            },
+            // {
+            //     headerName: "Actualizado",
+            //     flex: 1, 
+            //     field: "udated_at",
+            //     filter: false,
+            //     cellClass: "text-start",
+            // },
             {
                 headerName: "Inactivado",
                 flex: 1, 
@@ -376,7 +376,7 @@ async function saveData(){
         status
     };
 
-    console.log(params)
+    // console.log(params)
 
     let method = "PUT";
     // let method = "POST";

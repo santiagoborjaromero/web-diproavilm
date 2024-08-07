@@ -1,5 +1,6 @@
 <?PHP
 
+//TODO: Clase para captura del error y despiegue visual
 class ErrorHandler{
 
     public static function handleException(Throwable $exception): void {

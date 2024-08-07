@@ -35,9 +35,7 @@ var scopeUser = "";
 var title = "";
 
 function initial(){
-    /**
-     * Verificar si tiene iniciado la session
-     */
+    //TODO:Verificar si tiene iniciado la session
     let logueado = sessionGet("logged");
     let page = "";
     if (logueado){
@@ -48,9 +46,7 @@ function initial(){
     let pagina = `src/Views/${page}/${page}.php`;
     $("#mainPage").load(pagina);
 
-    /**
-     * Pagina por defecto
-     */
+    //TODO: Proceso de refresco y analisis de el path donde se encuentra, si  no se encuentra en login es decir cuando este logueado
     if (!["login"].includes(page)){
         setTimeout(function(){
             let ruta = sessionGet("route");
@@ -58,12 +54,12 @@ function initial(){
                 ruta = lstMenu[0].child[0].route;
             }
             selectRuta(ruta);
-            // console.log(apiToken);
         },1000)
     }
 
 }
 
+//TODO Funcion que permite consumir recursos ajax resp api sin token, para rutas de logueo
 function consumirApiWT(method, url, params = null) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -79,7 +75,7 @@ function consumirApiWT(method, url, params = null) {
         });
     });
 }
-
+//TODO Funcion que permite consumir recursos ajax resp api con token
 function consumirApi(method, url, params = null) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -99,18 +95,18 @@ function consumirApi(method, url, params = null) {
     });
 }
 
-
+//TODO Funcion que permite encriptar texto
 function encryptKey(text){
     var encrypted = CryptoJS.AES.encrypt(text, "y91ooeN3Vbx7iCkUpJXP5Xvek");
     return encrypted.toString();
 }
-
+//TODO Funcion que permite desencriptar texto
 function decryptKey(text){
     var bytes  = CryptoJS.AES.decrypt(text, "y91ooeN3Vbx7iCkUpJXP5Xvek");
     var decrypted = bytes.toString(CryptoJS.enc.Utf8);
     return decrypted;
 }
-
+//TODO Funcion que permite establecer la session por session storage
 function sessionSet(key = "", value = null){
     if (key == "") return;
     // let text = encryptKey(btoa(JSON.stringify(value)));
@@ -118,7 +114,7 @@ function sessionSet(key = "", value = null){
     // Cookies.set(key,  text, cookie_options);
     sessionStorage.setItem(key, text);
 }
-
+//TODO Funcion que permite traer la informacion guardada en la session storage
 function sessionGet(key = ""){
     let conv = null;
     try{
@@ -135,7 +131,7 @@ function sessionGet(key = ""){
     return conv;
 }
 
-
+//TODO Funcion que permite limpiar las variables de sesion
 function proccessCleanMemory(){
     sessionSet("user", "");
     sessionSet("token", "");
@@ -143,9 +139,10 @@ function proccessCleanMemory(){
     sessionSet("logged", false);
 }
 
-
+//TODO Seleccion de rutas. 
 async function selectRuta(route, args = ''){
-    // console.log("Ruta", route)
+    console.log("Ruta", route)
+    console.log("args", args)
     sessionSet("route", route);
 
     /**
