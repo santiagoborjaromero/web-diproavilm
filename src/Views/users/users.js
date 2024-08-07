@@ -1,6 +1,5 @@
 
 setTimeout(function(){
-    $("#Title").html("Usuarios");
     if (permisosLectura){
         estructuraGrid();
         loadData();
@@ -16,12 +15,23 @@ lstUsers = [];
 lstRoles = [];
 userSelected = {};
 
-if (scopeUser.includes("D")) {
-    $("btmDelete").removeClass("hide");
-    permisosBorrado = true;
-}else{
-    $("btmDelete").addClass("hide");
-    permisosBorrado = false;
+//TODO: Determinar titulo e icono que viene del menu
+ruta = JSON.parse(sessionGet("current_route"));
+title = ruta.name;
+$("#Title").html(title);
+$("#TitleIcon").addClass(ruta.icon);
+
+
+//TODO: Determina los permisos de RWD 
+if (permisosEscritura){
+    $("#divW").removeClass("hide");
+} else {
+    $("#divW").addClass("hide");
+}
+if (permisosBorrado){
+    $("#divD").removeClass("hide");
+} else{
+    $("#divD").addClass("hide");
 }
 
 async function loadData(){
@@ -54,13 +64,13 @@ async function loadData(){
                 gridApi.setGridOption("rowData", lstUsers);
                 gridApi.sizeColumnsToFit();
             } else {
-                sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
             }
         })
         .catch( err => {
             closeLoading();
             console.log("ERR", err);
-            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+            sendMessage("error", title, JSON.stringify(err.responseText));
         });
 }
 
@@ -85,13 +95,13 @@ async function loadRoles(){
                     $("#idrole").append(`<option value='${e.idrole}'>${e.name}</option>`)
                 });
             } else {
-                sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
             }
         })
         .catch( err => {
             closeLoading();
             console.log("ERR", err);
-            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+            sendMessage("error", title, JSON.stringify(err.responseText));
         });
 }
 
@@ -240,11 +250,27 @@ function estructuraGrid(){
             //     cellClass: "text-start",
             // },
             {
-                headerName: "Inactivado",
+                headerName: "Eliminado",
                 flex: 1, 
                 field: "deleted_at",
                 filter: true,
                 cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let html="";
+                    let inactivo = params.data.deleted_at ? 1 : 0;
+                    if (inactivo == 1){
+                        cls = "fa fa-check";
+                        // cls = "far fa-dor-circle";
+                        color = "bg-danger";
+                    }else{
+                        // cls = "fa fa-times";
+                        // cls = "far fa-circle";
+                        cls = "fas fa-minus";
+                        color = "bg-light text-dark";
+                    }
+                    html += `<kbd class='${color}'><i class="${cls}"></i></kbd>`;
+                    return html;
+                },
             },
         ]
     }
@@ -287,15 +313,15 @@ showDivs = (que = 0) => {
     switch(que){
         case 0:
             //Grid o listado 
-            $("#Title").html("Usuarios");
-            $("#btmNew").removeClass("disabled");
-            $("#btmEdit").removeClass("disabled");
-            $("#btmDelete").removeClass("disabled");
-            $("#btmRefresh").removeClass("disabled");
-            $("#btmReset").removeClass("disabled");
-            $("#btmUpUser").removeClass("disabled");
-            $("#btmSave").addClass("disabled");
-            $("#btmCancel").addClass("disabled");
+            $("#Title").html(title);
+            $("#btmNew").removeClass("hide");
+            $("#btmEdit").removeClass("hide");
+            $("#btmDelete").removeClass("hide");
+            $("#btmRefresh").removeClass("hide");
+            $("#btmReset").removeClass("hide");
+            $("#btmUpUser").removeClass("hide");
+            $("#btmSave").addClass("hide");
+            $("#btmCancel").addClass("hide");
             habilitarBotones(false);
 
             $("#myGrid").removeClass("hide");
@@ -303,15 +329,15 @@ showDivs = (que = 0) => {
             break;
         case 1:
             //Formulario de edicion o nuevo
-            $("#Title").html("Edición de Usuarios");
-            $("#btmNew").addClass("disabled");
-            $("#btmEdit").addClass("disabled");
-            $("#btmDelete").addClass("disabled");
-            $("#btmRefresh").addClass("disabled");
-            $("#btmReset").addClass("disabled");
-            $("#btmUpUser").addClass("disabled");
-            $("#btmSave").removeClass("disabled");
-            $("#btmCancel").removeClass("disabled");
+            $("#Title").html("Edición de " + title);
+            $("#btmNew").addClass("hide");
+            $("#btmEdit").addClass("hide");
+            $("#btmDelete").addClass("hide");
+            $("#btmRefresh").addClass("hide");
+            $("#btmReset").addClass("hide");
+            $("#btmUpUser").addClass("hide");
+            $("#btmSave").removeClass("hide");
+            $("#btmCancel").removeClass("hide");
 
             $("#myGrid").addClass("hide");
             $("#FormDiv").removeClass("hide");
@@ -365,7 +391,7 @@ async function saveData(){
 
     if (error){
         // console.log(errMsg)
-        sendMessage("error", "Usuarios", errMsg);
+        sendMessage("error", title, errMsg);
         return;
     }
 
@@ -398,17 +424,17 @@ async function saveData(){
                     showDivs(0);
                     loadData();
                 } else {
-                    sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+                    sendMessage("error", title, resp.message || JSON.stringify(resp));
                 }
             } else {
-                sendMessage("error", "Usuarios", "La respuesta es nula");
+                sendMessage("error", title, "La respuesta es nula");
             }
 
         })
         .catch( err => {
             closeLoading();
             console.log("ERR", err);
-            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+            sendMessage("error", title, JSON.stringify(err.responseText));
         });
 
 }
@@ -483,17 +509,17 @@ async function realizarAccion(ruta=""){
             // console.log(resp)
 
             if (resp.status && resp.status == 'ok') {
-                sendMessage("success", "Usuarios", resp.message );
+                sendMessage("success", title, resp.message );
                 showDivs(0);
                 loadData();
             } else {
-                sendMessage("error", "Usuarios", resp.message || JSON.stringify(resp));
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
             }
         })
         .catch( err => {
             closeLoading();
             console.log("ERR", err);
-            sendMessage("error", "Usuarios", JSON.stringify(err.responseText));
+            sendMessage("error", title, JSON.stringify(err.responseText));
         });
 
 }
@@ -504,22 +530,22 @@ $("#btmRefresh").on("click", function(){
 
 function habilitarBotones(opc = false){
     // console.log(opc, userSelected.deleted_at);
-    if (permisosEscritura){
-        $("#btmNew").removeClass("hide");
-        $("#btmEdit").removeClass("hide");
-        $("#btmReset").removeClass("hide");
-        $("#btmUpUser").removeClass("hide");
-    } else {
-        $("#btmNew").addClass("hide");
-        $("#btmEdit").addClass("hide");
-        $("#btmReset").addClass("hide");
-        $("#btmUpUser").addClass("hide");
-    }
-    if (permisosBorrado){
-        $("#btmDelete").removeClass("hide");
-    } else{
-        $("#btmDelete").addClass("hide");
-    }
+    // if (permisosEscritura){
+    //     $("#btmNew").removeClass("hide");
+    //     $("#btmEdit").removeClass("hide");
+    //     $("#btmReset").removeClass("hide");
+    //     $("#btmUpUser").removeClass("hide");
+    // } else {
+    //     $("#btmNew").addClass("hide");
+    //     $("#btmEdit").addClass("hide");
+    //     $("#btmReset").addClass("hide");
+    //     $("#btmUpUser").addClass("hide");
+    // }
+    // if (permisosBorrado){
+    //     $("#btmDelete").removeClass("hide");
+    // } else{
+    //     $("#btmDelete").addClass("hide");
+    // }
 
     if (opc && !userSelected.deleted_at ){
 

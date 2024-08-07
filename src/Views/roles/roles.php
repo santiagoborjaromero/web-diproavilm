@@ -1,25 +1,27 @@
-<div class="row bg-gray-lights p-2 border-down">
+<div class="row bg-gray-lights p-2 border-down bg-light">
     <div class="col-12 col-md-4  mt-1">
         <span>
-            <i class="fas fa-shield-alt mr-2 box"></i>
-            <span class="t20" id="Title">
-                <?php echo $title; ?>
-            </span>
+            <i id="TitleIcon" class="mr-2 box"></i>
+            <span class="t20" id="Title"></span>
         </span>
     </div>
     <div class="col-12  col-md-8 text-end">
-        <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
-            <i class="fa fa-plus"></i>
-            Nuevo
-        </button>
-        <button id="btmEdit" class="btn btn-info mr-1" title="Editar">
-            <i class="far fa-edit"></i>
-            Editar
-        </button>
-        <button id="btmDelete" class="btn btn-danger mr-1" title="Eliminar">
-            <i class="far fa-trash-alt"></i>
-            Eliminar
-        </button>
+        <span id="divW">
+            <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
+                <i class="fa fa-plus"></i>
+                Nuevo
+            </button>
+            <button id="btmEdit" class="btn btn-info mr-1" title="Editar">
+                <i class="far fa-edit"></i>
+                Editar
+            </button>
+        </span>
+        <span id="divD">
+            <button id="btmDelete" class="btn btn-danger mr-1" title="Eliminar">
+                <i class="far fa-trash-alt"></i>
+                Eliminar
+            </button>
+        </span>
         <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
             <i class="fas fa-sync-alt"></i>
             Refrescar
@@ -80,6 +82,7 @@
             </select>
         </div>
     </div>
+    
 </div>
 
 

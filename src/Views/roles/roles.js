@@ -1,29 +1,33 @@
 setTimeout(function(){
-    $("#Title").html(title);
-    estructuraGrid();
-    loadData();
-    // loadRoles();
-    showDivs(0);
+    if (permisosLectura){
+        estructuraGrid();
+        loadData();
+        showDivs(0);
+    } else{
+        $("#btmDivs").addClass("hide");
+        sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
+    }
 },800)
 
-title = "Roles";
 lstRoles = [];
 roleSelected = {};
 
-/** 
- * Verificar los permisos (scope) de los usuarios
- */
-if (scopeUser.includes("W")) {
-    $("btmNuevo").removeClass("hide");
-    $("btmEdit").removeClass("hide");
-}else{
-    $("btmNuevo").addClass("hide");
-    $("btmEdit").addClass("hide");
+//TODO: Determinar titulo e icono que viene del menu
+ruta = JSON.parse(sessionGet("current_route"));
+title = ruta.name;
+$("#Title").html(title);
+$("#TitleIcon").addClass(ruta.icon);
+
+//TODO: Determina los permisos de RWD 
+if (permisosEscritura){
+    $("#divW").removeClass("hide");
+} else {
+    $("#divW").addClass("hide");
 }
-if (scopeUser.includes("D")) {
-    $("btmDelete").removeClass("hide");
-}else{
-    $("btmDelete").addClass("hide");
+if (permisosBorrado){
+    $("#divD").removeClass("hide");
+} else{
+    $("#divD").addClass("hide");
 }
 
 async function loadData(){
@@ -188,13 +192,13 @@ function estructuraGrid(){
                     return html;
                 },
             },
-            {
-                headerName: "Actualizado",
-                flex: 1, 
-                field: "updated_at",
-                filter: false,
-                cellClass: "text-start",
-            },
+            // {
+            //     headerName: "Actualizado",
+            //     flex: 1, 
+            //     field: "updated_at",
+            //     filter: false,
+            //     cellClass: "text-start",
+            // },
             // {
             //     headerName: "Inactivado",
             //     flex: 1, 

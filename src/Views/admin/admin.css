@@ -113,11 +113,11 @@ ul>li{
 }
 
 .screen{
-    background-color: #fff;
+    background-color: #e0e0e0;
     min-height: var(--size-screen) ;
     height: var(--size-screen) ;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
     overflow-x: hidden;
     overflow-y: visible;
 }

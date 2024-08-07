@@ -1,4 +1,6 @@
 <?PHP
+// error_reporting(E_ALL);
+error_reporting(0);
 
 spl_autoload_register(function ($class){
     require __DIR__ . "/$class.php";
@@ -11,10 +13,12 @@ set_exception_handler("ErrorHandler::handleException");
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     //TODO: Captura de datos y inclusion del archivo de la vista correspondiente
 
-    $view = $_GET["cont"];
-    $title = $_GET["title"];
-    $args = @$_GET["args"];
+    $record = [
+        $args = $_GET["args"],
+    ];
+    extract($record);
 
+    $view = $_GET["cont"];
     require(__DIR__ . "/../Views/{$view}/{$view}.php");
 }
 ?>

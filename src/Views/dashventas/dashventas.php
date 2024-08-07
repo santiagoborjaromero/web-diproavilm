@@ -1,10 +1,8 @@
-<div class="row bg-gray-lights p-2 border-down">
+<div class="row bg-gray-lights p-2 border-down bg-light">
     <div class="col-12 col-md-6  mt-1">
         <span>
-            <i class="fas fa-chart-bar mr-2 box"></i>
-            <span class="t20">
-                <?php echo $title; ?>
-            </span>
+            <i id="TitleIcon" class="mr-2 box"></i>
+            <span class="t20" id="Title"></span>
         </span>
     </div>
     <div class="col-12  col-md-6 text-end">
@@ -33,5 +31,6 @@
 </div>
 
 
-
+<script src="src/Views/dashventas/dashventas.js"></script>
+<link rel="stylesheet" href="src/Views/dashventas/dashventas.css">
 

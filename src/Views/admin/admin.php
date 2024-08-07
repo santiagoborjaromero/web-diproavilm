@@ -11,8 +11,8 @@
     <div class="row menu">
         <div class="col-12 col-md-12 menuXXX" id="divmenu"></div>
     </div>
-    <div class="row">
-        <div class="col-12 col-md-12 breadcrumbs">
+    <div class="row ">
+        <div class="col-12 col-md-12 breadcrumbs bg-light">
             <i class="far fa-map"></i> <span id="path" class=""></span>
         </div>
     </div>

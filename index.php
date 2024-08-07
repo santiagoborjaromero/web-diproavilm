@@ -13,7 +13,7 @@
   */
 session_start();
 
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
 
 $jsonString = file_get_contents(__DIR__."/config.json");
 $config = json_decode($jsonString, true);

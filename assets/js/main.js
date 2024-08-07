@@ -109,9 +109,7 @@ function decryptKey(text){
 //TODO Funcion que permite establecer la session por session storage
 function sessionSet(key = "", value = null){
     if (key == "") return;
-    // let text = encryptKey(btoa(JSON.stringify(value)));
     let text = encryptKey(JSON.stringify(value));
-    // Cookies.set(key,  text, cookie_options);
     sessionStorage.setItem(key, text);
 }
 //TODO Funcion que permite traer la informacion guardada en la session storage
@@ -119,10 +117,8 @@ function sessionGet(key = ""){
     let conv = null;
     try{
         if (key == "") return null;
-        // let text = Cookies.get(key);
         let text = sessionStorage.getItem(key);
         if (text !== undefined){
-            // conv = JSON.parse(atob(decryptKey(text)));
             conv = JSON.parse(decryptKey(text));
         }
     } catch(err){
@@ -141,8 +137,6 @@ function proccessCleanMemory(){
 
 //TODO Seleccion de rutas. 
 async function selectRuta(route, args = ''){
-    console.log("Ruta", route)
-    console.log("args", args)
     sessionSet("route", route);
 
     /**
@@ -150,12 +144,14 @@ async function selectRuta(route, args = ''){
      */
     let parent = "";
     let path = [];
+    let objMenu = [];
     let title = "";
 
     lstMenu.forEach( e => {
         parent = e.name;
         e.child.forEach(ch=>{
             if (route == ch.route){
+                objMenu = ch;
                 path.push(parent);
                 path.push(ch.name);
                 title = ch.name;
@@ -163,17 +159,14 @@ async function selectRuta(route, args = ''){
         })
     });
     $("#path").html(path.join(" / "))
-
-    /**
-     * Llamar al controlador especifico
-     */
-    // controller = `src/Controllers/${route}Controller.php?args=125`;
-    // $("#divbody").load(controller)
-    controller = `src/Controllers/BaseController.php?cont=${route}&title=${title}&args=${args}`;
+    
+    sessionSet("current_route", JSON.stringify(objMenu));
+    //TODO: Llamar al controlador generico y pasar variables para ejecutar vistas
+    controller = `src/Controllers/BaseController.php?cont=${route}&args=${args}`;
     $("#divbody").load(controller)
 }
 
-
+//TODO: Funcion generica para despliegue de mensajes (POPUP)
 function sendMessage(type, titulo, message){
     if (typeof message === "array" || typeof message === "object" ){
         sendMessageObj(type, titulo, message)
@@ -207,17 +200,19 @@ function sendMessageObj(type, titulo, obj){
     })
 }
 
+//TODO: Despliegue de ayudas
 function help(message){
     sendMessage("question", "Ayuda", message);
 }
 
-
+//TODO: Icono girando en proceso spinner
 function showLoading(text="Cargando"){
     $("#spinner").removeClass("hide");
     $("#spinner").addClass("rotate_div");
     $("#spinner-text").html(text);
 }
 
+//TODO: Revisa solo letras y numeros
 function checkSoloLetrasNumeros(palabra){
     const pattern = new RegExp('^[A-Z0-9]+$', 'i');
     return pattern.test(palabra)
