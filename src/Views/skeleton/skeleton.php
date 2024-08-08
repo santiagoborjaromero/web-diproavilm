@@ -73,5 +73,5 @@
 
 
 
-<script src="src/Views/admin/admin.js"></script>
-<link rel="stylesheet" href="src/Views/admin/admin.css">
+<script src="src/Views/skeleton/skeleton.js"></script>
+<link rel="stylesheet" href="src/Views/skeleton/skeleton.css">

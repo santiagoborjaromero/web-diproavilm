@@ -39,7 +39,7 @@ function initial(){
     let logueado = sessionGet("logged");
     let page = "";
     if (logueado){
-        page = "admin";
+        page = "skeleton";
     }else{
         page = "login";
     }
