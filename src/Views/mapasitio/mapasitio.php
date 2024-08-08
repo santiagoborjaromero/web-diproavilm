@@ -1,4 +1,4 @@
-<div class="row bg-gray-lights p-2 border-down bg-light">
+<div class="row bg-gray-lights p-2 border-down bg-light sticky">
     <div class="col-12 col-md-6  mt-1">
         <span>
             <i id="TitleIcon" class="mr-2 box"></i>
@@ -19,8 +19,6 @@
         </div>
     </div>
 </div>
-
-
 
 <script src="src/Views/mapasitio/mapasitio.js"></script>
 <link rel="stylesheet" href="src/Views/mapasitio/mapasitio.css">

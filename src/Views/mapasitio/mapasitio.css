@@ -1,7 +1,4 @@
-ul{
-    text-decoration: none;
-}
+a{ text-decoration: none; }
+a:hover{ color: #26343a !important; }
 
-a{
-    text-decoration: none;
-}
+ul{list-style-type:none};

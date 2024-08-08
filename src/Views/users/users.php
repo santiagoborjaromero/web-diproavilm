@@ -1,4 +1,4 @@
-<div class="row bg-gray-lights p-2 border-down bg-light">
+<div class="row bg-gray-lights p-2 border-down bg-light sticky">
     <div class="col-12 col-md-4  mt-1">
         <span>
             <i id="TitleIcon" class="mr-2 box"></i>
@@ -45,8 +45,8 @@
     </div>
 </div>
 
-<div class="row mt-2 justify-content-md-center" id="GridDiv">
-    <div class="col-12 col-md-11 align-items-center">
+<div class="row mt-2 justify-content-md-center" >
+    <div class="col-12 col-md-11 align-items-center" id="GridDiv">
         <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
     </div>
 </div>

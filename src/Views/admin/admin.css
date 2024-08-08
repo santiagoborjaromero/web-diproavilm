@@ -117,9 +117,21 @@ ul>li{
     min-height: var(--size-screen) ;
     height: var(--size-screen) ;
     /* padding-top: 10px; */
-    /* padding-bottom: 10px; */
+    padding-bottom: 10px;
     overflow-x: hidden;
     overflow-y: visible;
+}
+
+#divmenu{
+    z-index: 9999;
+}
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 50px;
+    font-size: 20px;
+    z-index: 9998;
 }
 
 .footer{
