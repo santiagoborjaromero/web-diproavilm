@@ -52,51 +52,53 @@
 </div>
 
 <!-- Formulario -->
-<div id="FormDiv" class="hide">
-    <div class="row mb-2">
-        <label class="col-12 col-md-3 label-control text-end">Usuario</label>
-        <div class="col-12 col-md-3">
-            <input class="form-control" type="hidden" id="iduser" value="">
-            <input class="form-control" type="text" id="username" keypress="keypress" placeholder="Ingrese el usuario">
+<div class="row justify-content-md-center hide" id="FormDiv">
+    <div  class="col-12 col-md-11 align-items-center bg-white round-10">
+        <div class="row mt-5 mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Usuario</label>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="hidden" id="iduser" value="">
+                <input class="form-control" type="text" id="username" keypress="keypress" placeholder="Ingrese el usuario">
+            </div>
+            <div class="col-6 col-md-1 text-start">
+                <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
+            </div>
         </div>
-        <div class="col-6 col-md-1 text-start">
-            <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
+        <div class="row mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Nombre completo</label>
+            <div class="col-12 col-md-3">
+                <input class=" form-control" type="text" id="fullname" placeholder="Ingrese el nombre completo">
+            </div>
         </div>
+        <div class="row mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Rol</label>
+            <div class="col-12 col-md-3">
+                <select id="idrole" class="form-control">
+                    <option selected value="-">-- Seleccione un Rol -- </option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Idioma</label>
+            <div class="col-12 col-md-3">
+                <select id="lang" class="form-control">
+                    <option selected value="es">Español</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <label class="col-12 col-md-3 label-control text-end">Estado</label>
+            <div class="col-12 col-md-3">
+                <select id="status" class="form-control">
+                    <option selected value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div>
+        </div>
+        
     </div>
-    <div class="row mb-2">
-        <label class="col-12 col-md-3 label-control text-end">Nombre completo</label>
-        <div class="col-12 col-md-3">
-            <input class=" form-control" type="text" id="fullname" placeholder="Ingrese el nombre completo">
-        </div>
-    </div>
-    <div class="row mb-2">
-        <label class="col-12 col-md-3 label-control text-end">Rol</label>
-        <div class="col-12 col-md-3">
-            <select id="idrole" class="form-control">
-                <option selected value="-">-- Seleccione un Rol -- </option>
-            </select>
-        </div>
-    </div>
-    <div class="row mb-2">
-        <label class="col-12 col-md-3 label-control text-end">Idioma</label>
-        <div class="col-12 col-md-3">
-            <select id="lang" class="form-control">
-                <option selected value="es">Español</option>
-            </select>
-        </div>
-    </div>
-    <div class="row mb-5">
-        <label class="col-12 col-md-3 label-control text-end">Estado</label>
-        <div class="col-12 col-md-3">
-            <select id="status" class="form-control">
-                <option selected value="1">Activo</option>
-                <option value="0">Inactivo</option>
-            </select>
-        </div>
-    </div>
-    
 </div>
-
-
-<script src="src/Views/users/users.js"></script>
-<link rel="stylesheet" href="src/Views/users/users.css">
+    
+    
+    <script src="src/Views/users/users.js"></script>
+    <link rel="stylesheet" href="src/Views/users/users.css">

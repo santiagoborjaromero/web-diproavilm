@@ -45,49 +45,47 @@
 
 
 <!-- Formulario -->
-<div id="FormDiv" class="hide">
-    <div class="row mb-2">
-        <label class="col-12 col-md-3 label-control text-end">Nombre del rol</label>
-        <div class="col-12 col-md-3">
-            <input class="form-control" type="hidden" id="idrole" value="">
-            <input class="form-control" type="text" id="name" keypress="keypress" placeholder="Nombre del rol">
+<div class="row justify-content-md-center hide" id="FormDiv">
+    <div class="col-12 col-md-11 align-items-center bg-white round-10">
+        <div class="row mt-5 mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Nombre del rol</label>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="hidden" id="idrole" value="">
+                <input class="form-control" type="text" id="name" keypress="keypress" placeholder="Nombre del rol">
+            </div>
+            <!-- <div class="col-6 col-md-1 text-start">
+                <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
+            </div> -->
         </div>
-        <!-- <div class="col-6 col-md-1 text-start">
-            <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
-        </div> -->
-    </div>
-    <div class="row mb-2">
-        <label class="col-12 col-md-3 label-control text-end">Permisos Generales</label>
-        <div class="col-12 col-md-3">
-            <input class="form-check-input" type="checkbox"  id="scope_r">
-            <label class="form-check-label" for="scope_r"> Lectura </label> <br>
+        <div class="row mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Permisos Generales</label>
+            <div class="col-12 col-md-3">
+                <input class="form-check-input" type="checkbox" id="scope_r">
+                <label class="form-check-label" for="scope_r"> Lectura </label> <br>
 
-            <input class="form-check-input" type="checkbox"  id="scope_w">
-            <label class="form-check-label" for="scope_w"> Escritura </label> <br>
+                <input class="form-check-input" type="checkbox" id="scope_w">
+                <label class="form-check-label" for="scope_w"> Escritura </label> <br>
 
-            <input class="form-check-input" type="checkbox"  id="scope_d">
-            <label class="form-check-label" for="scope_d"> Borrado </label> <br>
+                <input class="form-check-input" type="checkbox" id="scope_d">
+                <label class="form-check-label" for="scope_d"> Borrado </label> <br>
 
-            <!-- <input type="checkbox" class="input-switch" id="scope_r" /> Lectura <br> -->
-            <!-- <input type="checkbox" class="input-switch" id="scope_w" /> Escritura <br>
-            <input type="checkbox" class="input-switch" id="scope_d" /> Eliminado -->
+                <!-- <input type="checkbox" class="input-switch" id="scope_r" /> Lectura <br> -->
+                <!-- <input type="checkbox" class="input-switch" id="scope_w" /> Escritura <br>
+                <input type="checkbox" class="input-switch" id="scope_d" /> Eliminado -->
+            </div>
+        </div>
+        <div class="row mb-5">
+            <label class="col-12 col-md-3 label-control text-end">Estado</label>
+            <div class="col-12 col-md-3">
+                <select id="status" class="form-control">
+                    <option selected value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div>
         </div>
     </div>
-    <div class="row mb-5">
-        <label class="col-12 col-md-3 label-control text-end">Estado</label>
-        <div class="col-12 col-md-3">
-            <select id="status" class="form-control">
-                <option selected value="1">Activo</option>
-                <option value="0">Inactivo</option>
-            </select>
-        </div>
-    </div>
-    
 </div>
 
 
 <script src="src/Views/roles/roles.js"></script>
 <link rel="stylesheet" href="src/Views/roles/roles.css">
-
-
-

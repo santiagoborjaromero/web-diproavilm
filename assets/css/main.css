@@ -259,3 +259,10 @@ body{
 .text-dark-500 { font-weight: 500; }
 .text-dark-600 { font-weight: 600; }
 .text-dark-700 { font-weight: 700; }
+
+
+.round-10 {border-radius: 10px;}
+.round-20 {border-radius: 20px;}
+.round-30 {border-radius: 30px;}
+.round-40 {border-radius: 40px;}
+.round-50 {border-radius: 50px;}
