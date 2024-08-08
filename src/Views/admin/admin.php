@@ -22,7 +22,9 @@
     <div class="row">
         <div class="col-12 col-md-12 footer" id="footer">
             <span class="t14" id="versionApp"></span> &nbsp;&nbsp; | &nbsp;&nbsp;
-            <i class="far fa-map mr-2"></i> <span>Mapa del Sitio</span>
+            <a class="text-white" onclick="selectRuta('mapasitio')" href="javascript: void(0)">
+                <i class="far fa-map mr-2"></i> <span>Mapa del Sitio</span>
+            </a>
         </div>
     </div>
 </div>

@@ -139,28 +139,31 @@ function proccessCleanMemory(){
 async function selectRuta(route, args = ''){
     sessionSet("route", route);
 
-    /**
-     * Breadcrumbs
-     */
-    let parent = "";
-    let path = [];
-    let objMenu = [];
-    let title = "";
-
-    lstMenu.forEach( e => {
-        parent = e.name;
-        e.child.forEach(ch=>{
-            if (route == ch.route){
-                objMenu = ch;
-                path.push(parent);
-                path.push(ch.name);
-                title = ch.name;
-            }
-        })
-    });
-    $("#path").html(path.join(" / "))
+    if (["mapasitio"].includes(route)){
+        $("#path").html("Mapa del Sitio")
+    } else {
+        //TODO: Breadcrumbs
+        let parent = "";
+        let path = [];
+        let objMenu = [];
+        let title = "";
     
-    sessionSet("current_route", JSON.stringify(objMenu));
+        lstMenu.forEach( e => {
+            parent = e.name;
+            e.child.forEach(ch=>{
+                if (route == ch.route){
+                    objMenu = ch;
+                    path.push(parent);
+                    path.push(ch.name);
+                    title = ch.name;
+                }
+            })
+        });
+        sessionSet("current_route", JSON.stringify(objMenu));
+        $("#path").html(path.join(" / "))
+    }
+
+    
     //TODO: Llamar al controlador generico y pasar variables para ejecutar vistas
     controller = `src/Controllers/BaseController.php?cont=${route}&args=${args}`;
     $("#divbody").load(controller)
