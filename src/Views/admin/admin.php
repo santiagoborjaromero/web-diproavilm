@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="row menu">
-        <div class="col-12 col-md-12 menuXXX" id="divmenu"></div>
+        <div class="col-12 col-md-12" id="divmenu"></div>
     </div>
     <div class="row ">
         <div class="col-12 col-md-12 breadcrumbs bg-light">
