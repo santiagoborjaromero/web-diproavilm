@@ -58,7 +58,7 @@
             <label class="col-12 col-md-3 label-control text-end">Usuario</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="hidden" id="iduser" value="">
-                <input class="form-control" type="text" id="username" keypress="keypress" placeholder="Ingrese el usuario">
+                <input class="form-control" type="text" id="username" placeholder="Ingrese el usuario">
             </div>
             <div class="col-6 col-md-1 text-start">
                 <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>

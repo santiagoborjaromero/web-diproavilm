@@ -51,7 +51,7 @@
             <label class="col-12 col-md-3 label-control text-end">Nombre del rol</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="hidden" id="idrole" value="">
-                <input class="form-control" type="text" id="name" keypress="keypress" placeholder="Nombre del rol">
+                <input class="form-control" type="text" id="name"  placeholder="Nombre del rol">
             </div>
             <!-- <div class="col-6 col-md-1 text-start">
                 <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>

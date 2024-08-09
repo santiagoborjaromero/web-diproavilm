@@ -3,14 +3,18 @@ setTimeout(function(){
         estructuraGrid();
         loadData();
         showDivs(0);
+
+        // gridApi.setGridOption("rowData", lstMenu);
+        // gridApi.sizeColumnsToFit();
     } else{
         $("#btmDivs").addClass("hide");
         sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
     }
 },800)
 
-lstRoles = [];
-roleSelected = {};
+lstMenuOriginal = [];
+dataSelected = {};
+var idmenu = "-1";
 
 //TODO: Determinar titulo e icono que viene del menu
 ruta = JSON.parse(sessionGet("current_route"));
@@ -36,7 +40,7 @@ async function loadData(){
     habilitarBotones(false);
     
     let metodo = "GET";
-    let url = "roles";
+    let url = "menus";
     await consumirApi(metodo, url)
         .then( resp=>{
             closeLoading();
@@ -44,17 +48,23 @@ async function loadData(){
                 resp = JSON.parse(resp);
             } catch (ex) {}
 
-            // console.log(resp)
-
             if (resp.status && resp.status == 'ok') {
-                lstRoles = [];
+                lstMenuOriginal = [];
                 resp.message.forEach( e => {
-                    e["idrole"] = e.idrole.toString();
-                    lstRoles.push(e)    
+                    e["idmenu"] = e.idmenu.toString();
+                    // if (e.submenu == 0){
+                    //     e["name"] = "└─ " + e.name
+                    // }
+                    lstMenuOriginal.push(e)    
                 });
                 
-                gridApi.setGridOption("rowData", lstRoles);
+                gridApi.setGridOption("rowData", lstMenuOriginal);
                 gridApi.sizeColumnsToFit();
+
+                // console.log(lstMenuOriginal)
+
+                parent();
+
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
             }
@@ -66,12 +76,27 @@ async function loadData(){
         });
 }
 
+function parent(){
+    lstMenuOriginal.forEach( e => {
+        // if (e.order.length == 2 ){
+        if (e.submenu == 1 ){
+            $("#parent").append(`<option value="${e.order}">${e.name}</option>`);
+        }
+    });
+    // checkParent();
+}
+
 function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
+        // getRowStyle: params => {
+        //     if (params.node.rowIndex % 2 !== 0) {
+        //         return { background: '#f9f9f9' };
+        //     }
+        // },
         getRowStyle: params => {
-            if (params.node.rowIndex % 2 !== 0) {
-                return { background: '#f9f9f9' };
+            if (params.data.submenu == 1) {
+                return { background: '#e7f1f7'};
             }
         },
         rowData: [],
@@ -100,74 +125,94 @@ function estructuraGrid(){
             // type: 'fitCellContents'
         },
         getRowId: (params) => {
-            return params.data.idrole;
+            return params.data.idmenu;
         },
         onRowClicked: (event) => {
-            roleSelected = event.data;
-            idSelect = event.data.idrole;
+            dataSelected = event.data;
+            idSelect = event.data.idmenu;
             idSelectName = event.data.name;
             habilitarBotones(true);
         },
+        // groupDisplayType: 'groupRows',
+        // groupRowRendererParams: {
+        //     order: '01',
+        // },
         columnDefs: [
             {
                 headerName: "ID",
                 flex: 1, 
-                field: "idrole",
+                field: "idmenu",
                 filter: false,
                 cellClass: "text-start",
             },
             {
-                headerName: "Nombre",
+                headerName: "Nivel",
                 flex: 1, 
-                field: "name",
+                field: "order",
                 filter: true,
                 cellClass: "text-start",
                 sort: "asc",
                 sortIndex: 1, 
             },
             {
-                headerName: "Permisos",
-                flex: 1, 
-                field: "scope",
-                filter: false,
+                headerName: "Nombre",
+                flex: 2, 
+                field: "name",
+                filter: true,
                 cellClass: "text-start",
                 cellRenderer: (params) => {
-                    let scope = params.data.scope;
+                    let sm = params.data.submenu;
+                    let cls = "";
                     let html = "";
-
-                    title_r = "Lectura";
-                    if (scope.includes("R")){
-                        color_r = "bg-success";
-                    }else{
-                        color_r = "bg-light";
+                    if (sm == 1){
+                        cls  = "bold";
+                        html = `<span class="${cls}">${params.data.name}</span>`;
+                    } else{
+                        html = `<span class="">└─ ${params.data.name}</span>`;
                     }
-
-                    title_w = "Escritura";
-                    if (scope.includes("W")){
-                        color_w = "bg-warning";
-                    }else{
-                        color_w = "bg-light";
-                    }
-
-                    title_d = "Borrado";
-                    if (scope.includes("D")){
-                        color_d = "bg-danger";
-                    }else{
-                        color_d = "bg-light";
-                    }
-                
-                    html += `<kbd class="${color_r}" title="${title_r}">R</kbd> `;
-                    html += `<kbd class="${color_w}" title="${title_w}">W</kbd> `;
-                    html += `<kbd class="${color_d}" title="${title_d}">D</kbd> `;
+                    return  html;
+                }
+            },
+            {
+                headerName: "Icono",
+                flex: 1, 
+                field: "icon",
+                filter: true,
+                cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let ico = params.data.icon;
+                    let html = `<i class="${ico} t16"></i> `;
                     return html;
                 }
             },
             {
-                headerName: "No. Usuarios",
+                headerName: "Ruta",
                 flex: 1, 
-                field: "nusuarios",
+                field: "route",
+                filter: true,
+                cellClass: "text-start",
+            },
+            {
+                headerName: "SubMenu",
+                flex: 1, 
+                field: "submenu",
                 filter: false,
                 cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let sm = params.data.submenu;
+                    let html = "";
+
+                    title_d = "Borrado";
+                    if (sm == 1){
+                        cls = "fa fa-check";
+                        color = "bg-success";
+                    }else{
+                        cls = "fas fa-minus";
+                        color = "bg-light text-dark";
+                    }
+                    html += `<kbd class="${color}" title="${title_d}"> <i class='${cls}'></i> </kbd> `;
+                    return html;
+                }
             },
             {
                 headerName: "Estado",
@@ -192,20 +237,26 @@ function estructuraGrid(){
                     return html;
                 },
             },
-            // {
-            //     headerName: "Actualizado",
-            //     flex: 1, 
-            //     field: "updated_at",
-            //     filter: false,
-            //     cellClass: "text-start",
-            // },
-            // {
-            //     headerName: "Inactivado",
-            //     flex: 1, 
-            //     field: "deleted_at",
-            //     filter: true,
-            //     cellClass: "text-start",
-            // },
+            {
+                headerName: "Eliminado",
+                flex: 1, 
+                field: "deleted_at",
+                filter: true,
+                cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let html="";
+                    let inactivo = params.data.deleted_at ? 1 : 0;
+                    if (inactivo == 1){
+                        cls = "fa fa-check";
+                        color = "bg-danger";
+                    }else{
+                        cls = "fas fa-minus";
+                        color = "bg-light text-dark";
+                    }
+                    html += `<kbd class='${color}'><i class="${cls}"></i></kbd>`;
+                    return html;
+                },
+            },
         ]
     }
 
@@ -215,34 +266,60 @@ function estructuraGrid(){
 }
 
 function cleanRecords(record=null){
-    let idrole = -1;
+    let idmenu = -1;
     let name = "";
-    let scope = "";
+    let submenu = "0";
     let status = "0";
+    let parent = "00";
+    let icono = "fa fa-cog";
+    let route = "";
+
     $("#name").prop("readonly", false);
     $("#name").prop("disabled", false);
-    if ($('#scope_r').is(':checked')) $('#scope_r').trigger('click');
-    if ($('#scope_w').is(':checked')) $('#scope_w').trigger('click');
-    if ($('#scope_d').is(':checked')) $('#scope_d').trigger('click');
+    $("#parentDIV").removeClass("hide");
+    $("#submenuDIV").removeClass("hide");
+    $("#rutaDIV").removeClass("hide");
 
     if(record){
-        idrole = record.idrole;
+        idmenu = record.idmenu;
         name = record.name;
-        scope = record.scope;
-
-        if (scope.includes("R")) $('#scope_r').trigger('click');
-        if (scope.includes("W")) $('#scope_w').trigger('click');
-        if (scope.includes("D")) $('#scope_d').trigger('click');
-
+        submenu = record.submenu;
+        parent = record.order.split(".")[0];
         status = record.status.toString();
+        icono = record.icon;
+        route = record.route;
+        // checkSubmenu(submenu);
+        
+        // lstMenuOriginal.forEach(e=>{
+        //     // console.log(e)
+        //     if (e.idmenu == record.idmenu) {
+        //         name = e.name;
+        //         submenu = e.submenu;
+        //         parent = e.order.split(".")[0];
+        //         status = e.status.toString();
+        //         icono = e.icono;
+        //         route = e.route;
+        //     }
+        // });
+
+        if (submenu == 1){
+            $("#rutaDIV").addClass("hide");
+        }
+        
         $("#username").prop("readonly", true);
         $("#username").prop("disabled", true);
+        $("#parentDIV").addClass("hide");
+        $("#submenuDIV").addClass("hide");
     }
-
-    $("#idrole").val(idrole);
+    
+    $("#idmenu").val(idmenu);
     $("#name").val(name);
-    $("#scope").val(scope);
+    $("#submenu").val(submenu);
+    $("#parent").val(parent);
     $("#status").val(status);
+    $("#icon").val(icono);
+    desplegarIcono(icono);
+    $("#route").val(route);
 }
 
 showDivs = (que = 0) => {
@@ -281,6 +358,7 @@ showDivs = (que = 0) => {
 
 $("#btmNew").on("click", function(){
     cleanRecords();
+    desplegarIcono($("#icon").val());
     showDivs(1);
 });
 
@@ -362,7 +440,7 @@ $("#btmCancel").on("click", function(){
 });
 
 $("#btmEdit").on("click", function(){
-    cleanRecords(roleSelected);
+    cleanRecords(dataSelected);
     $("#username").addClass("disabled");
     showDivs(1);
 });
@@ -439,13 +517,12 @@ $("#btmRefresh").on("click", function(){
 });
 
 function habilitarBotones(opc = false){
-    // console.log(opc, roleSelected.deleted_at);
-    if (opc && !roleSelected.deleted_at ){
+    if (opc && !dataSelected.deleted_at ){
         $("#btmEdit").removeClass("disabled");
         $("#btmEdit").removeClass("btn-secondary");
         $("#btmEdit").addClass("btn-info");
         
-        if (roleSelected.nusuarios==0){
+        if (dataSelected.nusuarios==0){
             $("#btmDelete").removeClass("disabled");
             $("#btmDelete").removeClass("btn-secondary");
             $("#btmDelete").addClass("btn-danger");
@@ -473,4 +550,89 @@ function habilitarBotones(opc = false){
         $("#btmReset").addClass("btn-secondary");
         
     }
+}
+
+$("#submenu").on("change", function(){
+    let d = $(this).val();
+    checkSubmenu(d);    
+});
+
+checkSubmenu = (d) =>{
+    if(d == 0){
+        $("#parentDIV").removeClass("hide");
+        $("#order2").removeClass("hide");
+    }else{
+        $("#parentDIV").addClass("hide");
+        $("#order2").addClass("hide");
+    }
+}
+
+// $("#parent").on("change", function(){
+//     checkParent();
+// });
+
+// function checkParent(){
+//     let d1 = $("#parent").val();
+//     let dText = $("#parent option:selected").text();
+//     $("#orden1").val(d1);
+//     $("#padre").html(dText);
+    
+//     let count = 0;
+//     let found = false;
+//     lstMenu.forEach( e=>{
+//         if (!found && e.order == d1){
+//             console.log(e)
+//             console.log(e.child.length);
+//             count = e.child.length;
+//         }
+//     });
+    
+//     count ++;
+//     let posible_order = count.toString().padStart(2, "0");
+
+//     $("#orden2").val(posible_order);
+
+
+// }
+
+//$(`#YourSelect option[value='${YourValue}']`).prop('selected', true);
+$("#icon").on("keyup", function(){
+    let icon = $(this).val();
+    desplegarIcono(icon);
+})
+
+desplegarIcono = (icono) =>{
+    // $("#execIcon").html(`<i class="${icono} t20"></i>`);
+    $("#execIcon").html(`<kbd class="bg-primary"><i class='${icono} t16'></i></kbd>`);
+}
+
+$("#route").on("keyup", function(){
+    let ruta = $(this).val();
+    
+    var found = verificarDisponibilidadRuta(ruta);
+
+    let html = ""
+    if (found){
+        cls = "fas fa-times";
+        color = "bg-danger";
+        msg = "Ya existe";
+    }else{
+        cls = "fa fa-check";
+        color = "bg-success";
+        msg = "Verificado";
+    }
+    html += `<kbd class="${color}" title="${msg}"><i class='${cls}'></i></kbd>`;
+    $("#obsRuta").html(html);
+
+})
+
+
+verificarDisponibilidadRuta = (ruta) => {
+    let found = false;
+    lstMenuOriginal.forEach( e=>{
+        if (e.route == ruta){
+            found = true;
+        }
+    });
+    return found;
 }

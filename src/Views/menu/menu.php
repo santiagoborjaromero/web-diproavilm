@@ -7,6 +7,14 @@
     </div>
     <div class="col-12  col-md-8 text-end">
         <span id="divW">
+            <!-- <button id="btmUpLevel" class="btn btn-light mr-1" title="Editar">
+                <i class="fas fa-long-arrow-alt-up"></i>
+                Subir Nivel
+            </button>
+            <button id="btmDownLevel" class="btn btn-light mr-1" title="Editar">
+                <i class="fas fa-long-arrow-alt-down"></i>
+                Bajar Nivel
+            </button> -->
             <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
                 <i class="fa fa-plus"></i>
                 Nuevo
@@ -48,30 +56,49 @@
 <div class="row justify-content-md-center hide" id="FormDiv">
     <div class="col-12 col-md-11 align-items-center bg-white round-10">
         <div class="row mt-5 mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre del rol</label>
+            <label class="col-12 col-md-3 label-control text-end">Nombre</label>
             <div class="col-12 col-md-3">
-                <input class="form-control" type="hidden" id="idrole" value="">
-                <input class="form-control" type="text" id="name" keypress="keypress" placeholder="Nombre del rol">
+                <input class="form-control" type="hidden" id="idmenu" value="">
+                <input class="form-control" type="text" id="name"  placeholder="Nombre del menu">
             </div>
-            <!-- <div class="col-6 col-md-1 text-start">
-                <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
-            </div> -->
+            <div class="col-6 col-md-1 text-start">
+                <i class="fas fa-question-circle" onclick="help('El nombre del menu debe ser un identificativo claro de lo que se desea mostrar, de preferencia debe ser único.')"></i>
+            </div>
         </div>
-        <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Permisos Generales</label>
+        <div class="row mb-2" id="submenuDIV">
+            <label class="col-12 col-md-3 label-control text-end">Es Submenu?</label>
             <div class="col-12 col-md-3">
-                <input class="form-check-input" type="checkbox" id="scope_r">
-                <label class="form-check-label" for="scope_r"> Lectura </label> <br>
-
-                <input class="form-check-input" type="checkbox" id="scope_w">
-                <label class="form-check-label" for="scope_w"> Escritura </label> <br>
-
-                <input class="form-check-input" type="checkbox" id="scope_d">
-                <label class="form-check-label" for="scope_d"> Borrado </label> <br>
-
-                <!-- <input type="checkbox" class="input-switch" id="scope_r" /> Lectura <br> -->
-                <!-- <input type="checkbox" class="input-switch" id="scope_w" /> Escritura <br>
-                <input type="checkbox" class="input-switch" id="scope_d" /> Eliminado -->
+                <select id="submenu" class="form-control">
+                    <option value="1">Si</option>
+                    <option selected  value="0">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2" id="parentDIV">
+            <label class="col-12 col-md-3 label-control text-end">Quien es el padre?</label>
+            <div class="col-12 col-md-3">
+                <select id="parent" class="form-control">
+                </select>
+            </div>
+        </div>
+        <div class="row  mb-2">
+            <label class="col-12 col-md-3 label-control text-end">Icono</label>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="text" id="icon" value="fa fa-cog" placeholder="fa fa-cogs">
+            </div>
+            <div class="col-6 col-md-3 text-start">
+                <i class="fas fa-question-circle" onclick="help('El listado de iconos disponibles puede revisar en https://fontawesome.com/v5/search?q=dot&o=r&m=free.')"></i>
+                <span class="ml-2" id="execIcon"></span>
+            </div>
+        </div>
+        <div class="row  mb-2" id="rutaDIV">
+            <label class="col-12 col-md-3 label-control text-end">Ruta</label>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="text" id="route" placeholder="Ruta">
+            </div>
+            <div class="col-6 col-md-3 text-start">
+                <i class="fas fa-question-circle" onclick="help('Debe ser único y debe estar compuesto de letras minusculas')"></i>
+                <span class="ml-2 text-success" id="obsRuta"></span>
             </div>
         </div>
         <div class="row mb-5">
@@ -87,5 +114,5 @@
 </div>
 
 
-<script src="src/Views/roles/roles.js"></script>
-<link rel="stylesheet" href="src/Views/roles/roles.css">
+<script src="src/Views/menu/menu.js"></script>
+<link rel="stylesheet" href="src/Views/menu/menu.css">
