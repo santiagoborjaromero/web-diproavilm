@@ -1,5 +1,5 @@
 <div class="row justify-content-md-center ">
-    <div class="col-6 text-center errordiv mt-5 mb-5">
+    <div class="col-6 col-md-8 text-center errordiv mt-5 mb-5">
         <i class="far fa-times-circle t80 text-danger"></i>
         <br>
         <h2>Error</h2>
