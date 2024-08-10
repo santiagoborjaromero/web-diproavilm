@@ -3,14 +3,12 @@ setTimeout(function(){
         estructuraGrid();
         loadData();
         showDivs(0);
-
-        // gridApi.setGridOption("rowData", lstMenu);
-        // gridApi.sizeColumnsToFit();
     } else{
         $("#btmDivs").addClass("hide");
         sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
     }
 },800)
+
 
 lstMenuOriginal = [];
 dataSelected = {};
@@ -288,19 +286,6 @@ function cleanRecords(record=null){
         status = record.status.toString();
         icono = record.icon;
         route = record.route;
-        // checkSubmenu(submenu);
-        
-        // lstMenuOriginal.forEach(e=>{
-        //     // console.log(e)
-        //     if (e.idmenu == record.idmenu) {
-        //         name = e.name;
-        //         submenu = e.submenu;
-        //         parent = e.order.split(".")[0];
-        //         status = e.status.toString();
-        //         icono = e.icono;
-        //         route = e.route;
-        //     }
-        // });
 
         if (submenu == 1){
             $("#rutaDIV").addClass("hide");
@@ -367,17 +352,66 @@ $("#btmSave").on("click", function(){
 });
 
 
+function nextOrder(parent = "", child = ""){
+
+    let data = [];
+    let prefijo = "";
+
+    if (parent=="" && child == ""){
+        lstMenu.forEach(e=>{
+            data.push(e)
+        })
+        prefijo = "";
+    } else{
+        lstMenu.forEach(e=>{
+            if (e.order == parent){
+                data = e.child;
+            }
+        })
+        prefijo = parent + ".";
+    }
+
+    let norder = data.length;
+    let salir = false;
+    let order = "";
+
+    while (!salir) {
+        ready = true;
+        norder ++;
+        order = prefijo + norder.toString().padStart(2, "0")
+
+        data.forEach( e => {
+            if (e.order == order){
+                ready = false;
+                console.log("ready", ready);
+            }
+        });
+
+        if (ready){
+            salir = true;
+        }
+    }
+
+    return order;
+}
+
 async function saveData(){
-    let idrole = $("#idrole").val();
 
-    let scope = "";
+    showLoading("Guardando");
 
-    if ($('#scope_r').is(':checked')) scope += "R";
-    if ($('#scope_w').is(':checked')) scope += "W";
-    if ($('#scope_d').is(':checked')) scope += "D";
-
+    let idmenu = parseInt($("#idmenu").val());
     let name = $.trim($("#name").val());
+    let submenu = parseInt($("#submenu").val());
     let status = parseInt($("#status").val());
+    let icon = $("#icon").val();
+    let route = $("#route").val();
+    let order = "";
+
+    if (submenu == 1){
+        order = nextOrder();
+    } else { 
+        order = nextOrder($("#parent").val());
+    }
 
     let error = false;
     let errMsg = "";
@@ -386,6 +420,11 @@ async function saveData(){
         error = true;
         errMsg = "Debe ingresar el nombre del usuario";
     }
+
+    if (!error && verificarDisponibilidadRuta(route) && idmenu==-1){
+        error = true;
+        errMsg = "La ruta ya esta en uso";
+    }
     
     if (error){
         sendMessage("error", title, errMsg);
@@ -393,21 +432,23 @@ async function saveData(){
     }
 
     let params = {
+        order,
         name,
-        scope,
+        icon,
+        route,
+        submenu,
         status
     };
 
-    // console.log(params)
-
     let method = "PUT";
     // let method = "POST";
-    if (idrole == -1){
+
+    if (idmenu == -1){
         method = "POST";
         params["name"] = name;
     }
-    let url = `saveRole&id=${idrole}`;
-    
+    let url = `saveMenu&id=${idmenu}`;
+
     await consumirApi(method, url, params)
         .then( resp=>{
             closeLoading();
@@ -446,7 +487,7 @@ $("#btmEdit").on("click", function(){
 });
 
 $("#btmDelete").on("click", function(){
-    hacerPregunta("Eliminar un Rol", "eliminar", "deleteRole");
+    hacerPregunta("Eliminar Menu", "eliminar", "deleteMenu");
 });
 
 function hacerPregunta(action='', keyword='', queFuncionEjecuto=''){
@@ -484,7 +525,7 @@ function hacerPregunta(action='', keyword='', queFuncionEjecuto=''){
 }
 
 async function realizarAccion(ruta=""){
-    let method = ruta == "deleteRole" ? "DELETE" : "POST";
+    let method = ruta == "deleteMenu" ? "DELETE" : "POST";
     let url = `${ruta}&id=${idSelect}`;
 
     await consumirApi(method, url)
@@ -497,7 +538,7 @@ async function realizarAccion(ruta=""){
             // console.log(resp)
 
             if (resp.status && resp.status == 'ok') {
-                sendMessage("success", title, resp.message );
+                sendMessage("success", title, `Registro ${resp.message} eliminado con éxito`);
                 showDivs(0);
                 loadData();
             } else {
@@ -522,15 +563,9 @@ function habilitarBotones(opc = false){
         $("#btmEdit").removeClass("btn-secondary");
         $("#btmEdit").addClass("btn-info");
         
-        if (dataSelected.nusuarios==0){
-            $("#btmDelete").removeClass("disabled");
-            $("#btmDelete").removeClass("btn-secondary");
-            $("#btmDelete").addClass("btn-danger");
-        } else {
-            $("#btmDelete").addClass("disabled");
-            $("#btmDelete").removeClass("btn-danger");
-            $("#btmDelete").addClass("btn-secondary");
-        }
+        $("#btmDelete").removeClass("disabled");
+        $("#btmDelete").removeClass("btn-secondary");
+        $("#btmDelete").addClass("btn-danger");
 
         $("#btmReset").removeClass("disabled");
         $("#btmReset").removeClass("btn-secondary");
@@ -567,42 +602,12 @@ checkSubmenu = (d) =>{
     }
 }
 
-// $("#parent").on("change", function(){
-//     checkParent();
-// });
-
-// function checkParent(){
-//     let d1 = $("#parent").val();
-//     let dText = $("#parent option:selected").text();
-//     $("#orden1").val(d1);
-//     $("#padre").html(dText);
-    
-//     let count = 0;
-//     let found = false;
-//     lstMenu.forEach( e=>{
-//         if (!found && e.order == d1){
-//             console.log(e)
-//             console.log(e.child.length);
-//             count = e.child.length;
-//         }
-//     });
-    
-//     count ++;
-//     let posible_order = count.toString().padStart(2, "0");
-
-//     $("#orden2").val(posible_order);
-
-
-// }
-
-//$(`#YourSelect option[value='${YourValue}']`).prop('selected', true);
 $("#icon").on("keyup", function(){
     let icon = $(this).val();
     desplegarIcono(icon);
 })
 
 desplegarIcono = (icono) =>{
-    // $("#execIcon").html(`<i class="${icono} t20"></i>`);
     $("#execIcon").html(`<kbd class="bg-primary"><i class='${icono} t16'></i></kbd>`);
 }
 
@@ -629,10 +634,12 @@ $("#route").on("keyup", function(){
 
 verificarDisponibilidadRuta = (ruta) => {
     let found = false;
-    lstMenuOriginal.forEach( e=>{
-        if (e.route == ruta){
-            found = true;
-        }
-    });
+    if (idmenu == "" || idmenu == "-1"){
+        lstMenuOriginal.forEach( e=>{
+            if (e.route == ruta){
+                found = true;
+            }
+        });
+    }
     return found;
 }

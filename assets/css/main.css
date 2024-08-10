@@ -266,3 +266,7 @@ body{
 .round-30 {border-radius: 30px;}
 .round-40 {border-radius: 40px;}
 .round-50 {border-radius: 50px;}
+
+.swal2-container {
+    z-index: 10000;
+}
