@@ -80,16 +80,16 @@ async function loadData(){
 function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
-        // getRowStyle: params => {
-        //     if (params.node.rowIndex % 2 !== 0) {
-        //         return { background: '#f9f9f9' };
-        //     }
-        // },
         getRowStyle: params => {
-            if (params.data.submenu == 1) {
-                return { background: '#e7f1f7'};
+            if (params.node.rowIndex % 2 !== 0) {
+                return { background: '#f9f9f9' };
             }
         },
+        // getRowStyle: params => {
+        //     if (params.data.submenu == 1) {
+        //         return { background: '#e7f1f7'};
+        //     }
+        // },
         rowData: [],
         deltaSort: true,
         pagination: true,
@@ -179,13 +179,13 @@ function estructuraGrid(){
                 filter: true,
                 cellClass: "text-start",
             },
-            {
-                headerName: "Email",
-                flex: 1, 
-                field: "email",
-                filter: true,
-                cellClass: "text-start",
-            },
+            // {
+            //     headerName: "Email",
+            //     flex: 1, 
+            //     field: "email",
+            //     filter: true,
+            //     cellClass: "text-start",
+            // },
             {
                 headerName: "Ciudad",
                 flex: 1, 

@@ -92,6 +92,10 @@ date_default_timezone_set ($config["timezone"]);
   <!-- PASSWORD STRENGTH -->
   <script src="https://unpkg.com/check-password-strength/dist/umd.js"></script>
 
+  <!-- MOMENT -->
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+
+
   <script src="assets/js/main.js"></script>
 
 </body>

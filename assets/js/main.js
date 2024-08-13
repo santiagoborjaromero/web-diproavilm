@@ -172,18 +172,32 @@ async function selectRuta(route, args = ''){
 }
 
 //TODO: Funcion generica para despliegue de mensajes (POPUP)
-function sendMessage(type, titulo, message){
+function sendMessage(type, titulo, message, textishtml = false){
     if (typeof message === "array" || typeof message === "object" ){
         sendMessageObj(type, titulo, message)
     } else{
-        Swal.fire({
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            title: titulo,
-            text: message,
-            icon: type,
-            footer: "DIPROAVILM",
-        })
+        if (textishtml){
+            Swal.fire({
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                title: titulo,
+                html: message,
+                icon: type,
+                footer: "DIPROAVILM",
+                width: "900px"
+            })
+
+        } else {
+            Swal.fire({
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                title: titulo,
+                text: message,
+                icon: type,
+                footer: "DIPROAVILM",
+            })
+
+        }
     }
 }
 
