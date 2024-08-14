@@ -10,10 +10,6 @@
             <i class="fa fa-eye"></i>
             Ver mas detalles
         </button>
-        <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
-            <i class="fas fa-sync-alt"></i>
-            Refrescar
-        </button>
         <!-- <span id="divW">
             <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
                 <i class="fa fa-plus"></i>

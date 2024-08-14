@@ -1,8 +1,10 @@
 setTimeout(function(){
     if (permisosLectura){
         estructuraGrid();
+        estructuraGridMenu();
         loadData();
         showDivs(0);
+        loadMenu();
     } else{
         $("#btmDivs").addClass("hide");
         sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
@@ -11,6 +13,7 @@ setTimeout(function(){
 
 lstRoles = [];
 roleSelected = {};
+lstMenuOriginal = [];
 
 //TODO: Determinar titulo e icono que viene del menu
 ruta = JSON.parse(sessionGet("current_route"));
@@ -66,6 +69,92 @@ async function loadData(){
         });
 }
 
+async function loadMenu(){
+    
+    let metodo = "GET";
+    let url = "menus";
+    await consumirApi(metodo, url)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp.status && resp.status == 'ok') {
+                lstMenuOriginal = [];
+                resp.message.forEach( e => {
+                    e["idmenu"] = e.idmenu.toString();
+                    e["check"] = false;
+
+                    lstMenuOriginal.push(e)    
+                });
+
+                lstMenuOriginal.sort((a, b) =>
+                    a.order.localeCompare(b.order)
+                );
+                
+                gridApi2.setGridOption("rowData", lstMenuOriginal);
+                // gridApi2.sizeColumnsToFit();
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
+
+async function loadMenuPorRol(){
+    
+    let metodo = "GET";
+    let url = "menubyrol";
+    let idrole = $("#idrole").val();
+    let params = {
+        idrole
+    }
+
+    await consumirApi(metodo, url, params)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp.status && resp.status == 'ok') {
+                gridApi2.forEachNodeAfterFilterAndSort(function (rowNode, index) {
+                    found = false;
+                    let row = rowNode.data;
+                    if (resp.message){
+                        resp.message.forEach( r=>{
+                            if ( !found && parseInt(row.idmenu) == r.idmenu ){
+                                found = true;
+                            }
+                        });
+                    }
+                    row.check = found;
+                    transaction = { update: [row] };
+                    gridApi2.applyTransactionAsync(transaction);
+                });
+
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
+
+function fillMenu(){
+    let html = "<ul>";
+    lstMenu.forEach(e=>{
+        html += `<li>${e-name}</li>`
+    })
+    html += "</ul>";
+}
+
 function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
@@ -96,6 +185,8 @@ function estructuraGrid(){
             enableCellChangeFlash: true,
             autoHeight: true,
         },
+        tooltipShowDelay: 0,
+        tooltipHideDelay: 2000,
         autoSizeStrategy: {
             // type: 'fitCellContents'
         },
@@ -118,6 +209,7 @@ function estructuraGrid(){
             },
             {
                 headerName: "Nombre",
+                headerTooltip: "Nombre del rol",
                 flex: 1, 
                 field: "name",
                 filter: true,
@@ -164,8 +256,17 @@ function estructuraGrid(){
             },
             {
                 headerName: "No. Usuarios",
+                headerTooltip: "Numero de usuarios asignados al rol",
                 flex: 1, 
                 field: "nusuarios",
+                filter: false,
+                cellClass: "text-start",
+            },
+            {
+                headerName: "No. Menus",
+                headerTooltip: "Numero de opciones de menú asignados",
+                flex: 1, 
+                field: "nmenus",
                 filter: false,
                 cellClass: "text-start",
             },
@@ -214,7 +315,96 @@ function estructuraGrid(){
     gridApi.sizeColumnsToFit();
 }
 
+
+function estructuraGridMenu(){
+    gridOptions2 = {
+        rowStyle: { background: 'white' },
+        getRowStyle: params => {
+            if (params.data.submenu == 1) {
+                return { background: '#e7f1f7'};
+            }
+        },
+        rowData: [],
+        deltaSort: true,
+        pagination: false,
+        paginationPageSize: 50,
+        paginationPageSizeSelector: [5, 10,20, 30, 40, 50, 100, 200, 300, 1000],
+        rowSelection: 'single',
+        rowHeight: 40,
+        tooltipInteraction: true,
+        defaultColDef: {
+            flex: 1,
+            minWidth: 50,
+            filter: false,
+            sortable: false,
+            resizable: false,
+            floatingFilter: false,
+            wrapText: true,
+            suppressSizeToFit: true,
+            autoHeaderHeight: true,
+            suppressAutoSize: true,
+            enableCellChangeFlash: true,
+            autoHeight: true,
+        },
+        autoSizeStrategy: {
+            // type: 'fitCellContents'
+        },
+        getRowId: (params) => {
+            return params.data.idmenu;
+        },
+        onRowClicked: (event) => {
+            dataSelected = event.data;
+            idSelect = event.data.idmenu;
+            idSelectName = event.data.name;
+            habilitarBotones(true);
+        },
+        columnDefs: [
+            {
+                headerName: "ID",
+                flex: 1, 
+                field: "idmenu",
+                filter: false,
+                cellClass: "text-start",
+            },
+            {
+                headerName: "Nombre",
+                flex: 2, 
+                field: "name",
+                filter: false,
+                cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let sm = params.data.submenu;
+                    let ico = params.data.icon;
+                    let cls = "";
+                    let html = "";
+                    if (sm == 1){
+                        cls  = "bold";
+                        html = `<span class="${cls}"> <i class="${ico} t16"></i> ${params.data.name}</span>`;
+                    } else{
+                        html = `<span class="">└─ <i class="${ico} t16"></i> ${params.data.name}</span>`;
+                    }
+                    return  html;
+                }
+            },
+            {
+                headerName: "Seleccionado",
+                flex: 1, 
+                field: "check",
+                filter: false,
+                cellClass: "text-start",
+                editable: true
+            },
+        ]
+    }
+
+    const myGridElement2 = document.querySelector("#myGridMenu");
+    gridApi2 = agGrid.createGrid(myGridElement2, gridOptions2);
+    // gridApi2.sizeColumnsToFit();
+}
+
 function cleanRecords(record=null){
+    $("#btnSelectAll").text("Seleccionar Todo");
+    
     let idrole = -1;
     let name = "";
     let scope = "";
@@ -237,6 +427,12 @@ function cleanRecords(record=null){
         status = record.status.toString();
         $("#username").prop("readonly", true);
         $("#username").prop("disabled", true);
+    }
+
+    if (idrole == -1){
+        $("#idrolDIV").addClass("hide");
+    } else{
+        $("#idrolDIV").removeClass("hide");
     }
 
     $("#idrole").val(idrole);
@@ -280,6 +476,7 @@ showDivs = (que = 0) => {
 }
 
 $("#btmNew").on("click", function(){
+    
     cleanRecords();
     showDivs(1);
 });
@@ -339,8 +536,12 @@ async function saveData(){
 
             if (resp){
                 if (resp.status && resp.status == 'ok') {
+                    if (method == "POST"){
+                        idrole = resp.message;
+                    }
                     showDivs(0);
-                    loadData();
+                    // loadData();
+                    saveDataRoleMenu(idrole);
                 } else {
                     sendMessage("error", title, resp.message || JSON.stringify(resp));
                 }
@@ -354,8 +555,55 @@ async function saveData(){
             console.log("ERR", err);
             sendMessage("error", title, JSON.stringify(err.responseText));
         });
-
 }
+
+async function saveDataRoleMenu(idrole){
+
+    let dparams = [];
+    lstMenuOriginal.forEach(e=>{
+        if (e.check){
+            dparams.push({
+                idrole,
+                idmenu: e.idmenu
+            })
+        }
+    })
+    
+    let params = {
+        data: dparams
+    }
+
+    method = "POST";
+    let url = `saveRolMenu&id=${idrole}`;
+    
+    await consumirApi(method, url, params)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            // console.log("█", resp)
+            loadData();
+
+            if (resp){
+                if (resp.status && resp.status == 'ok') {
+                } else {
+                    sendMessage("error", title, resp.message || JSON.stringify(resp));
+                }
+            } else {
+                sendMessage("error", title, "La respuesta es nula");
+            }
+
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
+
 
 $("#btmCancel").on("click", function(){
     showDivs(0);
@@ -363,8 +611,12 @@ $("#btmCancel").on("click", function(){
 
 $("#btmEdit").on("click", function(){
     cleanRecords(roleSelected);
+    $("#idrolDIV").removeClass("hide");
     $("#username").addClass("disabled");
     showDivs(1);
+    setTimeout(function(){
+        loadMenuPorRol();
+    }, 300)
 });
 
 $("#btmDelete").on("click", function(){
@@ -474,3 +726,24 @@ function habilitarBotones(opc = false){
         
     }
 }
+
+
+$("#btnSelectAll").on("click", function(){
+    let texto = $(this).text();
+    let cel = false;
+    if (texto == "Seleccionar Todo"){
+        $("#btnSelectAll").text("Deseleccionar Todo");
+        cel = true;
+    }else{
+        $("#btnSelectAll").text("Seleccionar Todo");
+        cel = false;
+    }
+
+    gridApi2.forEachNodeAfterFilterAndSort(function (rowNode, index) {
+        let row = rowNode.data;
+        row.check = cel;
+        transaction = { update: [row] };
+        gridApi2.applyTransactionAsync(transaction);
+    });
+
+});

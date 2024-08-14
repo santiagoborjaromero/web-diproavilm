@@ -77,7 +77,7 @@ async function loadData(){
 async function loadRoles(){
 
     let metodo = "GET";
-    let url = "roles";
+    let url = "roleshabiles";
 
     await consumirApi(metodo, url)
         .then( resp=>{

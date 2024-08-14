@@ -47,40 +47,58 @@
 <!-- Formulario -->
 <div class="row justify-content-md-center hide" id="FormDiv">
     <div class="col-12 col-md-11 align-items-center bg-white round-10">
-        <div class="row mt-5 mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre del rol</label>
-            <div class="col-12 col-md-3">
-                <input class="form-control" type="hidden" id="idrole" value="">
-                <input class="form-control" type="text" id="name"  placeholder="Nombre del rol">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="row mt-5 mb-2 hide" id="idrolDIV">
+                    <label class="col-12 col-md-4 label-control text-end">ID</label>
+                    <div class="col-12 col-md-7">
+                        <input class="form-control disabled" readonly type="text" id="idrole" value="">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label class="col-12 col-md-4 label-control text-end">Nombre del rol</label>
+                    <div class="col-12 col-md-7">
+                        <input class="form-control" type="text" id="name"  placeholder="Nombre del rol">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <label class="col-12 col-md-4 label-control text-end">Permisos Generales</label>
+                    <div class="col-12 col-md-7">
+                        <input class="form-check-input" type="checkbox" id="scope_r">
+                        <label class="form-check-label" for="scope_r"> <kbd class="bg-success">R</kbd> Lectura </label> <br>
+        
+                        <input class="form-check-input" type="checkbox" id="scope_w">
+                        <label class="form-check-label" for="scope_w"> <kbd class="bg-warning">W</kbd> Escritura </label> <br>
+        
+                        <input class="form-check-input" type="checkbox" id="scope_d">
+                        <label class="form-check-label" for="scope_d"> <kbd class="bg-danger">D</kbd> Borrado </label> <br>
+        
+                        <!-- <input type="checkbox" class="input-switch" id="scope_r" /> Lectura <br> -->
+                        <!-- <input type="checkbox" class="input-switch" id="scope_w" /> Escritura <br>
+                        <input type="checkbox" class="input-switch" id="scope_d" /> Eliminado -->
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <label class="col-12 col-md-4 label-control text-end">Estado</label>
+                    <div class="col-12 col-md-7">
+                        <select id="status" class="form-control">
+                            <option selected value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <!-- <div class="col-6 col-md-1 text-start">
-                <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
-            </div> -->
-        </div>
-        <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Permisos Generales</label>
-            <div class="col-12 col-md-3">
-                <input class="form-check-input" type="checkbox" id="scope_r">
-                <label class="form-check-label" for="scope_r"> Lectura </label> <br>
+            <div class="col-12 col-md-6 p-1 bg-gray-lightXXX">
+                <h6 class="mt-3">Seleccione las opciones del menu hablitadas que este rol tendrá acceso</h6>
+                <!-- <input class="form-check-input" type="checkbox" id="selectall"> 
+                <label class="form-check-label" for="selectall" id="selectalllabel"> Seleccionar Todo </label>  -->
+                <div class="row mb-2">
+                    <div class="col-12 text-end">
+                        <button class="btn btn-link" id="btnSelectAll"> Seleccionar Todo </button>
+                    </div>
+                </div>
 
-                <input class="form-check-input" type="checkbox" id="scope_w">
-                <label class="form-check-label" for="scope_w"> Escritura </label> <br>
-
-                <input class="form-check-input" type="checkbox" id="scope_d">
-                <label class="form-check-label" for="scope_d"> Borrado </label> <br>
-
-                <!-- <input type="checkbox" class="input-switch" id="scope_r" /> Lectura <br> -->
-                <!-- <input type="checkbox" class="input-switch" id="scope_w" /> Escritura <br>
-                <input type="checkbox" class="input-switch" id="scope_d" /> Eliminado -->
-            </div>
-        </div>
-        <div class="row mb-5">
-            <label class="col-12 col-md-3 label-control text-end">Estado</label>
-            <div class="col-12 col-md-3">
-                <select id="status" class="form-control">
-                    <option selected value="1">Activo</option>
-                    <option value="0">Inactivo</option>
-                </select>
+                <div id="myGridMenu" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
             </div>
         </div>
     </div>
