@@ -626,7 +626,7 @@ async function saveDataRoleMenu(idrole){
         data: dparams
     }
 
-    console.log(params)
+    // console.log(params)
 
     method = "POST";
     let url = `saveRolMenu&id=${idrole}`;

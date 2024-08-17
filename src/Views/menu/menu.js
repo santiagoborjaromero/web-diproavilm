@@ -270,6 +270,7 @@ function cleanRecords(record=null){
     let parent = "00";
     let icono = "fa fa-cog";
     let route = "";
+    let order = "";
 
     $("#name").prop("readonly", false);
     $("#name").prop("disabled", false);
@@ -285,6 +286,7 @@ function cleanRecords(record=null){
         status = record.status.toString();
         icono = record.icon;
         route = record.route;
+        order = record.order;
 
         if (submenu == 1){
             $("#rutaDIV").addClass("hide");
@@ -304,6 +306,7 @@ function cleanRecords(record=null){
     $("#icon").val(icono);
     desplegarIcono(icono);
     $("#route").val(route);
+    $("#order").val(order);
 }
 
 function showDivs(que = 0){
@@ -398,7 +401,7 @@ function nextOrder(parent = "", child = ""){
 
 async function saveData(){
 
-    showLoading("Guardando");
+    
 
     let idmenu = parseInt($("#idmenu").val());
     let name = $.trim($("#name").val());
@@ -406,12 +409,14 @@ async function saveData(){
     let status = parseInt($("#status").val());
     let icon = $("#icon").val();
     let route = $("#route").val();
-    let order = "";
+    let order = $("#order").val();
 
-    if (submenu == 1){
-        order = nextOrder();
-    } else { 
-        order = nextOrder($("#parent").val());
+    if (idmenu == -1){
+        if (submenu == 1){
+            order = nextOrder();
+        } else { 
+            order = nextOrder($("#parent").val());
+        }
     }
 
     let error = false;
@@ -420,6 +425,11 @@ async function saveData(){
     if (name == "") {
         error = true;
         errMsg = "Debe ingresar el nombre del usuario";
+    }
+
+    if (ruta == "") {
+        error = true;
+        errMsg = "Debe ingresar la ruta";
     }
 
     if (!error && verificarDisponibilidadRuta(route) && idmenu==-1){
@@ -441,8 +451,10 @@ async function saveData(){
         status
     };
 
+    // console.log(params);
+    showLoading("Guardando");
+
     let method = "PUT";
-    // let method = "POST";
 
     if (idmenu == -1){
         method = "POST";
@@ -456,6 +468,8 @@ async function saveData(){
             try {
                 resp = JSON.parse(resp);
             } catch (ex) {}
+
+            // console.log(resp)
 
             if (resp){
                 if (resp.status && resp.status == 'ok') {

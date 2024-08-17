@@ -93,7 +93,8 @@ function consumirApi(method, url, params = null) {
             url: `${apiPathBase}${url}`,
             type: method,
             headers: {
-                "Authorization": "Bearer " + apiToken 
+                "Authorization": "Bearer " + apiToken,
+                "Content-Type": "application/json"
             },
             data: params,
             success: function (resp, status, xhr) {

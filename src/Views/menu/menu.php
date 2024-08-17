@@ -63,6 +63,7 @@
             <label class="col-12 col-md-3 label-control text-end">Nombre <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="hidden" id="idmenu" value="">
+                <input class="form-control" type="hidden" id="order" value="">
                 <input class="form-control" type="text" id="name"  placeholder="Nombre del menu">
             </div>
             <div class="col-6 col-md-1 text-start">
