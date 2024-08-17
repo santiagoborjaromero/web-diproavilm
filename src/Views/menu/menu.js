@@ -356,28 +356,48 @@ $("#btmSave").on("click", function(){
 });
 
 
-function nextOrder(parent = "", child = ""){
+function nextOrder(parent = ""){
 
     let data = [];
     let prefijo = "";
 
-    if (parent=="" && child == ""){
-        lstMenu.forEach(e=>{
-            data.push(e)
-        })
+    if (parent == ""){
+    //     //TODO: Menu nivel 1. Parent
+    //     lstMenu.forEach(e=>{
+    //         data.push(e)
+    //     })
         prefijo = "";
     } else{
-        lstMenu.forEach(e=>{
-            if (e.order == parent){
-                data = e.child;
-            }
-        })
+    //     //TODO: Menu nivel 2. Child
+    //     lstMenu.forEach(e=>{
+    //         if (e.order == parent){
+    //             data = e.child;
+    //         }
+    //     })
         prefijo = parent + ".";
     }
+
+    let nivel = parent == '' ? 2 : 5;
+    let parts = [];
+    lstMenuOriginal.forEach( e =>{
+        // console.log(e.order.length, nivel)
+        partes = e.order.split(".");
+        if (e.order.length == nivel){
+            if (parent == ''){
+                data.push(e)
+            } else{
+                if (partes[0] == parent){
+                    data.push(e)
+                }
+            }
+        }
+    });
 
     let norder = data.length;
     let salir = false;
     let order = "";
+
+    // console.log(data)
 
     while (!salir) {
         ready = true;
@@ -385,9 +405,10 @@ function nextOrder(parent = "", child = ""){
         order = prefijo + norder.toString().padStart(2, "0")
 
         data.forEach( e => {
+            // console.log(e.order, order, e.order == order)
             if (e.order == order){
                 ready = false;
-                console.log("ready", ready);
+                // console.log("ready", ready);
             }
         });
 
@@ -418,6 +439,7 @@ async function saveData(){
             order = nextOrder($("#parent").val());
         }
     }
+
 
     let error = false;
     let errMsg = "";
