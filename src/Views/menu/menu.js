@@ -657,3 +657,7 @@ verificarDisponibilidadRuta = (ruta) => {
     }
     return found;
 }
+
+$("#btmReestablecer").on("click", function(){
+    hacerPregunta("Recuperar opcion eliminada", "recuperar", "recuperarMenu");
+});
