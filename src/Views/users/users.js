@@ -11,6 +11,7 @@ setTimeout(function(){
     }
 },800)
 
+//TODO: Variables enceradas
 lstUsers = [];
 lstRoles = [];
 userSelected = {};
@@ -48,19 +49,8 @@ async function loadData(){
                 resp = JSON.parse(resp);
             } catch (ex) {}
 
-            // console.log(resp)
-
             if (resp.status && resp.status == 'ok') {
                 lstUsers = resp.message;
-                // console.log(lstUsers)
-                // lstUsers.forEach( e=>{
-                //     transaction = { add: [e] };
-                //     gridApi.applyTransactionAsync(transaction);
-                // })
-                // // let params = {
-                // //     force: true,
-                // //     suppressFlash: true,
-                // // };
                 gridApi.setGridOption("rowData", lstUsers);
                 gridApi.sizeColumnsToFit();
             } else {
@@ -108,13 +98,16 @@ async function loadRoles(){
 function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
+        //TODO: Para que pinte lineas con fondo blanco o grid es un striped
         getRowStyle: params => {
             if (params.node.rowIndex % 2 !== 0) {
                 return { background: '#f9f9f9' };
             }
         },
+        //TODO: aqui se cargan los datos que inicialmente estan vacios
         rowData: [],
         deltaSort: true,
+        //TODO: Configuracion de Paginacion
         pagination: true,
         paginationPageSize: 50,
         paginationPageSizeSelector: [5, 10,20, 30, 40, 50, 100, 200, 300, 1000],
@@ -122,6 +115,7 @@ function estructuraGrid(){
         rowHeight: 40,
         tooltipInteraction: true,
         defaultColDef: {
+            //TODO: VALORES POR DEFECTO DE TODAS LAS COLUMNAS
             flex: 1,
             minWidth: 50,
             filter: true,
@@ -138,15 +132,18 @@ function estructuraGrid(){
         autoSizeStrategy: {
             // type: 'fitCellContents'
         },
+        // TODO: DEterminar el indice de la tabla que viene, normalment el campo ID 
         getRowId: (params) => {
             return params.data.iduser;
         },
+        //TODO: Cuando se da click sobre una fila, asigna vairables para tener y poder operar como el id y toda la fila en userSelected
         onRowClicked: (event) => {
             userSelected = event.data;
             idSelect = event.data.iduser;
             idSelectName = event.data.username;
             habilitarBotones(true);
         },
+        //TODO: DEFINICION DE COLUMNAS
         columnDefs: [
             {
                 headerName: "ID",
@@ -405,7 +402,6 @@ async function saveData(){
     // console.log(params)
 
     let method = "PUT";
-    // let method = "POST";
     if (iduser == -1){
         method = "POST";
         params["username"] = username;
@@ -529,24 +525,6 @@ $("#btmRefresh").on("click", function(){
 });
 
 function habilitarBotones(opc = false){
-    // console.log(opc, userSelected.deleted_at);
-    // if (permisosEscritura){
-    //     $("#btmNew").removeClass("hide");
-    //     $("#btmEdit").removeClass("hide");
-    //     $("#btmReset").removeClass("hide");
-    //     $("#btmUpUser").removeClass("hide");
-    // } else {
-    //     $("#btmNew").addClass("hide");
-    //     $("#btmEdit").addClass("hide");
-    //     $("#btmReset").addClass("hide");
-    //     $("#btmUpUser").addClass("hide");
-    // }
-    // if (permisosBorrado){
-    //     $("#btmDelete").removeClass("hide");
-    // } else{
-    //     $("#btmDelete").addClass("hide");
-    // }
-
     if (opc && !userSelected.deleted_at ){
 
         $("#btmEdit").removeClass("disabled");

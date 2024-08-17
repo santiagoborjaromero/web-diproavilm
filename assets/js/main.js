@@ -14,12 +14,15 @@ $("#DivForm").removeClass("modal-form");
 // Variables Globales
 let apiPathBase = "";
 let config = {};
+let prefijoDocumentacion = "";
+
 //:TODO carga el archiv config
 fetch('config.json')
     .then((response) => response.json())
     .then((json) => {
         config = json;
         apiPathBase = config.apipath + "?ruta=";
+        prefijoDocumentacion = config.prefijo_documentacion;
         sessionSet("config", json);
     });
 
@@ -40,6 +43,7 @@ let dataSelected2;
 let lstUsers = [];
 let scopeUser = "";
 let title = "";
+
 
 function initial(){
     //TODO:Verificar si tiene iniciado la session
@@ -238,6 +242,11 @@ function showLoading(text="Cargando"){
 
 //TODO: Revisa solo letras y numeros
 function checkSoloLetrasNumeros(palabra){
+    const pattern = new RegExp('^[A-Z0-9]+$', 'i');
+    return pattern.test(palabra)
+}
+
+function checkSoloLetrasNumerosEspacios(palabra){
     const pattern = new RegExp('^[A-Z0-9]+$', 'i');
     return pattern.test(palabra)
 }

@@ -55,23 +55,23 @@
 <div class="row justify-content-md-center hide" id="FormDiv">
     <div  class="col-12 col-md-11 align-items-center bg-white round-10">
         <div class="row mt-5 mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Usuario</label>
+            <label class="col-12 col-md-3 label-control text-end">Usuario <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="hidden" id="iduser" value="">
                 <input class="form-control" type="text" id="username" placeholder="Ingrese el usuario">
             </div>
-            <div class="col-6 col-md-1 text-start">
-                <i class="fas fa-question-circle" onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
+            <div class="col-6 col-md-1 text-start t18">
+                <i class="fas fa-question-circle " onclick="help('El nombre de usuario puede estar compuesto de mayúsculas, minúsculas, numeros. No se admiten símbolos, ni espacios en blanco.')"></i>
             </div>
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre completo</label>
+            <label class="col-12 col-md-3 label-control text-end">Nombre completo <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class=" form-control" type="text" id="fullname" placeholder="Ingrese el nombre completo">
             </div>
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Rol</label>
+            <label class="col-12 col-md-3 label-control text-end">Rol <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idrole" class="form-control">
                     <option selected value="-">-- Seleccione un Rol -- </option>
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Idioma</label>
+            <label class="col-12 col-md-3 label-control text-end">Idioma <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="lang" class="form-control">
                     <option selected value="es">Español</option>
@@ -87,14 +87,18 @@
             </div>
         </div>
         <div class="row mb-5">
-            <label class="col-12 col-md-3 label-control text-end">Estado</label>
+            <label class="col-12 col-md-3 label-control text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="status" class="form-control">
                     <option selected value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
             </div>
+            <div class="col-6 col-md-1 text-start t18">
+                <i class="fas fa-question-circle " onclick="help('El estado indica si un usuario puede ingresar al sistena (activo) o no(inactivo).')"></i>
+            </div>
         </div>
+        
         
     </div>
 </div>

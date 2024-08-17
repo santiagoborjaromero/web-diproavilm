@@ -431,8 +431,10 @@ function cleanRecords(record=null){
 
     if (idrole == -1){
         $("#idrolDIV").addClass("hide");
+        $("#nombreDiv").addClass("mt-5");
     } else{
         $("#idrolDIV").removeClass("hide");
+        $("#nombreDiv").removeClass("mt-5");
     }
 
     $("#idrole").val(idrole);
@@ -476,9 +478,11 @@ showDivs = (que = 0) => {
 }
 
 $("#btmNew").on("click", function(){
-    
     cleanRecords();
     showDivs(1);
+    setTimeout(function(){
+        loadMenuPorRol();
+    }, 300)
 });
 
 $("#btmSave").on("click", function(){
@@ -504,6 +508,26 @@ async function saveData(){
     if (name == "") {
         error = true;
         errMsg = "Debe ingresar el nombre del usuario";
+    }
+
+    if (!checkSoloLetrasNumerosEspacios(name)){
+        error = true;
+        errMsg = "Puede ingresar letras, numeros y espacios";
+    }
+
+    let dparams = [];
+    lstMenuOriginal.forEach(e=>{
+        if (e.check){
+            dparams.push({
+                idrole,
+                idmenu: e.idmenu
+            })
+        }
+    })
+
+    if (!error && dparams.length==0){
+        error = true;
+        errMsg = "Debe seleccionar por lo menos una opcion en el menu";
     }
     
     if (error){
@@ -534,16 +558,22 @@ async function saveData(){
                 resp = JSON.parse(resp);
             } catch (ex) {}
 
+            // console.log(resp)
+
             if (resp){
                 if (resp.status && resp.status == 'ok') {
                     if (method == "POST"){
                         idrole = resp.message;
                     }
-                    showDivs(0);
-                    // loadData();
-                    saveDataRoleMenu(idrole);
+
+                    if (idrole){
+                        // loadData();
+                        saveDataRoleMenu(idrole);
+                    } else {
+                        sendMessage("error", title, "No viene el id del rol");
+                    }
                 } else {
-                    sendMessage("error", title, resp.message || JSON.stringify(resp));
+                    sendMessage("error", title, resp.message[0].las || JSON.stringify(resp));
                 }
             } else {
                 sendMessage("error", title, "La respuesta es nula");
@@ -563,18 +593,21 @@ async function saveDataRoleMenu(idrole){
     lstMenuOriginal.forEach(e=>{
         if (e.check){
             dparams.push({
-                idrole,
                 idmenu: e.idmenu
             })
         }
     })
-    
+
     let params = {
         data: dparams
     }
 
+    console.log(params)
+
     method = "POST";
     let url = `saveRolMenu&id=${idrole}`;
+
+    // console.log(url)
     
     await consumirApi(method, url, params)
         .then( resp=>{
@@ -584,20 +617,21 @@ async function saveDataRoleMenu(idrole){
             } catch (ex) {}
 
             // console.log("█", resp)
-            loadData();
 
             if (resp){
                 if (resp.status && resp.status == 'ok') {
+                    loadData();
+                    showDivs(0);
                 } else {
                     sendMessage("error", title, resp.message || JSON.stringify(resp));
                 }
             } else {
-                sendMessage("error", title, "La respuesta es nula");
+                sendMessage("error", title + "- RoleMenu", "La respuesta es nula");
             }
 
         })
         .catch( err => {
-            closeLoading();
+            // closeLoading();
             console.log("ERR", err);
             sendMessage("error", title, JSON.stringify(err.responseText));
         });

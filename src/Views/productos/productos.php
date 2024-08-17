@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="row mt-5 mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Nombre</label>
+                    <label class="col-12 col-md-4 label-control text-end">Nombre <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <input class="form-control" type="hidden" id="idproduct" value="">
                         <input class="form-control" type="text" id="name"  placeholder="Nombre del producto">
@@ -66,25 +66,25 @@
                     </div> -->
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Descripcion</label>
+                    <label class="col-12 col-md-4 label-control text-end">Descripcion <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <input class="form-control" type="text" id="description"  placeholder="Descripcion">
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Codigo</label>
+                    <label class="col-12 col-md-4 label-control text-end">Codigo <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <input class="form-control" type="text" id="productcode"  placeholder="Codigo">
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Codigo de Barras</label>
+                    <label class="col-12 col-md-4 label-control text-end">Codigo de Barras <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <input class="form-control" type="text" id="barcode"  placeholder="Codigo de Barras">
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Presentación</label>
+                    <label class="col-12 col-md-4 label-control text-end">Presentación <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <select id="idpresentation" class="form-control">
                             <option value="-">-- Seleccione una linea --</option>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Línea</label>
+                    <label class="col-12 col-md-4 label-control text-end">Línea <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <select id="idproductline" class="form-control">
                             <option value="-">-- Seleccione una linea --</option>
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Categoría</label>
+                    <label class="col-12 col-md-4 label-control text-end">Categoría <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <select id="idproductcategory" class="form-control">
                             <option value="-">-- Seleccione una categoria --</option>
@@ -108,13 +108,13 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">PVP</label>
+                    <label class="col-12 col-md-4 label-control text-end">PVP <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <input class="form-control" type="text" id="price"  placeholder="0.00">
                     </div>
                 </div>
                 <div class="row mb-5">
-                    <label class="col-12 col-md-4 label-control text-end">Estado</label>
+                    <label class="col-12 col-md-4 label-control text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-8">
                         <select id="status" class="form-control">
                             <option selected value="1">Activo</option>

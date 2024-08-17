@@ -56,7 +56,7 @@
 <div class="row justify-content-md-center hide" id="FormDiv">
     <div class="col-12 col-md-11 align-items-center bg-white round-10">
         <div class="row mt-5 mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre</label>
+            <label class="col-12 col-md-3 label-control text-end">Nombre <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="hidden" id="idmenu" value="">
                 <input class="form-control" type="text" id="name"  placeholder="Nombre del menu">
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Es Submenu?</label>
+            <label class="col-12 col-md-3 label-control text-end">Es Submenu? <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="submenu" class="form-control">
                     <option value="1">Si</option>
@@ -75,14 +75,14 @@
             </div>
         </div>
         <div class="row mb-2" id="parentDIV">
-            <label class="col-12 col-md-3 label-control text-end">Quien es el padre?</label>
+            <label class="col-12 col-md-3 label-control text-end">Quien es el padre? <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="parent" class="form-control">
                 </select>
             </div>
         </div>
         <div class="row  mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Icono</label>
+            <label class="col-12 col-md-3 label-control text-end">Icono <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="icon" value="fa fa-cog" placeholder="fa fa-cogs">
             </div>
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="row  mb-2" id="rutaDIV">
-            <label class="col-12 col-md-3 label-control text-end">Ruta</label>
+            <label class="col-12 col-md-3 label-control text-end">Ruta <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="route" placeholder="Ruta">
             </div>
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="row mb-5">
-            <label class="col-12 col-md-3 label-control text-end">Estado</label>
+            <label class="col-12 col-md-3 label-control text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="status" class="form-control">
                     <option selected value="1">Activo</option>

@@ -57,7 +57,7 @@
     <div class="col-12 col-md-11 align-items-center bg-white round-10">
         
         <div class="row mt-5 mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Tipo</label>
+            <label class="col-12 col-md-3 label-control text-end">Tipo <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-6">
                 <select id="type" class="form-control">
                     <option selected value="C">Cliente</option>
@@ -68,7 +68,7 @@
         </div>
     
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre</label>
+            <label class="col-12 col-md-3 label-control text-end">Nombre <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-6">
                 <input class="form-control" type="hidden" id="idbeneficiary" value="">
                 <input class="form-control" type="text" id="name"  placeholder="Nombre">
@@ -89,7 +89,7 @@
 
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Identificacion</label>
+            <label class="col-12 col-md-3 label-control text-end">Identificacion <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="identificationnumber"  placeholder="0000000000000">
             </div>
@@ -97,21 +97,21 @@
 
 
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Pais</label>
+            <label class="col-12 col-md-3 label-control text-end">Pais <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idcountry" class="form-control">
                 </select>
             </div>
         </div>
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Provincia</label>
+            <label class="col-12 col-md-3 label-control text-end">Provincia <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idprovince" class="form-control">
                 </select>
             </div>
         </div>
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Ciudad</label>
+            <label class="col-12 col-md-3 label-control text-end">Ciudad <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idcity" class="form-control">
                 </select>
