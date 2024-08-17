@@ -267,7 +267,7 @@ function cleanRecords(record=null){
     let name = "";
     let submenu = "0";
     let status = "0";
-    let parent = "00";
+    let parent = "-";
     let icono = "fa fa-cog";
     let route = "";
     let order = "";
@@ -422,8 +422,6 @@ function nextOrder(parent = ""){
 
 async function saveData(){
 
-    
-
     let idmenu = parseInt($("#idmenu").val());
     let name = $.trim($("#name").val());
     let submenu = parseInt($("#submenu").val());
@@ -431,21 +429,19 @@ async function saveData(){
     let icon = $("#icon").val();
     let route = $("#route").val();
     let order = $("#order").val();
-
-    if (idmenu == -1){
-        if (submenu == 1){
-            order = nextOrder();
-        } else { 
-            order = nextOrder($("#parent").val());
-        }
-    }
+    let parent = $("#parent").val();
 
     let error = false;
     let errMsg = "";
     
     if (name == "") {
         error = true;
-        errMsg = "Debe ingresar el nombre del usuario";
+        errMsg = "Debe ingresar el nombre de la opcion";
+    }
+
+    if (submenu == 0 && (parent=='' || parent=='-')) {
+        error = true;
+        errMsg = "Debe seleccionar quien es el padre";
     }
 
     if (ruta == "") {
@@ -462,7 +458,15 @@ async function saveData(){
         sendMessage("error", title, errMsg);
         return;
     }
+    
 
+    if (idmenu == -1){
+        if (submenu == 1){
+            order = nextOrder();
+        } else {
+            order = nextOrder(parent);
+        }
+    }
     let params = {
         order,
         name,

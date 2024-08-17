@@ -83,7 +83,19 @@
             <label class="col-12 col-md-3 label-control text-end">Quien es el padre? <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="parent" class="form-control">
+                    <option selected value="-">-- Seleccione una opcion --</option>
                 </select>
+            </div>
+        </div>
+        
+        <div class="row  mb-2" id="rutaDIV">
+            <label class="col-12 col-md-3 label-control text-end">Ruta <sup class="text-danger" title="Requerido">*</sup></label>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="text" id="route" placeholder="Ruta">
+            </div>
+            <div class="col-6 col-md-3 text-start">
+                <i class="fas fa-question-circle" onclick="help('Debe ser único y debe estar compuesto de letras minusculas')"></i>
+                <span class="ml-2 text-success" id="obsRuta"></span>
             </div>
         </div>
         <div class="row  mb-2">
@@ -94,16 +106,6 @@
             <div class="col-6 col-md-3 text-start">
                 <i class="fas fa-question-circle" onclick="help('El listado de iconos disponibles puede revisar en https://fontawesome.com/v5/search?q=dot&o=r&m=free.')"></i>
                 <span class="ml-2" id="execIcon"></span>
-            </div>
-        </div>
-        <div class="row  mb-2" id="rutaDIV">
-            <label class="col-12 col-md-3 label-control text-end">Ruta <sup class="text-danger" title="Requerido">*</sup></label>
-            <div class="col-12 col-md-3">
-                <input class="form-control" type="text" id="route" placeholder="Ruta">
-            </div>
-            <div class="col-6 col-md-3 text-start">
-                <i class="fas fa-question-circle" onclick="help('Debe ser único y debe estar compuesto de letras minusculas')"></i>
-                <span class="ml-2 text-success" id="obsRuta"></span>
             </div>
         </div>
         <div class="row mb-5">
