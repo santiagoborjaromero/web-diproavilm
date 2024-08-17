@@ -100,8 +100,12 @@ function estructuraGrid(){
         rowStyle: { background: 'white' },
         //TODO: Para que pinte lineas con fondo blanco o grid es un striped
         getRowStyle: params => {
-            if (params.node.rowIndex % 2 !== 0) {
-                return { background: '#f9f9f9' };
+            if (params.data.deleted_at == null){
+                if (params.node.rowIndex % 2 !== 0) {
+                    return { background: '#f9f9f9' };
+                }
+            } else{
+                return { background: '#FFE2E2'};
             }
         },
         //TODO: aqui se cargan los datos que inicialmente estan vacios

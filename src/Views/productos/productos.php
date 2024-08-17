@@ -15,7 +15,7 @@
                 <i class="far fa-edit"></i>
                 Editar
             </button>
-            <button id="btmReestablecer" title="Reestablecer Usuario eliminado" class="btn btn-info mr-1">
+            <button id="btmReestablecer" title="Reestablecer" class="btn btn-info mr-1">
                 <i class="fas fa-notes-medical"></i>
                 Reestablecer
             </button>

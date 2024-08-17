@@ -154,15 +154,14 @@ function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
         getRowStyle: params => {
-            if (params.node.rowIndex % 2 !== 0) {
-                return { background: '#f9f9f9' };
+            if (params.data.deleted_at == null){
+                if (params.node.rowIndex % 2 !== 0) {
+                    return { background: '#f9f9f9' };
+                }
+            } else{
+                return { background: '#FFE2E2'};
             }
         },
-        // getRowStyle: params => {
-        //     if (params.data.submenu == 1) {
-        //         return { background: '#e7f1f7'};
-        //     }
-        // },
         rowData: [],
         deltaSort: true,
         pagination: true,
@@ -226,7 +225,7 @@ function estructuraGrid(){
                 filter: true,
                 cellClass: "text-start",
                 sort: "asc",
-                sortIndex: 1, 
+                sortIndex: 2, 
             },
             {
                 headerName: "Categoria",
@@ -292,6 +291,8 @@ function estructuraGrid(){
                 field: "deleted_at",
                 filter: true,
                 cellClass: "text-start",
+                sort: "asc",
+                sortIndex: 1, 
                 cellRenderer: (params) => {
                     let html="";
                     let inactivo = params.data.deleted_at ? 1 : 0;
@@ -658,68 +659,68 @@ function habilitarBotones(opc = false){
     }
 
     // if (dataSelected){
-        let html = "<ul class='list-group'>";
-        html += "<li class='list-group-item'>";
-        if (dataSelected) html += `<span>${dataSelected.productcode}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html += `<span class='t10'>CODIGO</span>`;
-        html += "</li>";
+    let html = "<ul class='list-group'>";
+    html += "<li class='list-group-item'>";
+    if (dataSelected) html += `<span>${dataSelected.productcode}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html += `<span class='t10'>CODIGO</span>`;
+    html += "</li>";
 
-        html += "<li class='list-group-item'>";
-        if (dataSelected)  html += `<span>${dataSelected.barcode}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html += `<span class='t10'>CODIGO DE BARRAS</span>`;
-        html += "</li>";
+    html += "<li class='list-group-item'>";
+    if (dataSelected)  html += `<span>${dataSelected.barcode}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html += `<span class='t10'>CODIGO DE BARRAS</span>`;
+    html += "</li>";
 
-        html += "<li class='list-group-item'>";
-        if (dataSelected)  html += `<span>${dataSelected.description}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html += `<span class='t10'>DESCRIPCION</span>`;
-        html += "</li>";
+    html += "<li class='list-group-item'>";
+    if (dataSelected)  html += `<span>${dataSelected.description}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html += `<span class='t10'>DESCRIPCION</span>`;
+    html += "</li>";
 
-        html += "<li class='list-group-item'>";
-        if (dataSelected)  html += `<span>${dataSelected.presentation}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html += `<span class='t10'>PRESENTACION</span>`;
-        html += "</li>";
+    html += "<li class='list-group-item'>";
+    if (dataSelected)  html += `<span>${dataSelected.presentation}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html += `<span class='t10'>PRESENTACION</span>`;
+    html += "</li>";
 
-        html += "<li class='list-group-item'>";
-        if (dataSelected)  html += `<span>${dataSelected.line}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html += `<span class='t10'>LINEA</span>`;
-        html += "</li>";
+    html += "<li class='list-group-item'>";
+    if (dataSelected)  html += `<span>${dataSelected.line}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html += `<span class='t10'>LINEA</span>`;
+    html += "</li>";
 
-        html += "<li class='list-group-item'>";
-        if (dataSelected)  html += `<span>${dataSelected.category}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html += `<span class='t10'>CATEGORIA</span>`;
-        html += "</li>";
+    html += "<li class='list-group-item'>";
+    if (dataSelected)  html += `<span>${dataSelected.category}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html += `<span class='t10'>CATEGORIA</span>`;
+    html += "</li>";
 
-        
+    
 
-        html += "<li class='list-group-item '>";
-        html +=   "<div class='row'>";
-        html +=     "<div class='col text-end'>";
-        if (dataSelected)  html +=       `<span>${dataSelected.cost}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html +=       `<span class='t10'>COSTO</span>`;
-        html +=     "</div>";
-        html +=     "<div class='col text-end'>";
-        if (dataSelected)  html +=       `<span>${dataSelected.price}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html +=       `<span class='t10'>PVP</span>`;
-        html +=     "</div>";
-        html +=     "<div class='col text-end'>";
-        if (dataSelected)  html +=       `<span>${dataSelected.stock}</span><br>`;
-        if (!dataSelected) html += `<br>`;
-        html +=       `<span class='t10'>EXISTENCIA</span>`;
-        html +=     "</div>";
-        html +=   "</div>";
-        html += "</li>";
-        
-        
-        html += "</ul>";
-        $("#info").html(html);
+    html += "<li class='list-group-item '>";
+    html +=   "<div class='row'>";
+    html +=     "<div class='col text-end'>";
+    if (dataSelected)  html +=       `<span>${dataSelected.cost}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html +=       `<span class='t10'>COSTO</span>`;
+    html +=     "</div>";
+    html +=     "<div class='col text-end'>";
+    if (dataSelected)  html +=       `<span>${dataSelected.price}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html +=       `<span class='t10'>PVP</span>`;
+    html +=     "</div>";
+    html +=     "<div class='col text-end'>";
+    if (dataSelected)  html +=       `<span>${dataSelected.stock}</span><br>`;
+    if (!dataSelected) html += `<br>`;
+    html +=       `<span class='t10'>EXISTENCIA</span>`;
+    html +=     "</div>";
+    html +=   "</div>";
+    html += "</li>";
+    
+    
+    html += "</ul>";
+    $("#info").html(html);
     // }
 
 }

@@ -23,6 +23,10 @@
                 <i class="far fa-edit"></i>
                 Editar
             </button>
+            <button id="btmReestablecer" title="Reestablecer" class="btn btn-info mr-1">
+                <i class="fas fa-notes-medical"></i>
+                Reestablecer
+            </button>
         </span>
         <span id="divD">
             <button id="btmDelete" class="btn btn-danger mr-1" title="Eliminar">

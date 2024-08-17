@@ -12,7 +12,7 @@ setTimeout(function(){
 },800)
 
 lstRoles = [];
-roleSelected = {};
+dataSelected = {};
 lstMenuOriginal = [];
 
 //TODO: Determinar titulo e icono que viene del menu
@@ -159,8 +159,12 @@ function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
         getRowStyle: params => {
-            if (params.node.rowIndex % 2 !== 0) {
-                return { background: '#f9f9f9' };
+            if (params.data.deleted_at == null){
+                if (params.node.rowIndex % 2 !== 0) {
+                    return { background: '#f9f9f9' };
+                }
+            } else{
+                return { background: '#FFE2E2'};
             }
         },
         rowData: [],
@@ -194,7 +198,7 @@ function estructuraGrid(){
             return params.data.idrole;
         },
         onRowClicked: (event) => {
-            roleSelected = event.data;
+            dataSelected = event.data;
             idSelect = event.data.idrole;
             idSelectName = event.data.name;
             habilitarBotones(true);
@@ -215,7 +219,7 @@ function estructuraGrid(){
                 filter: true,
                 cellClass: "text-start",
                 sort: "asc",
-                sortIndex: 1, 
+                sortIndex: 2 
             },
             {
                 headerName: "Permisos",
@@ -300,13 +304,31 @@ function estructuraGrid(){
             //     filter: false,
             //     cellClass: "text-start",
             // },
-            // {
-            //     headerName: "Inactivado",
-            //     flex: 1, 
-            //     field: "deleted_at",
-            //     filter: true,
-            //     cellClass: "text-start",
-            // },
+            {
+                headerName: "Elimiinado",
+                flex: 1, 
+                field: "deleted_at",
+                filter: true,
+                cellClass: "text-start",
+                sort: "asc",
+                sortIndex: 1,
+                cellRenderer: (params) => {
+                    let html="";
+                    let inactivo = params.data.deleted_at ? 1 : 0;
+                    if (inactivo == 1){
+                        cls = "fa fa-check";
+                        // cls = "far fa-dor-circle";
+                        color = "bg-danger";
+                    }else{
+                        // cls = "fa fa-times";
+                        // cls = "far fa-circle";
+                        cls = "fas fa-minus";
+                        color = "bg-light text-dark";
+                    }
+                    html += `<kbd class='${color}'><i class="${cls}"></i></kbd>`;
+                    return html;
+                },
+            },
         ]
     }
 
@@ -443,7 +465,7 @@ function cleanRecords(record=null){
     $("#status").val(status);
 }
 
-showDivs = (que = 0) => {
+function showDivs(que = 0){
     switch(que){
         case 0:
             //Grid o listado 
@@ -452,6 +474,7 @@ showDivs = (que = 0) => {
             $("#btmEdit").removeClass("hide");
             $("#btmDelete").removeClass("hide");
             $("#btmRefresh").removeClass("hide");
+            $("#btmReestablecer").removeClass("hide");
             $("#btmSave").addClass("hide");
             $("#btmCancel").addClass("hide");
             habilitarBotones(false);
@@ -466,6 +489,7 @@ showDivs = (que = 0) => {
             $("#btmEdit").addClass("hide");
             $("#btmDelete").addClass("hide");
             $("#btmRefresh").addClass("hide");
+            $("#btmReestablecer").addClass("hide");
             $("#btmSave").removeClass("hide");
             $("#btmCancel").removeClass("hide");
 
@@ -644,7 +668,7 @@ $("#btmCancel").on("click", function(){
 });
 
 $("#btmEdit").on("click", function(){
-    cleanRecords(roleSelected);
+    cleanRecords(dataSelected);
     $("#idrolDIV").removeClass("hide");
     $("#username").addClass("disabled");
     showDivs(1);
@@ -725,13 +749,13 @@ $("#btmRefresh").on("click", function(){
 });
 
 function habilitarBotones(opc = false){
-    // console.log(opc, roleSelected.deleted_at);
-    if (opc && !roleSelected.deleted_at ){
+    // console.log(opc, dataSelected.deleted_at);
+    if (opc && !dataSelected.deleted_at ){
         $("#btmEdit").removeClass("disabled");
         $("#btmEdit").removeClass("btn-secondary");
         $("#btmEdit").addClass("btn-info");
         
-        if (roleSelected.nusuarios==0){
+        if (dataSelected.nusuarios==0){
             $("#btmDelete").removeClass("disabled");
             $("#btmDelete").removeClass("btn-secondary");
             $("#btmDelete").addClass("btn-danger");
@@ -741,10 +765,16 @@ function habilitarBotones(opc = false){
             $("#btmDelete").addClass("btn-secondary");
         }
 
-        $("#btmReset").removeClass("disabled");
-        $("#btmReset").removeClass("btn-secondary");
-        $("#btmReset").addClass("btn-info");
-        
+        if (dataSelected && dataSelected.deleted_at){
+            $("#btmReestablecer").removeClass("disabled");
+            $("#btmReestablecer").removeClass("btn-secondary");
+            $("#btmReestablecer").addClass("btn-info");
+        }else{
+            $("#btmReestablecer").addClass("disabled");
+            $("#btmReestablecer").removeClass("btn-info");
+            $("#btmReestablecer").addClass("btn-secondary");
+        }
+
     } else {
         $("#btmEdit").addClass("disabled");
         $("#btmEdit").removeClass("btn-info");
@@ -754,9 +784,16 @@ function habilitarBotones(opc = false){
         $("#btmDelete").removeClass("btn-danger");
         $("#btmDelete").addClass("btn-secondary");
         
-        $("#btmReset").addClass("disabled");
-        $("#btmReset").removeClass("btn-info");
-        $("#btmReset").addClass("btn-secondary");
+        if (dataSelected &&  dataSelected.deleted_at){
+            $("#btmReestablecer").removeClass("disabled");
+            $("#btmReestablecer").removeClass("btn-secondary");
+            $("#btmReestablecer").addClass("btn-info");
+        }else{
+            $("#btmReestablecer").addClass("disabled");
+            $("#btmReestablecer").removeClass("btn-info");
+            $("#btmReestablecer").addClass("btn-secondary");
+
+        }
         
     }
 }
@@ -780,4 +817,8 @@ $("#btnSelectAll").on("click", function(){
         gridApi2.applyTransactionAsync(transaction);
     });
 
+});
+
+$("#btmReestablecer").on("click", function(){
+    hacerPregunta("Recuperar un rol eliminado", "recuperar", "recuperarRol");
 });

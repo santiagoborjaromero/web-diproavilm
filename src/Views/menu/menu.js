@@ -87,14 +87,13 @@ function parent(){
 function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
-        // getRowStyle: params => {
-        //     if (params.node.rowIndex % 2 !== 0) {
-        //         return { background: '#f9f9f9' };
-        //     }
-        // },
         getRowStyle: params => {
-            if (params.data.submenu == 1) {
-                return { background: '#e7f1f7'};
+            if (params.data.deleted_at == null){
+                if (params.data.submenu == 1) {
+                    return { background: '#e7f1f7'};
+                }
+            } else{
+                return { background: '#FFE2E2'};
             }
         },
         rowData: [],
@@ -307,7 +306,7 @@ function cleanRecords(record=null){
     $("#route").val(route);
 }
 
-showDivs = (que = 0) => {
+function showDivs(que = 0){
     switch(que){
         case 0:
             //Grid o listado 
@@ -316,6 +315,7 @@ showDivs = (que = 0) => {
             $("#btmEdit").removeClass("hide");
             $("#btmDelete").removeClass("hide");
             $("#btmRefresh").removeClass("hide");
+            $("#btmReestablecer").removeClass("hide");
             $("#btmSave").addClass("hide");
             $("#btmCancel").addClass("hide");
             habilitarBotones(false);
@@ -330,6 +330,7 @@ showDivs = (que = 0) => {
             $("#btmEdit").addClass("hide");
             $("#btmDelete").addClass("hide");
             $("#btmRefresh").addClass("hide");
+            $("#btmReestablecer").addClass("hide");
             $("#btmSave").removeClass("hide");
             $("#btmCancel").removeClass("hide");
 
@@ -567,9 +568,15 @@ function habilitarBotones(opc = false){
         $("#btmDelete").removeClass("btn-secondary");
         $("#btmDelete").addClass("btn-danger");
 
-        $("#btmReset").removeClass("disabled");
-        $("#btmReset").removeClass("btn-secondary");
-        $("#btmReset").addClass("btn-info");
+        if (dataSelected && dataSelected.deleted_at){
+            $("#btmReestablecer").removeClass("disabled");
+            $("#btmReestablecer").removeClass("btn-secondary");
+            $("#btmReestablecer").addClass("btn-info");
+        }else{
+            $("#btmReestablecer").addClass("disabled");
+            $("#btmReestablecer").removeClass("btn-info");
+            $("#btmReestablecer").addClass("btn-secondary");
+        }
         
     } else {
         $("#btmEdit").addClass("disabled");
@@ -580,9 +587,16 @@ function habilitarBotones(opc = false){
         $("#btmDelete").removeClass("btn-danger");
         $("#btmDelete").addClass("btn-secondary");
         
-        $("#btmReset").addClass("disabled");
-        $("#btmReset").removeClass("btn-info");
-        $("#btmReset").addClass("btn-secondary");
+        if (dataSelected &&  dataSelected.deleted_at){
+            $("#btmReestablecer").removeClass("disabled");
+            $("#btmReestablecer").removeClass("btn-secondary");
+            $("#btmReestablecer").addClass("btn-info");
+        }else{
+            $("#btmReestablecer").addClass("disabled");
+            $("#btmReestablecer").removeClass("btn-info");
+            $("#btmReestablecer").addClass("btn-secondary");
+
+        }
         
     }
 }

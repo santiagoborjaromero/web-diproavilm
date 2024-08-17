@@ -81,8 +81,12 @@ function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
         getRowStyle: params => {
-            if (params.node.rowIndex % 2 !== 0) {
-                return { background: '#f9f9f9' };
+            if (params.data.deleted_at == null){
+                if (params.node.rowIndex % 2 !== 0) {
+                    return { background: '#f9f9f9' };
+                }
+            } else{
+                return { background: '#FFE2E2'};
             }
         },
         // getRowStyle: params => {
@@ -134,7 +138,7 @@ function estructuraGrid(){
                 flex: 1, 
                 field: "idbeneficiary",
                 filter: false,
-                cellClass: "text-start",
+                cellClass: "text-start text-underline",
             },
             {
                 headerName: "Tipo",
@@ -194,11 +198,27 @@ function estructuraGrid(){
                 cellClass: "text-start",
             },
             {
-                headerName: "Parroquia",
+                headerName: "Eliminado",
                 flex: 1, 
-                field: "parroquia",
+                field: "deleted_at",
                 filter: true,
                 cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let html="";
+                    let inactivo = params.data.deleted_at ? 1 : 0;
+                    if (inactivo == 1){
+                        cls = "fa fa-check";
+                        // cls = "far fa-dor-circle";
+                        color = "bg-danger";
+                    }else{
+                        // cls = "fa fa-times";
+                        // cls = "far fa-circle";
+                        cls = "fas fa-minus";
+                        color = "bg-light text-dark";
+                    }
+                    html += `<kbd class='${color}'><i class="${cls}"></i></kbd>`;
+                    return html;
+                },
             },
         ]
     }
