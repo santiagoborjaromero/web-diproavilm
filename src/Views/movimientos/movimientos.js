@@ -101,7 +101,7 @@ async function loadTypes(idmovementtype = 0){
 
                     if (idmovementtype == 0){
                         resp.message.forEach(e=>{
-                            console.log(e.idmovementtype)
+                            // console.log(e.idmovementtype)
                             $("#idmovementtype").append(`<option value='${e.idmovementtype}'>${e.name}</option>`)
                         });
                     } else {

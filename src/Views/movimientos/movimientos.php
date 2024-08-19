@@ -47,19 +47,33 @@
 <!-- Formulario -->
 <div class="row justify-content-md-center hide" id="FormDiv">
     <div class="col-12 col-md-11 align-items-center bg-white round-10">
-        <div class="row mt-5 mb-5">
-            <label class="col-12 col-md-2 label-control text-end">Tipo de Movimiento</label>
-            <div class="col-12 col-md-4">
+        <div class="row mt-5 mb-2 ">
+            <label class="col-6 col-md-2 control-label text-end" for="fecha">Fecha</label>
+            <div class="col-6 col-md-2">
+                <input class="form-control" type="date" id="fecha" value="2024-01-01" placeholder="Fecha">
+            </div>
+            
+            <label class="col-12 col-md-2 control-label text-end">Tipo de Movimiento</label>
+            <div class="col-12 col-md-2">
                 <select id="idmovementtype" class="form-control">
-                    <option value="-">-- Seleccione un tipo de documento --</option>
+                    <option value="-">-- Seleccione  --</option>
                 </select>
             </div>
 
-            <label class="col-12 col-md-2 label-control text-end">Numero de Movimiento</label>
-            <div class="col-12 col-md-4">
-            <input class="form-control" type="text" id="numberdocument"  placeholder="000000000">
+            <label class="col-6 col-md-2 control-label text-end">Número de Movimiento</label>
+            <div class="col-6 col-md-2">
+                <input class="form-control" type="text" id="numberdocument"  placeholder="000000000">
             </div>
         </div>
+        <div class="row mb-2">
+
+            <label class="col-12 col-md-2 control-label text-end">Numero de Movimiento</label>
+            <div class="col-12 col-md-4">
+                <input class="form-control" type="text" id="numbssserdocument"  placeholder="000000000">
+            </div>
+        </div>
+
+
     </div>
 </div>
 

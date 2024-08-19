@@ -16,15 +16,50 @@ let apiPathBase = "";
 let config = {};
 let prefijoDocumentacion = "";
 
-//:TODO carga el archiv config
+//TODO: carga el archiv config
 fetch('config.json')
     .then((response) => response.json())
     .then((json) => {
         config = json;
         apiPathBase = config.apipath + "?ruta=";
-        prefijoDocumentacion = config.prefijo_documentacion;
-        sessionSet("config", json);
     });
+
+//TODO: carga tabla config
+async function loadConfig(){
+    let metodo = "GET";
+    let url = "config";
+
+    await consumirApiWT(metodo, url)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+            
+            if (resp.status && resp.status == 'ok') {
+                resp.message.forEach(e=>{
+                    eval(`config["${e.variable}"] = '${e.vvalue}'`);
+                });
+
+                config["prefijo_documentacion"]  = "";
+                if (config.establecimiento!="" && config.empresa_pto_venta!=''){
+                    config["prefijo_documentacion"] = `${config.empresa_establecimiento}-${config.empresa_pto_venta}-`;
+                }
+                prefijoDocumentacion = config.prefijo_documentacion;
+                $("#titleapp").html(config["empresa_nombre"]);
+
+                sessionSet("config", config);
+                // console.log(config)
+
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
 
 $("#spinner").addClass("hide");
 
@@ -67,6 +102,9 @@ function initial(){
             selectRuta(ruta);
         },1000)
     }
+
+    //TODO: getconfig
+    loadConfig();
 
 }
 

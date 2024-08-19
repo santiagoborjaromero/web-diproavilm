@@ -55,7 +55,7 @@
 <div class="row justify-content-md-center hide" id="FormDiv">
     <div  class="col-12 col-md-11 align-items-center bg-white round-10">
         <div class="row mt-5 mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Usuario <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Usuario <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="hidden" id="iduser" value="">
                 <input class="form-control" type="text" id="username" placeholder="Ingrese el usuario">
@@ -65,13 +65,13 @@
             </div>
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre completo <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Nombre completo <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class=" form-control" type="text" id="fullname" placeholder="Ingrese el nombre completo">
             </div>
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Rol <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Rol <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idrole" class="form-control">
                     <option selected value="-">-- Seleccione un Rol -- </option>
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Idioma <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Idioma <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="lang" class="form-control">
                     <option selected value="es">Español</option>
@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="row mb-5">
-            <label class="col-12 col-md-3 label-control text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="status" class="form-control">
                     <option selected value="1">Activo</option>

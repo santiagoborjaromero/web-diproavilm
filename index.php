@@ -23,11 +23,11 @@ date_default_timezone_set ($config["timezone"]);
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <base href= "<?php echo BASE_URL;?>" > 
-  <title>Diproavilm - Admin</title>
+  <title id="titleapp">Admin</title>
   <link rel="icon" type="image/x-icon" href="assets/images/icono.ico">
   <meta name="description" content="Diproavilm Admistrador">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">

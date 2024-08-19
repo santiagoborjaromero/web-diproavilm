@@ -44,11 +44,11 @@
 <div class="row m-1 justify-content-md-center">
     <div class="col-12 col-md-11 align-items-center bg-white round-10 pb-4">
         <div class="row mt-4 mb-1">
-            <label class="col-12 col-md-2 label-control text-end">Fecha desde</label>
+            <label class="col-12 col-md-2 control-label text-end">Fecha desde</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="date" id="fechadesde" value="2024-01-01" placeholder="Nombre del menu">
             </div>
-            <label class="col-12 col-md-2 label-control text-end">Fecha hasta</label>
+            <label class="col-12 col-md-2 control-label text-end">Fecha hasta</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="date" id="fechahasta" value="2024-01-01"  placeholder="Nombre del menu">
             </div>

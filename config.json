@@ -3,6 +3,5 @@
     "version": "0.0.1-alpha",
     "webpath": "http://localhost/web6ug8/",
     "apipath": "http://localhost/api6ug8/",
-    "timezone": "America/Guayaquil",
-    "prefijo_documentacion": "001-003-"
+    "timezone": "America/Guayaquil"
 }

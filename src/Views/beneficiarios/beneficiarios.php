@@ -57,18 +57,19 @@
     <div class="col-12 col-md-11 align-items-center bg-white round-10">
         
         <div class="row mt-5 mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Tipo <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Tipo <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-6">
                 <select id="type" class="form-control">
                     <option selected value="C">Cliente</option>
                     <option value="P">Proveedor</option>
                     <option value="A">Cliente/Proveedor</option>
+                    <option value="E">Empresa</option>
                 </select>
             </div>
         </div>
     
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Nombre <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-6">
                 <input class="form-control" type="hidden" id="idbeneficiary" value="">
                 <input class="form-control" type="text" id="name"  placeholder="Nombre">
@@ -78,7 +79,7 @@
             </div> -->
         </div>
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Nombre Comercial</label>
+            <label class="col-12 col-md-3 control-label text-end">Nombre Comercial</label>
             <div class="col-12 col-md-6">
                 <input class="form-control" type="text" id="comercialname"  placeholder="Nombre comercial">
             </div>
@@ -89,7 +90,7 @@
 
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Identificacion <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Identificacion <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="identificationnumber"  placeholder="0000000000000">
             </div>
@@ -97,21 +98,21 @@
 
 
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Pais <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Pais <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idcountry" class="form-control">
                 </select>
             </div>
         </div>
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Provincia <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Provincia <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idprovince" class="form-control">
                 </select>
             </div>
         </div>
         <div class="row mb-2" id="submenuDIV">
-            <label class="col-12 col-md-3 label-control text-end">Ciudad <sup class="text-danger" title="Requerido">*</sup></label>
+            <label class="col-12 col-md-3 control-label text-end">Ciudad <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="idcity" class="form-control">
                 </select>
@@ -119,56 +120,56 @@
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Dirección</label>
+            <label class="col-12 col-md-3 control-label text-end">Dirección</label>
             <div class="col-12 col-md-6">
                 <input class="form-control" type="text" id="address"  placeholder="Direccion">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Parroquia</label>
+            <label class="col-12 col-md-3 control-label text-end">Parroquia</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="parish"  placeholder="Parroquia">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Telefono</label>
+            <label class="col-12 col-md-3 control-label text-end">Telefono</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="phone"  placeholder="Telefono">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Correo Electronico</label>
+            <label class="col-12 col-md-3 control-label text-end">Correo Electronico</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="email"  placeholder="nombre@empresa.com">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Sitio web</label>
+            <label class="col-12 col-md-3 control-label text-end">Sitio web</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="web"  placeholder="www.empresa.com">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Cuota de crédito</label>
+            <label class="col-12 col-md-3 control-label text-end">Cuota de crédito</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="creditquota"  placeholder="0.00">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Dias de crédito</label>
+            <label class="col-12 col-md-3 control-label text-end">Dias de crédito</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="creditdays"  placeholder="0">
             </div>
         </div>
 
         <div class="row mb-2">
-            <label class="col-12 col-md-3 label-control text-end">Cuenta contable</label>
+            <label class="col-12 col-md-3 control-label text-end">Cuenta contable</label>
             <div class="col-12 col-md-3">
                 <input class="form-control" type="text" id="account"  placeholder="0.0.0.0000">
             </div>

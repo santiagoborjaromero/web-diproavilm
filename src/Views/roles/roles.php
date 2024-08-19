@@ -54,13 +54,13 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="row mt-5 mb-2 hide" id="idrolDIV">
-                    <label class="col-12 col-md-4 label-control text-end">ID</label>
+                    <label class="col-12 col-md-4 control-label text-end">ID</label>
                     <div class="col-12 col-md-7">
                         <input class="form-control disabled" readonly type="text" id="idrole" value="">
                     </div>
                 </div>
                 <div class="row mb-2" id="nombreDiv">
-                    <label class="col-12 col-md-4 label-control text-end">Nombre del rol <sup class="text-danger" title="Requerido">*</sup></label>
+                    <label class="col-12 col-md-4 control-label text-end">Nombre del rol <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-6">
                         <input class="form-control" type="text" id="name"  placeholder="Nombre del rol">
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <label class="col-12 col-md-4 label-control text-end">Permisos Generales <sup class="text-danger" title="Requerido">*</sup></label>
+                    <label class="col-12 col-md-4 control-label text-end">Permisos Generales <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-7">
                         <input class="form-check-input" type="checkbox" id="scope_r">
                         <label class="form-check-label" for="scope_r"> <kbd class="bg-success">R</kbd> Lectura </label> <br>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="row mb-5">
-                    <label class="col-12 col-md-4 label-control text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
+                    <label class="col-12 col-md-4 control-label text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
                     <div class="col-12 col-md-7">
                         <select id="status" class="form-control">
                             <option selected value="1">Activo</option>
