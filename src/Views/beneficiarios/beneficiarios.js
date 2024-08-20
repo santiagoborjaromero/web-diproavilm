@@ -150,16 +150,22 @@ function estructuraGrid(){
                     let type = params.data.type;
                     let cls = "";
                     let html = "";
-
-                    if (type == "Cliente"){
-                        // cls  = "text-success";
+                    let text = "";
+                    if (type == "C"){
+                        text = "Cliente"
                         cls  = "bg-success";
-                    } else{
-                        // cls  = "text-warning";
+                    } else if (type == "P"){
+                        text = "Proveedor"
                         cls  = "bg-warning";
+                    } else if (type == "A"){
+                        text = "Proveedor/Cliente"
+                        cls  = "bg-info";
+                    } else if (type == "E"){
+                        text = "Empresa"
+                        cls  = "bg-primary";
                     }
                     // return `<span class='${cls}'>${type}<span>`;
-                    return `<kbd class='${cls}'>${type}<kbd>`;
+                    return `<kbd class='${cls}'>${text}<kbd>`;
                 }
             },
             {

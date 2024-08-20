@@ -4,16 +4,26 @@ setTimeout(function(){
         loadData();
         showDivs(0);
         loadTypes();
+        // loadPresentacion();
+        loadProductos()
+        loadBeneficiarios();
     } else{
         $("#btmDivs").addClass("hide");
         sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
     }
 },800)
 
-
 lstTransacciones = [];
+lstTypes = [];
+rsType = {};
+lstBeneficiarios = [];
+lstProductos = [];
+lstPresentacion = [];
+lstItems = [];
 dataSelected = {};
 var idtransaction = "-1";
+
+
 
 cnf = sessionGet("config");
 
@@ -80,13 +90,9 @@ async function loadData(){
         });
 }
 
-async function loadTypes(idmovementtype = 0){
+async function loadTypes(){
     let metodo = "GET";
     let url = "movtipos";
-    if (idmovementtype!=0){
-        url = `movtipo&id=${idmovementtype}`;
-    }
-    // console.log(url);
 
     await consumirApi(metodo, url)
         .then( resp=>{
@@ -94,21 +100,20 @@ async function loadTypes(idmovementtype = 0){
                 resp = JSON.parse(resp);
             } catch (ex) {}
 
-            // console.log(resp.message[0])
+            // console.log(resp);
 
             if (resp.status && resp.status == 'ok') {
                 if (resp.message){
 
-                    if (idmovementtype == 0){
-                        resp.message.forEach(e=>{
-                            // console.log(e.idmovementtype)
-                            $("#idmovementtype").append(`<option value='${e.idmovementtype}'>${e.name}</option>`)
-                        });
-                    } else {
-                        let obj = resp.message[0];
-                        let seq = obj.sequential + 1;
-                        $("#numberdocument").val(cnf.prefijo_documentacion + seq.toString().padStart(7, "0"));
-                    }
+                    lstTypes = [];
+                    resp.message.forEach(e=>{
+                        lstTypes.push(e);
+                        $("#idmovementtype").append(`<option value='${e.idmovementtype}'>${e.name}</option>`)
+                    });
+
+                    rsType = lstTypes[0];
+                    seleccionTipoMovimiento(rsType.idmovementtype);
+
                 }
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
@@ -120,6 +125,91 @@ async function loadTypes(idmovementtype = 0){
         });
 }
 
+async function loadBeneficiarios(){
+    let metodo = "GET";
+    let url = `bene`;
+    
+    await consumirApi(metodo, url)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            // console.log(resp)
+            if (resp.status && resp.status == 'ok') {
+                if (resp.message){
+                    lstBeneficiarios = resp.message;
+                }
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
+async function loadPresentacion(){
+    
+    $("#idpresentation").html("");
+    
+    let metodo = "GET";
+    let url = `presentacion`;
+    
+    await consumirApi(metodo, url)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp.status && resp.status == 'ok') {
+                if (resp.message){
+                    resp.message.forEach(e=>{
+                        lstPresentacion.push(e);
+                        $("#idpresentation").append(`<option value='${e.idpresentation}'>${e.acronym}</option>`);
+                    });
+                }
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
+async function loadProductos(){
+    
+    $("#idproduct").html("");
+    $("#idproduct").append(`<option value='-'>-- Seleccione un producto --</option>`);
+
+    let metodo = "GET";
+    let url = `productos`;
+    
+    await consumirApi(metodo, url)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp.status && resp.status == 'ok') {
+                if (resp.message){
+                    resp.message.forEach(e=>{
+                        lstProductos.push(e);
+                        $("#idproduct").append(`<option value='${e.idproduct}'>${e.name}</option>`);
+                    });
+                }
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
 
 function estructuraGrid(){
     gridOptions = {
@@ -240,44 +330,52 @@ function estructuraGrid(){
     gridApi.sizeColumnsToFit();
 }
 
-
 function cleanRecords(record=null){
-    $("#btnSelectAll").text("Seleccionar Todo");
+
+    let idmovementtype =  $("#idmovementtype").val();
+    seleccionTipoMovimiento(idmovementtype);
+
+    limpiarIngresoProducto();
+    lstItems = [];
+    refreshItemData();
     
-    let idtransaction = -1;
-    let name = "";
-    let scope = "";
-    let status = "0";
-    $("#name").prop("readonly", false);
-    $("#name").prop("disabled", false);
-    if ($('#scope_r').is(':checked')) $('#scope_r').trigger('click');
-    if ($('#scope_w').is(':checked')) $('#scope_w').trigger('click');
-    if ($('#scope_d').is(':checked')) $('#scope_d').trigger('click');
 
-    if(record){
-        idtransaction = record.idtransaction;
-        name = record.name;
-        scope = record.scope;
 
-        if (scope.includes("R")) $('#scope_r').trigger('click');
-        if (scope.includes("W")) $('#scope_w').trigger('click');
-        if (scope.includes("D")) $('#scope_d').trigger('click');
+    // $("#btnSelectAll").text("Seleccionar Todo");
+    // let idtransaction = -1;
+    // let name = "";
+    // let scope = "";
+    // let status = "0";
+    // $("#name").prop("readonly", false);
+    // $("#name").prop("disabled", false);
+    // if ($('#scope_r').is(':checked')) $('#scope_r').trigger('click');
+    // if ($('#scope_w').is(':checked')) $('#scope_w').trigger('click');
+    // if ($('#scope_d').is(':checked')) $('#scope_d').trigger('click');
 
-        status = record.status.toString();
-        $("#username").prop("readonly", true);
-        $("#username").prop("disabled", true);
-    }
+    // if(record){
+    //     idtransaction = record.idtransaction;
+    //     name = record.name;
+    //     scope = record.scope;
 
-    if (idtransaction == -1){
-        $("#idrolDIV").addClass("hide");
-    } else{
-        $("#idrolDIV").removeClass("hide");
-    }
+    //     if (scope.includes("R")) $('#scope_r').trigger('click');
+    //     if (scope.includes("W")) $('#scope_w').trigger('click');
+    //     if (scope.includes("D")) $('#scope_d').trigger('click');
 
-    $("#idtransaction").val(idtransaction);
-    $("#name").val(name);
-    $("#scope").val(scope);
-    $("#status").val(status);
+    //     status = record.status.toString();
+    //     $("#username").prop("readonly", true);
+    //     $("#username").prop("disabled", true);
+    // }
+
+    // if (idtransaction == -1){
+    //     $("#idrolDIV").addClass("hide");
+    // } else{
+    //     $("#idrolDIV").removeClass("hide");
+    // }
+
+    // $("#idtransaction").val(idtransaction);
+    // $("#name").val(name);
+    // $("#scope").val(scope);
+    // $("#status").val(status);
 }
 
 showDivs = (que = 0) => {
@@ -439,7 +537,224 @@ function habilitarBotones(opc = false){
 }
 
 
+function seleccionTipoMovimiento(idmovementtype){
+
+    lstTypes.forEach( e=>{
+        if (e.idmovementtype == parseInt(idmovementtype)){
+            rsType = e;
+            $("#tipoSiglas").html(e.acronym);
+        }
+    });
+    
+    if (rsType.entry == "A"){
+        $("#entry").prop("disabled", false);
+    } else{
+        $("#entry").prop("disabled", true);
+        $("#entry").val(rsType.entry)
+    }
+    
+    //TODO: Calculo si permite edicion de numdoc o no 
+    if (rsType.calculatenumdoc == '1'){
+        //TODO: Calculo de numero de documento
+        let seq = rsType.sequential + 1;
+        $("#numberdocument").val(cnf.prefijo_documentacion + seq.toString().padStart(7, "0"));
+        $("#numberdocument").prop("disabled", true);
+    } else{
+        $("#numberdocument").val("");
+        $("#numberdocument").prop("disabled", false);
+    }
+
+    //TODO: Calculo de Beneficiarios ya sean proveedores o clientes
+    $("#idbeneficiary").html("");
+    lstBeneficiarios.forEach(e=>{
+        if (e.type == rsType.beneficiarytype || (rsType.beneficiarytype!="E" && e.type == "A")){
+            $("#idbeneficiary").append(`<option value='${e.idbeneficiary}'>${e.nombre}</option>`);        
+        }
+    });
+}
+
+
 $("#idmovementtype").on("change", function(){
     let idmovementtype =  $(this).val();
-    loadTypes(idmovementtype);  
+    seleccionTipoMovimiento(idmovementtype);
+});
+
+$("#searchProduct").on("keypress", function($event){
+    let textoBuscar = $(this).val();
+    let lstprod= []
+    if ($event.charCode == 13){
+        lstProductos.forEach(e=>{
+            if (e.name.indexOf(textoBuscar)>-1 || e.description.indexOf(textoBuscar)>-1 || e.productcode.indexOf(textoBuscar)>-1 || e.barcode.indexOf(textoBuscar)>-1){
+                lstprod.push(e)
+            }
+        });
+    
+        let barcode = "";
+        let idproduct = "";
+        let qty = 0;
+        let price = 0;
+        let total = 0;
+    
+        if (lstprod.length==1){
+            barcode = lstprod[0].barcode;
+            idproduct = lstprod[0].idproduct;
+            qty = 1;
+            price = rsType.typevalue == 'C' ? lstprod[0].cost :  lstprod[0].price ;
+            total = 0;
+            $("#searchProduct").val(barcode);
+            $("#idproduct").val(idproduct);
+            $("#entry").val(rsType.entry);
+            $("#qty").val(qty);
+            $("#price").val(price);
+            $("#total").val(total);
+            focus("qty");
+        }
+    
+    }
+    // console.log(lstprod)
 })
+
+function focus(obj, isText=true){
+    var element = document.getElementById(obj);
+    element.focus();
+    if (isText){
+        element.setSelectionRange(0, ($(`#${obj}`).val()).length);
+    }
+}
+
+$("#qty").keypress(function( event ){
+    if ( event.which == 13 ) {
+        totalItem();
+        focus("price");
+        return false;
+    }
+});
+
+$("#price").keypress(function( event ){
+    if ( event.which == 13 ) {
+        totalItem();
+        focus("btmAddItem", false);
+        return false;
+    }
+});
+
+$("#btmAddItem").on("click", function(){
+    let idproduct =  $("#idproduct").val();
+    let barcode = "";
+    let name = "";
+
+    lstProductos.forEach(e=>{
+        if (e.idproduct == idproduct){
+            barcode = e.barcode;
+            name = e.name;
+        }
+    })
+
+    let record = {
+        idproduct: idproduct,
+        barcode: barcode,
+        name:  name,
+        entry:  $("#entry").val(),
+        qty:  parseFloat($("#qty").val()),
+        price:  parseFloat($("#price").val()),
+        total:  parseFloat($("#total").val())
+    }
+
+    updateItem(record);
+
+    limpiarIngresoProducto();
+    focus("searchProduct",false);
+});
+
+function limpiarIngresoProducto(){
+    $("#searchProduct").val("");
+    $("#idproduct").val("-");
+    $("#entry").val(rsType.entry);
+    $("#qty").val(0);
+    $("#price").val(0);
+    $("#total").val(0);
+}
+
+function totalItem(){
+    let qty = parseFloat($("#qty").val());
+    let price = parseFloat($("#price").val());
+    total = qty * price;
+    $("#total").val(total);
+}
+
+function updateItem(record){
+    let found = false;
+    lstItems.forEach( (e, idx)=>{
+        if (e.idproduct == record.idproduct){
+            found = true;
+            e = record;
+        }
+    });
+
+    if (!found){
+        lstItems.push(record);
+    }
+    refreshItemData();
+}
+
+function fillItem(record){
+    $("#searchProduct").val(record.barcode);
+    $("#idproduct").val(record.idproduct);
+    $("#entry").val(record.entry);
+    $("#qty").val(record.qty);
+    $("#price").val(record.price);
+    $("#total").val(record.total);
+}
+
+function editItem(idproduct, action){
+    lstItems.forEach( (e, idx)=>{
+        if (e.idproduct == idproduct){
+            if (action == "E"){
+                fillItem(e)
+            } else{
+                lstItems.splice(idx, 1);
+            }
+        }
+    });
+    refreshItemData();
+
+}
+
+function refreshItemData(){
+
+    $("#tblbody").html("");
+
+    let subtotal = 0;
+    let descuento = 0;
+    let ttotal = 0;
+
+    lstItems.forEach(e=>{
+        subtotal += total;
+        ttotal += total;
+
+        $("#tblbody").append(`
+            <tr>
+                <td>${e.idproduct}</td>
+                <td>${e.barcode}</td>
+                <td>${e.name}</td>
+                <td class='text-center'>${e.entry}</td>
+                <td class='text-end'>${e.qty.toFixed(2)}</td>
+                <td class='text-end'>${e.price.toFixed(2)}</td>
+                <td class='text-end'>${e.total.toFixed(2)}</td>
+                <td class='text-center'>
+                    <button id="btmEditItem" onclick="javascript:editItem(${e.idproduct}, 'E')" class="btn btn-info mr-1" title="Editar">
+                        <i class="far fa-edit"></i>
+                    </button>
+                    <button id="btmDeleteItem" onclick="javascript:editItem(${e.idproduct}, 'D')" class="btn btn-danger mr-1" title="Eliminar">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>    
+        `);
+    })
+
+}
+
+function totalizar(){
+
+}
