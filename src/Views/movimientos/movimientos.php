@@ -36,11 +36,34 @@
         </button>
     </div>
 </div>
-
-<div class="row mt-2 justify-content-md-center" id="GridDiv">
-    <div class="col-12 col-md-11 align-items-center">
-        <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+<div  id="GridDiv">
+    <div class="row m-1 justify-content-md-center">
+        <div class="col-12 col-md-11 align-items-center bg-white round-10 pb-4">
+            <div class="row mt-4 mb-1">
+                <label class="col-12 col-md-2 control-label text-end mt-1">Fecha desde</label>
+                <div class="col-12 col-md-3">
+                    <input class="form-control" type="date" id="fechadesde" value="2024-01-01" placeholder="Nombre del menu">
+                </div>
+                <label class="col-12 col-md-2 control-label text-end mt-1">Fecha hasta</label>
+                <div class="col-12 col-md-3">
+                    <input class="form-control" type="date" id="fechahasta" value="2024-01-01"  placeholder="Nombre del menu">
+                </div>
+                <div class="col-12 col-md-2">
+                    <button id="btnBuscar" class='btn btn-primary'>
+                        <i class="fas fa-search"></i>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    <div class="row mt-2 justify-content-md-center">
+        <div class="col-12 col-md-11 align-items-center">
+            <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -84,13 +107,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td> <input class="form-control" type="date" id="fecha" value="2024-01-01" placeholder="Fecha"> </td>
-                    <td> 
+                    <td> <input class="form-control" type="date" id="date" value="2024-01-01" placeholder="Fecha"> </td>
+                    <td>
                         <select id="idmovementtype" class="form-control">
                         </select>
                     </td>
                     <td class="pt-2"><kbd id="tipoSiglas" class="bg-primary mt-5">FC</kbd></td>
-                    <td> <input class="form-control" type="text" id="numberdocument"  placeholder="000000000"> </td>
+                    <td> <input class="form-control" type="text" id="numberdocument" placeholder="000000000"> </td>
                     <td width="50%">
                         <select id="idbeneficiary" class="form-control">
                             <option value="-">-- Seleccione --</option>
@@ -114,22 +137,22 @@
             </thead>
             <tbody>
                 <tr>
-                    <td> 
-                        <input class="form-control" type="text" id="searchProduct"  placeholder="Ingrese Nombre o codigo">
+                    <td>
+                        <input class="form-control" type="text" id="searchProduct" placeholder="Ingrese Nombre o codigo">
                     </td>
-                    <td> 
-                        <select id="idproduct" class="form-control">
+                    <td>
+                        <select disabled id="idproduct" class="form-control">
                         </select>
                     </td>
-                    <td> 
-                        <select id="entry" disabled class="form-control">   
+                    <td>
+                        <select id="entry" disabled class="form-control">
                             <option selected value="I">Ingreso</option>
                             <option value="E">Egreso</option>
                         </select>
                     </td>
-                    <td> <input class="form-control text-end" type="text" id="qty"  placeholder="0.00"> </td>
-                    <td> <input class="form-control text-end" type="text" id="price"  placeholder="0.00"> </td>
-                    <td> <input readonly disabled class="form-control text-end" type="text" id="total"  placeholder="0.00"> </td>
+                    <td> <input class="form-control text-end" type="text" id="qty" placeholder="0.00"> </td>
+                    <td> <input class="form-control text-end" type="text" id="price" placeholder="0.00"> </td>
+                    <td> <input readonly disabled class="form-control text-end" type="text" id="total" placeholder="0.00"> </td>
                     <td>
                         <button id="btmAddItem" class="btn btn-primary">
                             Añadir
@@ -155,6 +178,45 @@
             <tbody id="tblbody"></tbody>
         </table>
 
+        <div class="row mb-5">
+            <div class="col-6 col-md-8">
+                <div class="row mb-3">
+                    <div class="col-3 text-end t12 bold">
+                        Comentarios / Referencia
+                    </div>
+                    <div class="col-9 text-start">
+                        <textarea id="reference" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3 text-end t12 bold">
+                        Son:
+                    </div>
+                    <div class="col-9 text-start" id="son">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3 text-end t12 bold">
+                        Número de Items:
+                    </div>
+                    <div class="col-9 text-start" id="nitems"></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="row bg-light">
+                    <div class="col text-end bold mt-2">SubTotal</div>
+                    <div class="col"><input disabled readonly type="text" id="subtotal" class="form-control text-end" value="0.00"></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col text-end bold mt-2">Descuento</div>
+                    <div class="col"><input type="text" id="desc" class="form-control text-end" value="0.00"></div>
+                </div>
+                <div class="row bg-light mt-1 ">
+                    <div class="col text-end bold mt-2">Total</div>
+                    <div class="col"><input disabled readonly type="text" id="totalg" class="form-control text-end" value="0.00"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

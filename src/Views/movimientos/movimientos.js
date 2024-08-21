@@ -1,12 +1,17 @@
 setTimeout(function(){
     if (permisosLectura){
         estructuraGrid();
-        loadData();
         showDivs(0);
         loadTypes();
-        // loadPresentacion();
         loadProductos()
         loadBeneficiarios();
+
+        $("#date").val( moment().format("YYYY-MM-DD") );
+        $("#fechadesde").val( moment().format("YYYY-MM") + "-01" );
+        $("#fechahasta").val( moment().format("YYYY-MM-DD") );
+
+        loadData();
+        
     } else{
         $("#btmDivs").addClass("hide");
         sendMessage("error", "Autorizacion", mensajeNoPermisoLectura);
@@ -22,8 +27,6 @@ lstPresentacion = [];
 lstItems = [];
 dataSelected = {};
 var idtransaction = "-1";
-
-
 
 cnf = sessionGet("config");
 
@@ -45,14 +48,27 @@ if (permisosBorrado){
     $("#divD").addClass("hide");
 }
 
+$("#btnBuscar").on("click", function(){
+    loadData();
+});
+
+
 async function loadData(){
     showLoading("Cargando");
 
     habilitarBotones(false);
+
+    let dini = $("#fechadesde").val();
+    let dfin  = $("#fechahasta").val();
+
+    let params = {
+        fecha_ini: dini,
+        fecha_fin: dfin
+    }
     
     let metodo = "GET";
-    let url = "transacciones";
-    await consumirApi(metodo, url)
+    let url = "transaccionesFiltro";
+    await consumirApi(metodo, url, params)
         .then( resp=>{
             closeLoading();
             try {
@@ -310,7 +326,7 @@ function estructuraGrid(){
                 type: "rightAligned",
                 cellClass: "text-end",
                 sortable: true, 
-                valueFormatter: params => params.data.total.toFixed(2),
+                valueFormatter: params => numero(params.data.total,2)
             },
             {
                 headerName: "Items",
@@ -339,6 +355,9 @@ function cleanRecords(record=null){
     lstItems = [];
     refreshItemData();
     
+    $("#date").val( moment().format("YYYY-MM-DD") );
+
+    let idtransaction = "-1";
 
 
     // $("#btnSelectAll").text("Seleccionar Todo");
@@ -391,7 +410,7 @@ showDivs = (que = 0) => {
             $("#btmCancel").addClass("hide");
             habilitarBotones(false);
 
-            $("#myGrid").removeClass("hide");
+            $("#GridDiv").removeClass("hide");
             $("#FormDiv").addClass("hide");
             break;
         case 1:
@@ -404,7 +423,7 @@ showDivs = (que = 0) => {
             $("#btmSave").removeClass("hide");
             $("#btmCancel").removeClass("hide");
 
-            $("#myGrid").addClass("hide");
+            $("#GridDiv").addClass("hide");
             $("#FormDiv").removeClass("hide");
             break;
         case 2:
@@ -424,23 +443,39 @@ $("#btmSave").on("click", function(){
 
 
 async function saveData(){
-    let idtransaction = $("#idtransaction").val();
-
-    let scope = "";
-
-    if ($('#scope_r').is(':checked')) scope += "R";
-    if ($('#scope_w').is(':checked')) scope += "W";
-    if ($('#scope_d').is(':checked')) scope += "D";
-
-    let name = $.trim($("#name").val());
-    let status = parseInt($("#status").val());
+    
+    let date = $("#date").val();
+    let idmovementtype = $("#idmovementtype").val();
+    let numberdocument = $("#numberdocument").val();
+    let idbeneficiary = $("#idbeneficiary").val();
+    let reference = $("#reference").val();
 
     let error = false;
     let errMsg = "";
     
-    if (name == "") {
+    if (date == "") {
         error = true;
-        errMsg = "Debe ingresar el nombre del usuario";
+        errMsg = "Debe ingresar la fecha de la transacción";
+    }
+
+    if (!error && moment(date) > moment()) {
+        error = true;
+        errMsg = "La fecha debe ser menor o igual a la del dia de hoy.";
+    }
+    
+    if (!error && numberdocument == ""){
+        error = true;
+        errMsg = "Debe ingresar el numero de documento";
+    }
+
+    if (!error && (idbeneficiary == "" || idbeneficiary == "-") ){
+        error = true;
+        errMsg = "Debe seleccionar el beneficiario";
+    }
+
+    if (!error && lstItems.length==0){
+        error = true;
+        errMsg = "Debe ingresar por lo menos un producto para guardar la transacción.";
     }
     
     if (error){
@@ -448,21 +483,43 @@ async function saveData(){
         return;
     }
 
-    let params = {
-        name,
-        scope,
-        status
-    };
+    let lstSave = [];
+    let subtotal = 0;
+    let discount = parseFloat($("#desc").val());
+    let ttotal = 0;
 
-    // console.log(params)
+
+    lstItems.forEach(e=>{
+        lstSave.push({
+            idproduct: e.idproduct,
+            entry: e.entry,
+            qty: e.qty,
+            price: e.price,
+            total: e.total
+        })
+        subtotal += e.total;
+    });
+
+    ttotal = subtotal - discount;
+
+    let params = {
+        idbeneficiary,
+        idmovementtype,
+        date: date + " " + moment().format("HH:mm:ss") ,
+        numberdocument,
+        subtotal,
+        discount,
+        total: ttotal,
+        reference,
+        items: lstSave
+    };
 
     let method = "PUT";
     // let method = "POST";
     if (idtransaction == -1){
         method = "POST";
-        params["name"] = name;
     }
-    let url = `saveRole&id=${idtransaction}`;
+    let url = `saveTransaction&id=${idtransaction}`;
     
     await consumirApi(method, url, params)
         .then( resp=>{
@@ -477,8 +534,7 @@ async function saveData(){
                         idtransaction = resp.message;
                     }
                     showDivs(0);
-                    // loadData();
-                    saveDataRoleMenu(idtransaction);
+                    loadData();
                 } else {
                     sendMessage("error", title, resp.message || JSON.stringify(resp));
                 }
@@ -660,7 +716,20 @@ $("#btmAddItem").on("click", function(){
         total:  parseFloat($("#total").val())
     }
 
-    updateItem(record);
+    // updateItem(record);
+
+    let found = false;
+    lstItems.forEach( (e, idx)=>{
+        if (e.idproduct == record.idproduct){
+            found = true;
+            lstItems[idx] = record;
+        }
+    });
+
+    if (!found){
+        lstItems.push(record);
+    }
+    refreshItemData();
 
     limpiarIngresoProducto();
     focus("searchProduct",false);
@@ -682,20 +751,6 @@ function totalItem(){
     $("#total").val(total);
 }
 
-function updateItem(record){
-    let found = false;
-    lstItems.forEach( (e, idx)=>{
-        if (e.idproduct == record.idproduct){
-            found = true;
-            e = record;
-        }
-    });
-
-    if (!found){
-        lstItems.push(record);
-    }
-    refreshItemData();
-}
 
 function fillItem(record){
     $("#searchProduct").val(record.barcode);
@@ -724,23 +779,16 @@ function refreshItemData(){
 
     $("#tblbody").html("");
 
-    let subtotal = 0;
-    let descuento = 0;
-    let ttotal = 0;
-
     lstItems.forEach(e=>{
-        subtotal += total;
-        ttotal += total;
-
         $("#tblbody").append(`
             <tr>
                 <td>${e.idproduct}</td>
                 <td>${e.barcode}</td>
                 <td>${e.name}</td>
                 <td class='text-center'>${e.entry}</td>
-                <td class='text-end'>${e.qty.toFixed(2)}</td>
-                <td class='text-end'>${e.price.toFixed(2)}</td>
-                <td class='text-end'>${e.total.toFixed(2)}</td>
+                <td class='text-end'>${numero(e.qty,2)}</td>
+                <td class='text-end'>${numero(e.price,2)}</td>
+                <td class='text-end'>${numero(e.total,2)}</td>
                 <td class='text-center'>
                     <button id="btmEditItem" onclick="javascript:editItem(${e.idproduct}, 'E')" class="btn btn-info mr-1" title="Editar">
                         <i class="far fa-edit"></i>
@@ -753,8 +801,54 @@ function refreshItemData(){
         `);
     })
 
+    totalizar();
+
 }
 
 function totalizar(){
+
+    let desc = parseFloat($("#desc").val());
+    let subtotal = 0;
+    let ttotal = 0;
+
+    if (lstItems.length>0){
+        lstItems.forEach( e=>{
+            subtotal += parseFloat(e.total);
+        });
+    }
+
+    ttotal = subtotal - desc;
+
+    $("#subtotal").val(numero(subtotal,2));
+    $("#desc").val(numero(desc,2));
+    $("#totalg").val(numero(ttotal,2));
+
+    let numlet = numeroALetras(ttotal) + " DOLARES DE ESTADOS UNIDOS DE AMERICA";
+
+    $("#nitems").html(lstItems.length);
+    $("#son").html(numlet);
+}
+
+
+$("#btmCancel").on("click", function(){
+    showDivs(0);
+});
+
+
+$("#desc").keypress(function( event ){
+    if ( event.which == 13 ) {
+        totalizar();
+        return false;
+    }
+});
+
+
+
+function imprimir( record ){
+    var doc = new jsPDF()
+
+    doc.text('Hello world!', 10, 10)
+    doc.save('a4.pdf')
+
 
 }

@@ -96,7 +96,11 @@ date_default_timezone_set ($config["timezone"]);
   <!-- MOMENT -->
   <script src="https://momentjs.com/downloads/moment.js"></script>
 
+  <!-- PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/numeroALetras.js"></script>
 </body>
 </html>
