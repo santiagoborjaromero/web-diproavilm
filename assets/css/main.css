@@ -28,21 +28,27 @@
     --vert: 1.1032150550494102px;
 
     
-    --color-datagrid-bg-header: #9fdee2;
-    --color-datagrid-bg-header-hover: #ffffff9d;
+    /* --color-datagrid-bg-header: #fcf5d2; */
+    --color-datagrid-bg-header: #fff1e3;
+    --color-datagrid-fore-header: #0d191a;
+
+    --color-datagrid-bg-header-hover: #ffffff9a
     --color-datagrid-bg-header-bg-hover: #ffffff1a;
     --color-datagrid-header-font-color: #ffffff;
     --color-datagrid-row-impar: #d1d1d1;
     --color-datagrid-row-impar-border: #f5f5f5;
     --color-datagrid-font-color: rgb(0, 0, 0);
 }
-.ag-theme-quartz {
+/* .ag-theme-quartz {
     --ag-foreground-color: #000;
     --ag-background-color: #fff;
     --ag-header-background-color: var(--color-datagrid-bg-header);
     --ag-header-foreground-color: #000;
     --ag-font-size: 14px;
-}
+} */
+
+
+
 
 
 body{
@@ -276,3 +282,11 @@ body{
 .swal2-container {
     z-index: 10000;
 }
+
+.h50 {min-height: 50px !important; height: 50px !important;}
+.h60 {min-height: 60px !important; height: 60px !important;}
+.h70 {min-height: 70px !important; height: 70px !important;}
+.h80 {min-height: 80px !important; height: 80px !important;}
+.h90 {min-height: 90px !important; height: 90px !important;}
+.h100 {min-height: 500px !important; height: 500px !important;}
+

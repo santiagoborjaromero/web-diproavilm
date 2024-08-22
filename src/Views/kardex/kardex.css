@@ -1,0 +1,12 @@
+
+.ag-theme-quartz {
+    --ag-header-foreground-color: var(--color-datagrid-fore-header);
+    --ag-header-background-color: var(--color-datagrid-bg-header);
+}
+
+.bg-header-1{
+    border-left: 1px solid #e6ceaa;
+}
+.bg-header-2{
+    border-left: 1px solid #e6ceaa;
+}

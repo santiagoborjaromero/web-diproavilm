@@ -173,7 +173,7 @@ function estructuraGrid(){
         defaultColDef: {
             flex: 1,
             minWidth: 50,
-            filter: true,
+            filter: false,
             sortable: true,
             resizable: false,
             floatingFilter: false,
@@ -197,13 +197,13 @@ function estructuraGrid(){
             habilitarBotones(true);
         },
         columnDefs: [
-            {
-                headerName: "ID",
-                flex: 1, 
-                field: "idproduct",
-                filter: false,
-                cellClass: "text-start",
-            },
+            // {
+            //     headerName: "ID",
+            //     flex: 1, 
+            //     field: "idproduct",
+            //     filter: false,
+            //     cellClass: "text-start",
+            // },
             // {
             //     headerName: "Código",
             //     flex: 1, 
@@ -215,7 +215,7 @@ function estructuraGrid(){
                 headerName: "Código Barras",
                 flex: 1, 
                 field: "barcode",
-                filter: false,
+                filter: true,
                 cellClass: "text-start",
             },
             {

@@ -1,3 +1,16 @@
+.ag-theme-quartz {
+    /* --ag-foreground-color: rgb(17, 64, 134);
+    --ag-background-color: rgb(249, 245, 227); */
+    --ag-header-foreground-color: var(--color-datagrid-fore-header);
+    --ag-header-background-color: var(--color-datagrid-bg-header);
+    /* --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+    --ag-header-column-resize-handle-color: rgb(126, 46, 132); */
+
+    /* --ag-font-size: 14px;
+    --ag-font-family: monospace; */
+}
+
+
 .border{
     border-top: 1px dashed #dadada;
 }
