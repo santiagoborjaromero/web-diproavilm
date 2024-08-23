@@ -6,7 +6,7 @@
         </span>
     </div>
     <div class="col-12  col-md-8 text-end">
-        <button id="btmEdit" class="btn btn-info mr-1" title="Nuevo">
+        <button id="btmVerMas" class="btn btn-info mr-1" title="Nuevo">
             <i class="fa fa-eye"></i>
             Ver mas detalles
         </button>

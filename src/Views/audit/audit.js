@@ -231,27 +231,15 @@ showDivs = (que = 0) => {
         case 0:
             //Grid o listado 
             $("#Title").html(title);
-            $("#btmNew").removeClass("hide");
-            $("#btmEdit").removeClass("hide");
-            $("#btmDelete").removeClass("hide");
-            $("#btmRefresh").removeClass("hide");
-            $("#btmSave").addClass("hide");
-            $("#btmCancel").addClass("hide");
+            $("#btmVerMas").removeClass("hide");
             habilitarBotones(false);
-
             $("#myGrid").removeClass("hide");
             $("#FormDiv").addClass("hide");
             break;
         case 1:
             //Formulario de edicion o nuevo
             $("#Title").html("Edición de " + title);
-            $("#btmNew").addClass("hide");
-            $("#btmEdit").addClass("hide");
-            $("#btmDelete").addClass("hide");
-            $("#btmRefresh").addClass("hide");
-            $("#btmSave").removeClass("hide");
-            $("#btmCancel").removeClass("hide");
-
+            $("#btmVerMas").addClass("hide");
             $("#myGrid").addClass("hide");
             $("#FormDiv").removeClass("hide");
             break;
@@ -276,9 +264,9 @@ $("#btmCancel").on("click", function(){
     showDivs(0);
 });
 
-$("#btmEdit").on("click", function(){
+$("#btmVerMas").on("click", function(){
     // cleanRecords(dataSelected);
-    // showDivs(1);
+    // showDivs(0);
 
     let html = "<table class='table table-striped'>";
     html += "<tbody>";
@@ -291,6 +279,7 @@ $("#btmEdit").on("click", function(){
     html += "</tbody>";
     html += "</table>";
     sendMessage("info", "Auditor", html, true);
+    habilitarBotones(false);
 });
 
 $("#btmDelete").on("click", function(){
@@ -365,32 +354,14 @@ $("#btmRefresh").on("click", function(){
 });
 
 function habilitarBotones(opc = false){
-    if (opc ){
-        $("#btmEdit").removeClass("disabled");
-        $("#btmEdit").removeClass("btn-secondary");
-        $("#btmEdit").addClass("btn-info");
-        
-        $("#btmDelete").removeClass("disabled");
-        $("#btmDelete").removeClass("btn-secondary");
-        $("#btmDelete").addClass("btn-danger");
-
-        $("#btmReset").removeClass("disabled");
-        $("#btmReset").removeClass("btn-secondary");
-        $("#btmReset").addClass("btn-info");
-        
+    if (opc){
+        $("#btmVerMas").removeClass("disabled");
+        $("#btmVerMas").removeClass("btn-secondary");
+        $("#btmVerMas").addClass("btn-info");
     } else {
-        $("#btmEdit").addClass("disabled");
-        $("#btmEdit").removeClass("btn-info");
-        $("#btmEdit").addClass("btn-secondary");
-
-        $("#btmDelete").addClass("disabled");
-        $("#btmDelete").removeClass("btn-danger");
-        $("#btmDelete").addClass("btn-secondary");
-        
-        $("#btmReset").addClass("disabled");
-        $("#btmReset").removeClass("btn-info");
-        $("#btmReset").addClass("btn-secondary");
-        
+        $("#btmVerMas").addClass("disabled");
+        $("#btmVerMas").removeClass("btn-info");
+        $("#btmVerMas").addClass("btn-secondary");
     }
 }
 
