@@ -1,3 +1,8 @@
+//TODO: FALTA - POPUP para seleccionar producto o buscar por nombre
+//TODO: OK - Que cuando elijan tipo de comprobante y luego ingresen productos se disabled para que no cambien de documento los pilas
+//TODO: FALTA - Revisar los stocks
+//TODO: FALTA - Poner stock anterior o actual frente a lo que tiene
+
 setTimeout(function(){
     if (permisosLectura){
         estructuraGrid();
@@ -79,19 +84,18 @@ async function loadData(){
 
             if (resp.status && resp.status == 'ok') {
                 lstTransacciones = [];
-                resp.message.forEach( e => {
-                    e["idtransaction"] = e.idtransaction.toString();
-                    lstTransacciones.push(e)    
-                    
-                    // transaction = { add: [e] };
-                    // gridApi.applyTransactionAsync(transaction);
 
-                });
-
+                if (resp.message){
+                    resp.message.forEach( e => {
+                        e["idtransaction"] = e.idtransaction.toString();
+                        lstTransacciones.push(e)    
+                        // transaction = { add: [e] };
+                        // gridApi.applyTransactionAsync(transaction);
+                    });
+                }
                 // lstTransacciones.sort((a, b) =>
                 //     b.date.localeCompare(a.date)
                 // );
-                
                 gridApi.setGridOption("rowData", lstTransacciones);
                 gridApi.sizeColumnsToFit();
 
@@ -358,43 +362,6 @@ function cleanRecords(record=null){
     $("#date").val( moment().format("YYYY-MM-DD") );
 
     let idtransaction = "-1";
-
-
-    // $("#btnSelectAll").text("Seleccionar Todo");
-    // let idtransaction = -1;
-    // let name = "";
-    // let scope = "";
-    // let status = "0";
-    // $("#name").prop("readonly", false);
-    // $("#name").prop("disabled", false);
-    // if ($('#scope_r').is(':checked')) $('#scope_r').trigger('click');
-    // if ($('#scope_w').is(':checked')) $('#scope_w').trigger('click');
-    // if ($('#scope_d').is(':checked')) $('#scope_d').trigger('click');
-
-    // if(record){
-    //     idtransaction = record.idtransaction;
-    //     name = record.name;
-    //     scope = record.scope;
-
-    //     if (scope.includes("R")) $('#scope_r').trigger('click');
-    //     if (scope.includes("W")) $('#scope_w').trigger('click');
-    //     if (scope.includes("D")) $('#scope_d').trigger('click');
-
-    //     status = record.status.toString();
-    //     $("#username").prop("readonly", true);
-    //     $("#username").prop("disabled", true);
-    // }
-
-    // if (idtransaction == -1){
-    //     $("#idrolDIV").addClass("hide");
-    // } else{
-    //     $("#idrolDIV").removeClass("hide");
-    // }
-
-    // $("#idtransaction").val(idtransaction);
-    // $("#name").val(name);
-    // $("#scope").val(scope);
-    // $("#status").val(status);
 }
 
 showDivs = (que = 0) => {
@@ -432,7 +399,6 @@ showDivs = (que = 0) => {
 }
 
 $("#btmNew").on("click", function(){
-    
     cleanRecords();
     showDivs(1);
 });
@@ -657,9 +623,10 @@ $("#searchProduct").on("keypress", function($event){
             qty = 1;
             price = rsType.typevalue == 'C' ? lstprod[0].cost :  lstprod[0].price ;
             total = 0;
+
             $("#searchProduct").val(barcode);
             $("#idproduct").val(idproduct);
-            $("#entry").val(rsType.entry);
+            $("#entry").val(rsType.entry!="A" ? rsType.entry : 'I');
             $("#qty").val(qty);
             $("#price").val(price);
             $("#total").val(total);
@@ -733,12 +700,21 @@ $("#btmAddItem").on("click", function(){
 
     limpiarIngresoProducto();
     focus("searchProduct",false);
+
 });
+
+function checkTipoComprobante(){
+    if (lstItems.length>0){
+        $("#idmovementtype").prop("disabled", true);
+    }else{
+        $("#idmovementtype").prop("disabled", false);
+    }
+}
 
 function limpiarIngresoProducto(){
     $("#searchProduct").val("");
     $("#idproduct").val("-");
-    $("#entry").val(rsType.entry);
+    $("#entry").val(rsType.entry!="A" ? rsType.entry : 'I');
     $("#qty").val(0);
     $("#price").val(0);
     $("#total").val(0);
@@ -802,6 +778,7 @@ function refreshItemData(){
     })
 
     totalizar();
+    checkTipoComprobante();
 
 }
 

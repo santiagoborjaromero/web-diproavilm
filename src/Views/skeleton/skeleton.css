@@ -19,6 +19,11 @@
     --ag-font-family: monospace; */
 }
 
+.tr-header{
+    color: var(--color-datagrid-fore-header) !important;
+    background-color: var(--color-datagrid-bg-header) !important;
+}
+
 
 
 .contenedor{
@@ -128,7 +133,7 @@ ul>li{
 }
 
 .screen{
-    background-color: #e0e0e0;
+    background-color: var(--background-body);
     min-height: var(--size-screen) ;
     height: var(--size-screen) ;
     /* padding-top: 10px; */
@@ -159,3 +164,13 @@ ul>li{
     font-size: .7em;
 }
 
+.bg-header{
+    border-left: 1px solid var(--background-body);
+    background-color: #ffffff5b;
+}
+.bg-header-1{
+    border-left: 1px solid var(--background-body);
+}
+.bg-header-2{
+    border-left: 1px solid var(--background-body);
+}

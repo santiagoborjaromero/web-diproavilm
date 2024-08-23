@@ -78,16 +78,16 @@ async function loadData(){
                         e["id"] = e.id.toString();
                         lstKardex.push(e)    
                     });
+                    let last = lstKardex[lstKardex.length-1];   
+                    // console.log(last)
+                    let t = $("#descProd").html();
+                    $("#descProd").html(`${t} <br>
+                        <kbd class="bg-success mr-1">Stock actual: ${numero(last.sal_cant,4)}</kbd>
+                        <kbd class="bg-success mr-1">Costo calculado: ${numero(last.sal_costo,4)}</kbd>
+                    `);
+                    
                 }
 
-                let last = lstKardex[lstKardex.length-1];   
-                // console.log(last)
-                let t = $("#descProd").html();
-                $("#descProd").html(`${t} <br>
-                    <kbd class="bg-success mr-1">Stock actual: ${numero(last.sal_cant,4)}</kbd>
-                    <kbd class="bg-success mr-1">Costo calculado: ${numero(last.sal_costo,4)}</kbd>
-                `);
-                
                 gridApi.setGridOption("rowData", lstKardex);
                 gridApi.sizeColumnsToFit();
 

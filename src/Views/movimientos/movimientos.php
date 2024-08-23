@@ -100,9 +100,10 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Fecha</th>
-                    <th colspan="3">Comprobante</th>
-                    <th>Beneficiario</th>
+                    <th class="tr-headerXX">Fecha</th>
+                    <th class="tr-headerXX" colspan="2">Comprobante</th>
+                    <th class="tr-headerXX">Número Documento</th>
+                    <th class="tr-headerXX">Beneficiario</th>
                 </tr>
             </thead>
             <tbody>
@@ -113,7 +114,7 @@
                         </select>
                     </td>
                     <td class="pt-2"><kbd id="tipoSiglas" class="bg-primary mt-5">FC</kbd></td>
-                    <td> <input class="form-control" type="text" id="numberdocument" placeholder="000000000"> </td>
+                    <td> <input class="form-control" type="text" id="numberdocument" placeholder="000-000-0000000"> </td>
                     <td width="50%">
                         <select id="idbeneficiary" class="form-control">
                             <option value="-">-- Seleccione --</option>
@@ -126,13 +127,13 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Codigo</th>
-                    <th>Producto</th>
-                    <th>Asiento</th>
-                    <th class="text-end">Cantidad</th>
-                    <th class="text-end">Precio</th>
-                    <th class="text-end">Total</th>
-                    <th class="text-end">Acción</th>
+                    <th class="tr-headerXX">Codigo</th>
+                    <th class="tr-headerXX">Producto</th>
+                    <th class="tr-headerXX">Asiento</th>
+                    <th class="text-end tr-headerXX">Cantidad</th>
+                    <th class="text-end tr-headerXX">Precio</th>
+                    <th class="text-end tr-headerXX">Total</th>
+                    <th class="text-end tr-headerXX">Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -165,14 +166,14 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="bg-primary text-white">ID</th>
-                    <th class="bg-primary text-white">Codigo</th>
-                    <th class="bg-primary text-white">Producto</th>
-                    <th class="bg-primary text-white text-center">Asiento</th>
-                    <th class="bg-primary text-white text-end">Cantidad</th>
-                    <th class="bg-primary text-white text-end">Precio</th>
-                    <th class="bg-primary text-white text-end">Total</th>
-                    <th class="bg-primary text-white text-center">Acción</th>
+                    <th class="tr-header text-white">ID</th>
+                    <th class="tr-header text-white">Codigo</th>
+                    <th class="tr-header text-white">Producto</th>
+                    <th class="tr-header text-white text-center">Asiento</th>
+                    <th class="tr-header text-white text-end">Cantidad</th>
+                    <th class="tr-header text-white text-end">Precio</th>
+                    <th class="tr-header text-white text-end">Total</th>
+                    <th class="tr-header text-white text-center">Acción</th>
                 </tr>
             </thead>
             <tbody id="tblbody"></tbody>
