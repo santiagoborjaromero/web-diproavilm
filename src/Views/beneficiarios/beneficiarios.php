@@ -88,14 +88,22 @@
             </div> -->
         </div>
 
-
+        <div class="row mb-2" id="submenuDIV">
+            <label class="col-12 col-md-3 control-label text-end">Tipo de Identificacion <sup class="text-danger" title="Requerido">*</sup></label>
+            <div class="col-12 col-md-3">
+                <select id="ididentificationtype" class="form-control">
+                </select>
+            </div>
+        </div>
         <div class="row mb-2">
             <label class="col-12 col-md-3 control-label text-end">Identificacion <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
-                <input class="form-control" type="text" id="identificationnumber"  placeholder="0000000000000">
+                <input class="form-control" type="text" id="identificationnumber"  placeholder="0000000000">
+            </div>
+             <div class="col-6 col-md-3 text-start" id="verificacionIdentificacion">
+                <!-- <i class="fa fa-times text-danger"></i> No verificado -->
             </div>
         </div>
-
 
         <div class="row mb-2" id="submenuDIV">
             <label class="col-12 col-md-3 control-label text-end">Pais <sup class="text-danger" title="Requerido">*</sup></label>
