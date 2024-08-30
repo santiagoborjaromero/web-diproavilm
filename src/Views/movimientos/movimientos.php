@@ -69,34 +69,7 @@
 
 <!-- Formulario -->
 <div class="row justify-content-md-center hide" id="FormDiv">
-    <div class="col-12 col-md-11 align-items-center bg-white round-10">
-        <!-- <div class="row mt-5 mb-2 ">
-            <label class="col-6 col-md-2 control-label text-end" for="fecha">Fecha</label>
-            <div class="col-6 col-md-2">
-                <input class="form-control" type="date" id="fecha" value="2024-01-01" placeholder="Fecha">
-            </div>
-            
-            <label class="col-12 col-md-2 control-label text-end">Tipo de Movimiento</label>
-            <div class="col-12 col-md-2">
-                <select id="idmovementtype" class="form-control">
-                    <option value="-">-- Seleccione --</option>
-                </select>
-            </div>
-
-            <label class="col-6 col-md-2 control-label text-end">Número de Movimiento</label>
-            <div class="col-6 col-md-2">
-                <input class="form-control" type="text" id="numberdocument"  placeholder="000000000">
-            </div>
-        </div>
-        <div class="row mb-2">
-            <label class="col-12 col-md-2 control-label text-end">Beneficiario</label>
-            <div class="col-12 col-md-4">
-                <select id="idbeneficiary" class="form-control">
-                    <option value="-">-- Seleccione --</option>
-                </select>
-            </div>
-        </div> -->
-
+    <div class="col-12 col-md-11 align-items-center bg-white round-10" id="formDivP1">
         <table class="table">
             <thead>
                 <tr>
@@ -110,8 +83,7 @@
                 <tr>
                     <td> <input class="form-control" type="date" id="date" value="2024-01-01" placeholder="Fecha"> </td>
                     <td>
-                        <select id="idmovementtype" class="form-control">
-                        </select>
+                        <select id="idmovementtype" class="form-control"></select>
                     </td>
                     <td class="pt-2"><kbd id="tipoSiglas" class="bg-primary mt-5">FC</kbd></td>
                     <td> <input class="form-control" type="text" id="numberdocument" placeholder="000-000-0000000"> </td>
@@ -128,7 +100,9 @@
             <thead>
                 <tr>
                     <th class="tr-headerXX">Codigo</th>
+                    <th class="tr-headerXX"></th>
                     <th class="tr-headerXX">Producto</th>
+                    <th class="text-end tr-headerXX">Stock</th>
                     <th class="tr-headerXX">Asiento</th>
                     <th class="text-end tr-headerXX">Cantidad</th>
                     <th class="text-end tr-headerXX">Precio</th>
@@ -142,9 +116,12 @@
                         <input class="form-control" type="text" id="searchProduct" placeholder="Ingrese Nombre o codigo">
                     </td>
                     <td>
-                        <select disabled id="idproduct" class="form-control">
-                        </select>
+                        <button class="btn btn-success" id="btnBuscarTexto"><i class="fas fa-search"></i></button>
                     </td>
+                    <td>
+                        <select disabled id="idproduct" class="form-control"></select>
+                    </td>
+                    <td> <input disabled class="form-control text-end" type="text" id="stock" placeholder="0.00">  </td>
                     <td>
                         <select id="entry" disabled class="form-control">
                             <option selected value="I">Ingreso</option>
@@ -219,8 +196,26 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-11 align-items-center bg-white round-10 hide" id="formDivP2">
+        <div class="row mt-3 mb-2">
+            <div class="col-12 col-md-3 text-end mt-2">Texto a buscar</div>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="text" id="buscarP" placeholder="Ingrese Nombre o codigo">
+            </div>
+            <div class="col-12 col-md-2">
+                <button id="btnBuscarP" class="btn btn-primary">Buscar</button>
+            </div>
+            <div class="col-12 col-md-4 text-end">
+                <button id="btnSeleccionar" class="btn btn-primary disabled">Seleccionar</button>
+                <button id="btnCancelaBusqueda" class="btn btn-danger">Cancelar</button>
+            </div>
+        </div>
+        <div id="myGridP" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+    </div>
 </div>
 
 
+
+
 <script src="src/Views/movimientos/movimientos.js"></script>
-<!-- <link rel="stylesheet" href="src/Views/movimientos/movimientos.css"> -->
+<link rel="stylesheet" href="src/Views/movimientos/movimientos.css">

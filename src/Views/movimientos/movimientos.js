@@ -6,6 +6,7 @@
 setTimeout(function(){
     if (permisosLectura){
         estructuraGrid();
+        estructuraGridBusqueda();
         showDivs(0);
         loadTypes();
         loadProductos()
@@ -31,7 +32,12 @@ lstProductos = [];
 lstPresentacion = [];
 lstItems = [];
 dataSelected = {};
+gridApi2;
+gridOptions2;
 var idtransaction = "-1";
+dataSelected2 = {};
+idSelect2 = "";
+idSelectName2 = "";
 
 cnf = sessionGet("config");
 
@@ -97,7 +103,7 @@ async function loadData(){
                 //     b.date.localeCompare(a.date)
                 // );
                 gridApi.setGridOption("rowData", lstTransacciones);
-                gridApi.sizeColumnsToFit();
+                // gridApi.sizeColumnsToFit();
 
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
@@ -203,7 +209,7 @@ async function loadPresentacion(){
 async function loadProductos(){
     
     $("#idproduct").html("");
-    $("#idproduct").append(`<option value='-'>-- Seleccione un producto --</option>`);
+    $("#idproduct").append(`<option value='-'></option>`);
 
     let metodo = "GET";
     let url = `productos`;
@@ -347,7 +353,116 @@ function estructuraGrid(){
 
     const myGridElement = document.querySelector("#myGrid");
     gridApi = agGrid.createGrid(myGridElement, gridOptions);
-    gridApi.sizeColumnsToFit();
+    // gridApi.sizeColumnsToFit();
+}
+
+function estructuraGridBusqueda(){
+    gridOptions2 = {
+        rowStyle: { background: 'white' },
+        getRowStyle: params => {
+            if (params.node.rowIndex % 2 !== 0) {
+                return { background: '#f9f9f9' };
+            }
+        },
+        rowData: [],
+        deltaSort: true,
+        pagination: true,
+        paginationPageSize: 50,
+        paginationPageSizeSelector: [5, 10,20, 30, 40, 50, 100, 200, 300, 1000],
+        rowSelection: 'single',
+        rowHeight: 40,
+        tooltipInteraction: true,
+        defaultColDef: {
+            flex: 1,
+            minWidth: 50,
+            filter: true,
+            sortable: false,
+            resizable: false,
+            floatingFilter: false,
+            wrapText: true,
+            suppressSizeToFit: true,
+            autoHeaderHeight: true,
+            suppressAutoSize: true,
+            enableCellChangeFlash: true,
+            autoHeight: true,
+        },
+        autoSizeStrategy: {
+            // type: 'fitCellContents'
+        },
+        getRowId: (params) => {
+            return params.data.barcode;
+        },
+        onRowClicked: (event) => {
+            dataSelected2 = event.data;
+            idSelect2 = event.data.barcode;
+            idSelectName2 = event.data.name;
+            habilitarBotones2(true);
+        },
+        columnDefs: [
+            {
+                headerName: "Codigo",
+                headerTooltip: "Codigo",
+                flex: 1, 
+                field: "barcode",
+                sortable: true, 
+                cellClass: "text-start",
+            },
+            {
+                headerName: "Nombre",
+                headerTooltip: "Nombre del Producto",
+                flex: 2, 
+                field: "name",
+                cellClass: "text-start",
+                sort: "desc",
+                sortIndex: 1, 
+                sortable: true, 
+            },
+            {
+                headerName: "Linea",
+                headerTooltip: "Linea",
+                flex: 1, 
+                field: "line",
+                cellClass: "text-start",
+                sortable: true, 
+            },
+            {
+                headerName: "Categoria",
+                headerTooltip: "Categoria",
+                flex: 2, 
+                field: "category",
+                cellClass: "text-start",
+                sortable: true, 
+            },
+            {
+                headerName: "Stock",
+                headerTooltip: "Stock",
+                flex: 1, 
+                field: "stock",
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                type: "rightAligned",
+            },
+            {
+                headerName: "Costo",
+                headerTooltip: "Costo",
+                flex: 1, 
+                field: "cost",
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                type: "rightAligned",
+            },
+            {
+                headerName: "PVP",
+                headerTooltip: "PVP",
+                flex: 1, 
+                field: "price",
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                type: "rightAligned",
+            }
+        ]
+    }
+
+    const myGridElement1 = document.querySelector("#myGridP");
+    gridApi2 = agGrid.createGrid(myGridElement1, gridOptions2);
+    // gridApi2.sizeColumnsToFit();
 }
 
 function cleanRecords(record=null){
@@ -557,6 +672,17 @@ function habilitarBotones(opc = false){
         
     }
 }
+function habilitarBotones2(opc = false){
+    if (opc ){
+        $("#btnSeleccionar").removeClass("disabled");
+        $("#btnSeleccionar").removeClass("btn-secondary");
+        $("#btnSeleccionar").addClass("btn-info");
+    } else {
+        $("#btnSeleccionar").addClass("disabled");
+        $("#btnSeleccionar").removeClass("btn-info");
+        $("#btnSeleccionar").addClass("btn-secondary");
+    }
+}
 
 
 function seleccionTipoMovimiento(idmovementtype){
@@ -603,39 +729,107 @@ $("#idmovementtype").on("change", function(){
 
 $("#searchProduct").on("keypress", function($event){
     let textoBuscar = $(this).val();
-    let lstprod= []
     if ($event.charCode == 13){
-        lstProductos.forEach(e=>{
-            if (e.name.indexOf(textoBuscar)>-1 || e.description.indexOf(textoBuscar)>-1 || e.productcode.indexOf(textoBuscar)>-1 || e.barcode.indexOf(textoBuscar)>-1){
-                lstprod.push(e)
-            }
-        });
+        buscarProd(textoBuscar, 1);
+    }
+});
+
+// $("#searchProduct").on("blur", function($event){
+//     let textoBuscar = $(this).val();
+//     buscarProd(textoBuscar, 1);
+// })
+
+$("#buscarP").on("keypress", function($event){
+    let textoBuscar = $(this).val();
+    if ($event.charCode == 13){
+        buscarProd(textoBuscar, 0);
+    }
+})
+$("#buscarP").on("blur", function($event){
+    let textoBuscar = $(this).val();
+    buscarProd(textoBuscar, 0);
+})
+
+$("#btnBuscarP").on("click", function(){
+    let textoBuscar = $("#buscarP").val();
+    buscarProd(textoBuscar, 0);
+});
+
+$("#btnBuscarTexto").on("click", function(){
+    let textoBuscar = $("#searchProduct").val();
+    buscarProd(textoBuscar, 1);
+});
+
+function buscarProd(textoBuscar = "", lugar = 0){
+    // console.log(textoBuscar, lugar)
+    textoBuscar = textoBuscar.toLowerCase();
     
+    let lstprod = [];
+    
+    lstProductos.forEach(e=>{
+        if ((e.name.toLowerCase()).indexOf(textoBuscar)>-1 || (e.description.toLowerCase()).indexOf(textoBuscar)>-1 || (e.productcode.toLowerCase()).indexOf(textoBuscar)>-1 || (e.barcode.toLowerCase()).indexOf(textoBuscar)>-1){
+            lstprod.push(e);
+        }
+    });
+
+    if (lugar == 1){
         let barcode = "";
         let idproduct = "";
         let qty = 0;
         let price = 0;
         let total = 0;
+        let stock = 0;
     
         if (lstprod.length==1){
             barcode = lstprod[0].barcode;
             idproduct = lstprod[0].idproduct;
+            stock = lstprod[0].stock;
             qty = 1;
             price = rsType.typevalue == 'C' ? lstprod[0].cost :  lstprod[0].price ;
             total = 0;
-
+    
             $("#searchProduct").val(barcode);
             $("#idproduct").val(idproduct);
             $("#entry").val(rsType.entry!="A" ? rsType.entry : 'I');
             $("#qty").val(qty);
             $("#price").val(price);
             $("#total").val(total);
+            $("#stock").val(stock);
             focus("qty");
+        } else{
+            gridApi2.setGridOption("rowData", lstprod);
+            habilitarBusqueda(true);
         }
-    
+    } else {
+        gridApi2.setGridOption("rowData", lstprod);
+        habilitarBusqueda(true);
     }
-    // console.log(lstprod)
-})
+
+}
+
+$("#btnSeleccionar").on("click", function(){
+    habilitarBusqueda(false);
+    buscarProd(idSelect2, 1);
+});
+
+$("#btnCancelaBusqueda").on("click", function(){
+    habilitarBusqueda(false)
+});
+
+function habilitarBusqueda(opc = false){
+    if (opc){
+        $("#formDivP1").addClass("hide");
+        $("#formDivP2").removeClass("hide");
+        $("#btmSave").addClass("hide");
+        $("#btmCancel").addClass("hide");
+    } else {
+        $("#formDivP1").removeClass("hide");
+        $("#formDivP2").addClass("hide");
+        $("#btmSave").removeClass("hide");
+        $("#btmCancel").removeClass("hide");
+        $("#btnSeleccionar").addClass("disabled");
+    }
+}
 
 function focus(obj, isText=true){
     var element = document.getElementById(obj);
@@ -665,6 +859,18 @@ $("#btmAddItem").on("click", function(){
     let idproduct =  $("#idproduct").val();
     let barcode = "";
     let name = "";
+    let stock = parseFloat($("#stock").val());
+    let qty = parseFloat($("#qty").val());
+    let asiento = $("#entry").val();
+
+    //TODO: Validaicion de stock vs venta o egreso
+    if (asiento == "E"){
+        if (qty > stock ){
+            focus("qty");
+            sendMessage("error", "Movimientos", "La cantidad de salida de mercaderia es mayor a la existente. Por favor corríjalo y vuelva a intentarlo.")
+            return ;
+        }
+    }
 
     lstProductos.forEach(e=>{
         if (e.idproduct == idproduct){
@@ -718,6 +924,7 @@ function limpiarIngresoProducto(){
     $("#qty").val(0);
     $("#price").val(0);
     $("#total").val(0);
+    $("#stock").val(0);
 }
 
 function totalItem(){
@@ -820,12 +1027,9 @@ $("#desc").keypress(function( event ){
 });
 
 
-
 function imprimir( record ){
     var doc = new jsPDF()
 
     doc.text('Hello world!', 10, 10)
     doc.save('a4.pdf')
-
-
 }
