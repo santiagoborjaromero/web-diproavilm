@@ -1,7 +1,3 @@
-//TODO: FALTA - POPUP para seleccionar producto o buscar por nombre
-//TODO: OK - Que cuando elijan tipo de comprobante y luego ingresen productos se disabled para que no cambien de documento los pilas
-//TODO: FALTA - Revisar los stocks
-//TODO: FALTA - Poner stock anterior o actual frente a lo que tiene
 
 setTimeout(function(){
     if (permisosLectura){
@@ -302,7 +298,7 @@ function estructuraGrid(){
             },
             {
                 headerName: "Beneficiario",
-                headerTooltip: "Beneficiari",
+                headerTooltip: "Beneficiario",
                 flex: 2, 
                 field: "beneficiary_name",
                 filter: true,
@@ -410,7 +406,7 @@ function estructuraGridBusqueda(){
             {
                 headerName: "Nombre",
                 headerTooltip: "Nombre del Producto",
-                flex: 2, 
+                flex: 3, 
                 field: "name",
                 cellClass: "text-start",
                 sort: "desc",
@@ -420,7 +416,7 @@ function estructuraGridBusqueda(){
             {
                 headerName: "Linea",
                 headerTooltip: "Linea",
-                flex: 1, 
+                flex: 2, 
                 field: "line",
                 cellClass: "text-start",
                 sortable: true, 
