@@ -4,5 +4,7 @@
 //TODO: OK - Poner stock anterior o actual frente a lo que tiene
 //TODO: FALTA - Poner busqueda inteligente con beneficiarios
 //TODO: FALTA - Poner busqueda inteligente en kardex tambien
-
-
+//TODO: FALTA - Eliminar un comprobante de bodega y que se recaulcuel el stock
+//TODO: FALTA - recalculo de saldos - opcion
+//TODO: FALTAN - REPORTES
+//TODO: FALTAN - DASHBOARDS
