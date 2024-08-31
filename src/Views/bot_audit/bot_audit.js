@@ -12,9 +12,6 @@ setTimeout(function(){
 },800)
 
 lstAudit = [];
-lstPais = [];
-lstProvincia = [];
-lstCiudad = [];
 dataSelected = {};
 var idmenu = "-1";
 
@@ -24,7 +21,7 @@ title = ruta.name;
 $("#Title").html(title);
 $("#TitleIcon").addClass(ruta.icon);
 
-//TODO: Determina los permisos de RWD 
+//TODO: Determina los permisos de RWD
 if (permisosEscritura){
     $("#divW").removeClass("hide");
 } else {
@@ -42,7 +39,7 @@ async function loadData(params){
     habilitarBotones(false);
 
     let metodo = "GET";
-    let url = "audit";
+    let url = "botaudit";
     await consumirApi(metodo, url, params)
         .then( resp=>{
             closeLoading();
@@ -55,16 +52,13 @@ async function loadData(params){
 
                 if (resp.message){
                     resp.message.forEach( e => {
-                        e["idaudit"] = e.idaudit.toString();
-                        lstAudit.push(e)    
+                        e["idbotaudit"] = e.idbotaudit.toString();
+                        lstAudit.push(e)
                     });
                 }
-                
+
                 gridApi.setGridOption("rowData", lstAudit);
                 gridApi.sizeColumnsToFit();
-
-                // console.log(lstAudit)
-                // parent();
 
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
@@ -77,14 +71,21 @@ async function loadData(params){
         });
 }
 
+
+//TODO: Estructura para definir el grid o tabla de datos
 function estructuraGrid(){
     gridOptions = {
         rowStyle: { background: 'white' },
         getRowStyle: params => {
-            if (params.node.rowIndex % 2 !== 0) {
-                return { background: '#f9f9f9' };
+            if (params.data.deleted_at == null){
+                if (params.node.rowIndex % 2 !== 0) {
+                    return { background: '#f9f9f9' };
+                }
+            } else{
+                return { background: '#FFE2E2'};
             }
         },
+
         rowData: [],
         deltaSort: true,
         pagination: true,
@@ -99,7 +100,7 @@ function estructuraGrid(){
             filter: true,
             sortable: true,
             resizable: false,
-            floatingFilter: true,
+            floatingFilter: false,
             wrapText: true,
             suppressSizeToFit: true,
             autoHeaderHeight: true,
@@ -111,112 +112,68 @@ function estructuraGrid(){
             // type: 'fitCellContents'
         },
         getRowId: (params) => {
-            return params.data.idaudit;
+            return params.data.idbotaudit;
         },
         onRowClicked: (event) => {
             dataSelected = event.data;
-            idSelect = event.data.idaudit;
-            idSelectName = event.data.fullname;
+            idSelect = event.data.idbotaudit;
+            idSelectName = event.data.textentered;
             habilitarBotones(true);
         },
-        // groupDisplayType: 'groupRows',
-        // groupRowRendererParams: {
-        //     order: '01',
-        // },
         columnDefs: [
             {
                 headerName: "ID",
-                flex: 1, 
-                field: "idaudit",
+                flex: 1,
+                field: "idbotaudit",
+                filter: false,
+                cellClass: "text-start text-underline",
+            },
+            {
+                headerName: "Usuario",
+                flex: 2,
+                field: "username",
+                filter: true,
+                sortable: true,
+            },
+            {
+                headerName: "Texto Ingresado",
+                flex: 3,
+                field: "textentered",
+                filter: true,
+                sortable: true,
+            },
+            {
+                headerName: "Pronostico",
+                flex: 3,
+                field: "keyresult",
+                filter: true,
+                sortable: true,
+            },
+            {
+                headerName: "Data",
+                flex: 1,
+                field: "data",
+                filter: true,
+                sortable: true,
+                cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let data = params.data.data;
+                    if (data != "" && data != null){
+                        cls = "fa fa-check";
+                        color = "bg-success";
+                    }else{
+                        cls = "fas fa-minus";
+                        color = "bg-light text-dark";
+                    }
+                    return `<kbd class='${color}'><i class="${cls}"></i></kbd>`;
+                }
+            },
+            {
+                headerName: "Creado",
+                flex: 2,
+                field: "created_at",
                 filter: false,
                 cellClass: "text-start",
-            },
-            {
-                headerName: "Fecha",
-                flex: 2, 
-                field: "date",
-                filter: true,
-                cellClass: "text-start",
-            },
-            {
-                headerName: "Responsable",
-                flex: 2, 
-                field: "fullname",
-                filter: true,
-                cellClass: "text-start",
-            },
-            // {
-            //     headerName: "User Agent",
-            //     flex: 3, 
-            //     field: "ipaddr",
-            //     filter: true,
-            //     cellClass: "text-start",
-            //     cellRenderer: (params) => {
-            //         let ipaddr = params.data.ipaddr;
-            //         return ipaddr.substring(0,20) + " ..."
-            //     }
-            // },
-            {
-                headerName: "Metodo",
-                flex: 1, 
-                field: "method",
-                filter: true,
-                cellClass: "text-start",
-                cellRenderer: (params) => {
-                    let method = params.data.method;
-                    let cls = "";
-                    let html = "";
-
-                    switch(method){
-                        case "GET":
-                            cls  = "bg-success";
-                            break;
-                        case "POST":
-                            cls  = "bg-primary";
-                            break;
-                        case "PUT":
-                            cls  = "bg-warning";
-                            break;
-                        case "DELETE":
-                            cls  = "bg-danger";
-                            break;
-                    }
-
-                    return `<kbd class='${cls}'>${method}<kbd>`;
-                }
-            },
-            {
-                headerName: "Ruta",
-                flex: 2, 
-                field: "route",
-                filter: true,
-                cellClass: "text-start",
-                // cellRenderer: (params) => {
-                //     let route = params.data.route;
-                //     return route.substring(0,20) + " ..."
-                // }
-            },
-            {
-                headerName: "Json",
-                flex: 1, 
-                field: "json",
-                filter: true,
-                cellClass: "text-start",
-                cellRenderer: (params) => {
-                    let json = params.data.json;
-                    let cls = "";
-                    let html = "";
-
-                    if(json != "null"){
-                        cls  = "bg-success";
-                        html = "<i class='fa fa-check'></i>";
-                    } else {
-                        cls  = "bg-secondary";
-                        html = "<i class='fa fa-times'></i>";
-                    }
-
-                    return `<kbd class='${cls}'>${html}<kbd>`;
-                }
             },
         ]
     }
@@ -229,7 +186,7 @@ function estructuraGrid(){
 showDivs = (que = 0) => {
     switch(que){
         case 0:
-            //Grid o listado 
+            //Grid o listado
             $("#Title").html(title);
             $("#btmVerMas").removeClass("hide");
             habilitarBotones(false);
@@ -265,33 +222,17 @@ $("#btmCancel").on("click", function(){
 });
 
 $("#btmVerMas").on("click", function(){
-    // cleanRecords(dataSelected);
-    // showDivs(0);
-
-    let html = "<table class='table table-striped'>";
-    html += "<tbody>";
-    html += `<tr><td width="20%" class="text-start">Fecha</td><td class="text-start">${dataSelected.date}</td><tr>`;
-    html += `<tr><td width="20%" class="text-start">Responsable</td><td class="text-start">${dataSelected.fullname}</td><tr>`;
-    html += `<tr><td width="20%" class="text-start">Metodo</td><td class="text-start">${dataSelected.method}</td><tr>`;
-    html += `<tr><td width="20%" class="text-start">Ruta</td><td class="text-start">${dataSelected.route}</td><tr>`;
-    // html += `<tr><td width="20%" class="text-start">Json</td><td class="text-start">${dataSelected.json}</td><tr>`;
-    html += `<tr><td width="20%" class="text-start">Json</td><td class="text-start">
-            <andypf-json-viewer 
-                indent="2"
-                expanded="true"
-                theme="default-light"
-                show-data-types="true"
-                show-toolbar="false"
-                expand-icon-type="arrow"
-                show-copy="true"
-                show-size="true"
-                data='${dataSelected.json}'>
-            </andypf-json-viewer>
-        </td><tr>`;
-    html += `<tr><td width="20%" class="text-start">User Agent</td><td class="text-start">${dataSelected.ipaddr}</td><tr>`;
-    html += "</tbody>";
-    html += "</table>";
-    sendMessage("info", "Auditor", html, true, 1200);
+    let html = `<andypf-json-viewer 
+        indent="2"
+        expanded="true"
+        theme="default-light"
+        show-data-types="true"
+        show-toolbar="false"
+        expand-icon-type="arrow"
+        show-copy="true"
+        show-size="true"
+        data='${dataSelected.data}'></andypf-json-viewer>`;
+    sendMessage("", "Auditor Bot", html, true);
     habilitarBotones(false);
 });
 
@@ -367,7 +308,7 @@ $("#btmRefresh").on("click", function(){
 });
 
 function habilitarBotones(opc = false){
-    if (opc){
+    if (opc && dataSelected.data!=null){
         $("#btmVerMas").removeClass("disabled");
         $("#btmVerMas").removeClass("btn-secondary");
         $("#btmVerMas").addClass("btn-info");
@@ -377,62 +318,4 @@ function habilitarBotones(opc = false){
         $("#btmVerMas").addClass("btn-secondary");
     }
 }
-
-$("#submenu").on("change", function(){
-    let d = $(this).val();
-    checkSubmenu(d);    
-});
-
-checkSubmenu = (d) =>{
-    if(d == 0){
-        $("#parentDIV").removeClass("hide");
-        $("#order2").removeClass("hide");
-    }else{
-        $("#parentDIV").addClass("hide");
-        $("#order2").addClass("hide");
-    }
-}
-
-$("#icon").on("keyup", function(){
-    let icon = $(this).val();
-    desplegarIcono(icon);
-})
-
-desplegarIcono = (icono) =>{
-    $("#execIcon").html(`<kbd class="bg-primary"><i class='${icono} t16'></i></kbd>`);
-}
-
-$("#route").on("keyup", function(){
-    let ruta = $(this).val();
-    
-    var found = verificarDisponibilidadRuta(ruta);
-
-    let html = ""
-    if (found){
-        cls = "fas fa-times";
-        color = "bg-danger";
-        msg = "Ya existe";
-    }else{
-        cls = "fa fa-check";
-        color = "bg-success";
-        msg = "Verificado";
-    }
-    html += `<kbd class="${color}" title="${msg}"><i class='${cls}'></i></kbd>`;
-    $("#obsRuta").html(html);
-
-})
-
-
-verificarDisponibilidadRuta = (ruta) => {
-    let found = false;
-    if (idmenu == "" || idmenu == "-1"){
-        lstAudit.forEach( e=>{
-            if (e.route == ruta){
-                found = true;
-            }
-        });
-    }
-    return found;
-}
-
 
