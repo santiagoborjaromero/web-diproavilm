@@ -4,23 +4,22 @@
         <br>
         <h2>Error</h2>
         <br>
-        <!-- var_dump($errArr["code"]) -->
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <th class="text-end">Codigo</th>
+                    <td width="30%" class="text-end">Codigo</td>
                     <td class="text-start"><?PHP echo $errArr["code"]?></td>
                 </tr>
                 <tr>
-                    <th class="text-end">Mensaje</th>
+                    <td class="text-end">Mensaje</td>
                     <td class="text-start"><?PHP echo $errArr["message"]?></td>
                 </tr>
                 <tr>
-                    <th class="text-end">Archivo</th>
+                    <td class="text-end">Archivo</td>
                     <td class="text-start"><?PHP echo $errArr["file"]?></td>
                 </tr>
                 <tr>
-                    <th class="text-end">Linea</th>
+                    <td class="text-end">Linea</td>
                     <td class="text-start"><?PHP echo $errArr["line"]?></td>
                 </tr>
             </tbody>
