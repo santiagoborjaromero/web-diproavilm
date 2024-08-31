@@ -220,7 +220,7 @@ async function selectRuta(route, args = ''){
 }
 
 //TODO: Funcion generica para despliegue de mensajes (POPUP)
-function sendMessage(type, titulo, message, textishtml = false){
+function sendMessage(type, titulo, message, textishtml = false, width="900px"){
     if (typeof message === "array" || typeof message === "object" ){
         sendMessageObj(type, titulo, message)
     } else{
@@ -232,7 +232,7 @@ function sendMessage(type, titulo, message, textishtml = false){
                 html: message,
                 icon: type,
                 footer: "DIPROAVILM",
-                width: "900px"
+                width: width
             })
 
         } else {
