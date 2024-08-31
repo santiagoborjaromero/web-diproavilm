@@ -264,7 +264,6 @@ function showDivs(que = 0){
 
 $("#btmNew").on("click", function(){
     cleanRecords();
-    desplegarIcono($("#icon").val());
     showDivs(1);
 });
 
