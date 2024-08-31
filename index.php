@@ -100,6 +100,10 @@ date_default_timezone_set ($config["timezone"]);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 
 
+  <link rel="stylesheet" href="https://unpkg.com/json-viewer-js/dist/json-viewer.css">
+  <script src="https://pfau-software.de/json-viewer/dist/iife/index.js"></script>
+
+
   <script src="assets/js/main.js"></script>
   <script src="assets/js/numeroALetras.js"></script>
 </body>
