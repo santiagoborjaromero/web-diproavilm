@@ -251,10 +251,10 @@ function sendMessage(type, titulo, message, textishtml = false){
 
 function sendMessageObj(type, titulo, obj){
     let html = "<table class='table table-striped'>";
-    if (obj.hasOwnProperty("code")) html += `<tr><th class="text-end">Codigo:</th><td class="text-start">${obj.code}</td></tr>` ;
-    if (obj.hasOwnProperty("file")) html += `<tr><th class="text-end">Archivo:</th><td class="text-start">${obj.file}</td></tr>` ;
-    if (obj.hasOwnProperty("line")) html += `<tr><th class="text-end">Linea:</th><td class="text-start">${obj.line}</td></tr>` ;
-    if (obj.hasOwnProperty("message")) html += `<tr><th class="text-end">Mensaje:</th><td class="text-start">${obj.message}</td></tr>` ;
+    if (obj.hasOwnProperty("code")) html += `<tr><th width="20%" class="text-end">Codigo</th><td class="text-start">${obj.code}</td></tr>` ;
+    if (obj.hasOwnProperty("file")) html += `<tr><th class="text-end">Archivo</th><td class="text-start">${obj.file}</td></tr>` ;
+    if (obj.hasOwnProperty("line")) html += `<tr><th class="text-end">Linea</th><td class="text-start">${obj.line}</td></tr>` ;
+    if (obj.hasOwnProperty("message")) html += `<tr><th class="text-end">Mensaje</th><td class="text-start">${obj.message}</td></tr>` ;
     html += "</table>"
     Swal.fire({
         allowOutsideClick: false,
