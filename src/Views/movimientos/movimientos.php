@@ -77,18 +77,27 @@
                     <th class="tr-headerXX" colspan="2">Comprobante</th>
                     <th class="tr-headerXX">Número Documento</th>
                     <th class="tr-headerXX">Beneficiario</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td> <input class="form-control" type="date" id="date" value="2024-01-01" placeholder="Fecha"> </td>
-                    <td>
+                    <td width="15%">
                         <select id="idmovementtype" class="form-control"></select>
                     </td>
                     <td class="pt-2"><kbd id="tipoSiglas" class="bg-primary mt-5">FC</kbd></td>
                     <td> <input class="form-control" type="text" id="numberdocument" placeholder="000-000-0000000"> </td>
-                    <td width="50%">
-                        <select id="idbeneficiary" class="form-control">
+                    <td >
+                        <input type="text" name="txtBene" id="txtBuscarBene" class="form-control" placeholder="Ingrese cedula o nombre">
+                    </td>
+                    <td>
+                        <button class="btn btn-success" id="btnBuscarBeneficiario"><i class="fas fa-search"></i></button>
+                    </td>
+                    <td width="20%"> 
+                        <select id="idbeneficiary"  disabled class="form-control">
                             <option value="-">-- Seleccione --</option>
                         </select>
                     </td>
@@ -211,6 +220,22 @@
             </div>
         </div>
         <div id="myGridP" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+    </div>
+    <div class="col-12 col-md-11 align-items-center bg-white round-10 hide" id="formDivP3">
+        <div class="row mt-3 mb-2">
+            <div class="col-12 col-md-3 text-end mt-2">Texto a buscar</div>
+            <div class="col-12 col-md-3">
+                <input class="form-control" type="text" id="buscarP3" placeholder="Ingrese identificacion o nombre">
+            </div>
+            <div class="col-12 col-md-2">
+                <button id="btnBuscarP3" class="btn btn-primary">Buscar</button>
+            </div>
+            <div class="col-12 col-md-4 text-end">
+                <button id="btnSeleccionar3" class="btn btn-primary disabled">Seleccionar</button>
+                <button id="btnCancelaBusqueda3" class="btn btn-danger">Cancelar</button>
+            </div>
+        </div>
+        <div id="myGridP3" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
     </div>
 </div>
 

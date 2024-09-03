@@ -3,6 +3,7 @@ setTimeout(function(){
     if (permisosLectura){
         estructuraGrid();
         estructuraGridBusqueda();
+        estructuraGridBusquedaBeneficiarios();
         showDivs(0);
         loadTypes();
         loadProductos()
@@ -24,16 +25,22 @@ lstTransacciones = [];
 lstTypes = [];
 rsType = {};
 lstBeneficiarios = [];
+lstBeneficiariosSeleccion = [];
 lstProductos = [];
 lstPresentacion = [];
 lstItems = [];
 dataSelected = {};
 gridApi2;
 gridOptions2;
+var gridApi3;
+var gridOptions3;
 var idtransaction = "-1";
 dataSelected2 = {};
 idSelect2 = "";
 idSelectName2 = "";
+dataSelected3 = {};
+idSelect3 = "";
+idSelectName3 = "";
 
 cnf = sessionGet("config");
 
@@ -82,8 +89,6 @@ async function loadData(){
                 resp = JSON.parse(resp);
             } catch (ex) {}
 
-            // console.log(resp)
-
             if (resp.status && resp.status == 'ok') {
                 lstTransacciones = [];
 
@@ -91,15 +96,9 @@ async function loadData(){
                     resp.message.forEach( e => {
                         e["idtransaction"] = e.idtransaction.toString();
                         lstTransacciones.push(e)    
-                        // transaction = { add: [e] };
-                        // gridApi.applyTransactionAsync(transaction);
                     });
                 }
-                // lstTransacciones.sort((a, b) =>
-                //     b.date.localeCompare(a.date)
-                // );
                 gridApi.setGridOption("rowData", lstTransacciones);
-                // gridApi.sizeColumnsToFit();
 
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
@@ -160,7 +159,12 @@ async function loadBeneficiarios(){
             // console.log(resp)
             if (resp.status && resp.status == 'ok') {
                 if (resp.message){
-                    lstBeneficiarios = resp.message;
+                    resp.message.forEach(e=>{
+                        if (!e.deleted_at){
+                            e["idbeneficiary"] = e.idbeneficiary.toString();
+                            lstBeneficiarios.push(e);
+                        }
+                    })
                 }
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
@@ -460,6 +464,117 @@ function estructuraGridBusqueda(){
     gridApi2 = agGrid.createGrid(myGridElement1, gridOptions2);
     // gridApi2.sizeColumnsToFit();
 }
+function estructuraGridBusquedaBeneficiarios(){
+    gridOptions3 = {
+        rowStyle: { background: 'white' },
+        getRowStyle: params => {
+            if (params.node.rowIndex % 2 !== 0) {
+                return { background: '#f9f9f9' };
+            }
+        },
+        rowData: [],
+        deltaSort: true,
+        pagination: true,
+        paginationPageSize: 50,
+        paginationPageSizeSelector: [5, 10,20, 30, 40, 50, 100, 200, 300, 1000],
+        rowSelection: 'single',
+        rowHeight: 40,
+        tooltipInteraction: true,
+        defaultColDef: {
+            flex: 1,
+            minWidth: 50,
+            filter: true,
+            sortable: false,
+            resizable: false,
+            floatingFilter: false,
+            wrapText: true,
+            suppressSizeToFit: true,
+            autoHeaderHeight: true,
+            suppressAutoSize: true,
+            enableCellChangeFlash: true,
+            autoHeight: true,
+        },
+        autoSizeStrategy: {
+            // type: 'fitCellContents'
+        },
+        getRowId: (params) => {
+            return params.data.idbeneficiary;
+        },
+        onRowClicked: (event) => {
+            dataSelected3 = event.data;
+            idSelect3 = event.data.idbeneficiary;
+            idSelectName3 = event.data.nombre;
+            habilitarBotones3(true);
+        },
+        columnDefs: [
+            {
+                headerName: "ID",
+                headerTooltip: "ID",
+                flex: 1, 
+                field: "idbeneficiary",
+                sortable: true, 
+                cellClass: "text-start",
+            },
+            {
+                headerName: "Tipo",
+                flex: 2, 
+                field: "type",
+                filter: true,
+                cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let type = params.data.type;
+                    let cls = "";
+                    let html = "";
+                    let text = "";
+                    if (type == "C"){
+                        text = "Cliente"
+                        cls  = "bg-success";
+                    } else if (type == "P"){
+                        text = "Proveedor"
+                        cls  = "bg-warning";
+                    } else if (type == "A"){
+                        text = "Proveedor/Cliente"
+                        cls  = "bg-info";
+                    } else if (type == "E"){
+                        text = "Empresa"
+                        cls  = "bg-primary";
+                    }
+                    // return `<span class='${cls}'>${type}<span>`;
+                    return `<kbd class='${cls}'>${text}<kbd>`;
+                }
+            },
+            {
+                headerName: "Identificacion",
+                headerTooltip: "Identificacion",
+                flex: 1, 
+                field: "identification",
+                cellClass: "text-start",
+                sortable: true, 
+            },
+            {
+                headerName: "Nombre",
+                headerTooltip: "Nombre",
+                flex: 3, 
+                field: "nombre",
+                cellClass: "text-start",
+                sort: "desc",
+                sortIndex: 1, 
+                sortable: true, 
+            },
+            {
+                headerName: "Nombre Comercial",
+                headerTooltip: "Nombre Comercial",
+                flex: 3, 
+                field: "nombrecomercial",
+                cellClass: "text-start",
+                sortable: true, 
+            },
+        ]
+    }
+
+    const myGridElement3 = document.querySelector("#myGridP3");
+    gridApi3 = agGrid.createGrid(myGridElement3, gridOptions3);
+}
 
 function cleanRecords(record=null){
 
@@ -679,6 +794,17 @@ function habilitarBotones2(opc = false){
         $("#btnSeleccionar").addClass("btn-secondary");
     }
 }
+function habilitarBotones3(opc = false){
+    if (opc ){
+        $("#btnSeleccionar3").removeClass("disabled");
+        $("#btnSeleccionar3").removeClass("btn-secondary");
+        $("#btnSeleccionar3").addClass("btn-info");
+    } else {
+        $("#btnSeleccionar3").addClass("disabled");
+        $("#btnSeleccionar3").removeClass("btn-info");
+        $("#btnSeleccionar3").addClass("btn-secondary");
+    }
+}
 
 
 function seleccionTipoMovimiento(idmovementtype){
@@ -710,8 +836,10 @@ function seleccionTipoMovimiento(idmovementtype){
 
     //TODO: Calculo de Beneficiarios ya sean proveedores o clientes
     $("#idbeneficiary").html("");
+    lstBeneficiariosSeleccion = [];
     lstBeneficiarios.forEach(e=>{
         if (e.type == rsType.beneficiarytype || (rsType.beneficiarytype!="E" && e.type == "A")){
+            lstBeneficiariosSeleccion.push(e);
             $("#idbeneficiary").append(`<option value='${e.idbeneficiary}'>${e.nombre}</option>`);        
         }
     });
@@ -729,11 +857,6 @@ $("#searchProduct").on("keypress", function($event){
         buscarProd(textoBuscar, 1);
     }
 });
-
-// $("#searchProduct").on("blur", function($event){
-//     let textoBuscar = $(this).val();
-//     buscarProd(textoBuscar, 1);
-// })
 
 $("#buscarP").on("keypress", function($event){
     let textoBuscar = $(this).val();
@@ -824,6 +947,23 @@ function habilitarBusqueda(opc = false){
         $("#btmSave").removeClass("hide");
         $("#btmCancel").removeClass("hide");
         $("#btnSeleccionar").addClass("disabled");
+    }
+}
+
+function habilitarBusqueda3(opc = false){
+    if (opc){
+        $("#formDivP1").addClass("hide");
+        $("#formDivP2").addClass("hide");
+        $("#formDivP3").removeClass("hide");
+        $("#btmSave").addClass("hide");
+        $("#btmCancel").addClass("hide");
+    } else {
+        $("#formDivP1").removeClass("hide");
+        $("#formDivP2").removeClass("hide");
+        $("#formDivP3").addClass("hide");
+        $("#btmSave").removeClass("hide");
+        $("#btmCancel").removeClass("hide");
+        $("#btnSeleccionar3").addClass("disabled");
     }
 }
 
@@ -1029,3 +1169,79 @@ function imprimir( record ){
     doc.text('Hello world!', 10, 10)
     doc.save('a4.pdf')
 }
+
+
+
+
+$("#txtBuscarBene").on("keypress", function($event){
+    let textoBuscar = $(this).val();
+    if ($event.charCode == 13){
+        buscarBene(textoBuscar, 0);
+    }
+});
+
+$("#btnBuscarBeneficiario").on("click", function(){
+    let textoBuscar = $("#txtBuscarBene").val();
+    buscarBene(textoBuscar, 0);
+});
+
+function buscarBene(textoBuscar = "", lugar = 0){
+    // console.log(textoBuscar, lugar)
+    textoBuscar = textoBuscar.toLowerCase();
+        
+    let lstBene = [];
+
+    lstBeneficiariosSeleccion.forEach(e=>{
+        if (lugar == 0){
+            if ((e.identification.toLowerCase()).indexOf(textoBuscar)>-1 || (e.nombre.toLowerCase()).indexOf(textoBuscar)>-1 || (e.nombrecomercial.toLowerCase()).indexOf(textoBuscar)>-1){
+                lstBene.push(e);
+            }
+        } else{
+            if (e.idbeneficiary == textoBuscar){
+                lstBene.push(e);
+            }
+        }
+    });
+
+    // console.log(lstBene)
+
+    if (lugar == 1){
+        if (lstBene.length==1){
+            idbeneficiary = lstBene[0].idbeneficiary;
+            $("#idbeneficiary").val(idbeneficiary);
+            focus("searchProduct");
+        } else{
+            gridApi3.setGridOption("rowData", lstBene);
+            habilitarBusqueda3(true);
+        }
+    } else {
+        gridApi3.setGridOption("rowData", lstBene);
+        habilitarBusqueda3(true);
+    }
+}
+
+$("#btnSeleccionar3").on("click", function(){
+    habilitarBusqueda3(false);
+    buscarBene(idSelect3, 1);
+});
+
+$("#btnCancelaBusqueda3").on("click", function(){
+    habilitarBusqueda3(false)
+});
+
+
+$("#buscarP3").on("keypress", function($event){
+    let textoBuscar = $(this).val();
+    if ($event.charCode == 13){
+        buscarBene(textoBuscar, 0);
+    }
+})
+$("#buscarP3").on("blur", function($event){
+    let textoBuscar = $(this).val();
+    buscarBene(textoBuscar, 0);
+})
+
+$("#btnBuscarP3").on("click", function(){
+    let textoBuscar = $("#buscarP").val();
+    buscarBene(textoBuscar, 0);
+});

@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row p-1 header">
         <div class="col-12 col-sm-4 col-md-3 "><img src="logo.png"></div>
-        <div class="col-12 col-sm-4 col-md-6 special t20 mt-3 text-center" id="nameApp"></div>
+        <div class="col-12 col-sm-4 col-md-6 t25 mt-3 text-center" id="nameApp"></div>
         <div class="col-12 col-sm-4 col-md-3 text-end diviconos">
             <button id="btnNot" class="btn btn-white t20 text-secondary bold" title="Notificaciones"><i class="fa fa-bell"></i></button>
             <button id="btnUserInfo" class="btn btn-white  text-secondary bold" title="Informacion del Usuario"><i class="fas fa-user t20"></i> <span id="nombreUsuario"></span></button>

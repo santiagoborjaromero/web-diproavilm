@@ -2,6 +2,7 @@ setTimeout(function(){
     if (permisosLectura){
         loadProductos();
         estructuraGrid();
+        estructuraGridBusqueda();
         showDivs(0);
     } else{
         $("#btmDivs").addClass("hide");
@@ -12,6 +13,11 @@ setTimeout(function(){
 lstProductos  = [];
 lstKardex = [];
 dataSelected = {};
+
+dataSelected2;
+idSelect2;
+idSelectName2;
+
 var id = "-1";
 
 //TODO: Determinar titulo e icono que viene del menu
@@ -39,20 +45,20 @@ async function loadData(){
     let error = false;
     let errMsg = "";
     
-    if (!error && id == "-") {
-        error = true;
-        errMsg = "Debe seleccionar un producto";
-    }
+    // if (!error && id == "-") {
+    //     error = true;
+    //     errMsg = "Debe seleccionar un producto";
+    // }
 
-    if (error){
-        sendMessage("error", title, errMsg);
-        return;
-    }
+    // if (error){
+    //     sendMessage("error", title, errMsg);
+    //     return;
+    // }
 
-    showLoading("Cargando");
+    // showLoading("Cargando");
 
     lstProductos.forEach(e=>{
-        if (e.idproduct == id){
+        if (e.idproduct == id ){
             $("#descProd").html(`${e.barcode} | ${e.name} | ${e.category} | ${e.line} | ${e.presentation}`);
         }
     })
@@ -113,9 +119,12 @@ async function loadProductos(){
             } catch (ex) {}
 
             if (resp.status && resp.status == 'ok') {
-                lstProductos = resp.message;
-                lstProductos.forEach( e => {
-                    $("#idproduct").append(`<option value="${e.idproduct}">${e.name}</option>`);
+                // lstProductos = resp.message;
+                resp.message.forEach( e => {
+                    if (!e.deleted_at){
+                        lstProductos.push(e);
+                        $("#idproduct").append(`<option value="${e.idproduct}">${e.name}</option>`);
+                    }
                 });
 
             } else {
@@ -339,12 +348,6 @@ showDivs = (que = 0) => {
 }
 
 
-$("#btnBuscar").on("click", function(){
-    loadData();
-});
-
-
-
 $("#btmRefresh").on("click", function(){
     loadData();
 });
@@ -380,4 +383,209 @@ function habilitarBotones(opc = false){
 }
 
 
+$("#buscarP").on("keypress", function($event){
+    let textoBuscar = $(this).val();
+    if ($event.charCode == 13){
+        buscarProd(textoBuscar, 0);
+    }
+})
 
+$("#btnBuscarP").on("click", function(){
+    let textoBuscar = $("#buscarP").val();
+    buscarProd(textoBuscar, 0);
+});
+
+
+$("#txtbuscar").on("keypress", function($event){
+    let textoBuscar = $("#txtbuscar").val();
+    if ($event.charCode == 13){
+        buscarProd(textoBuscar, 0);
+    }
+})
+$("#btnBuscar").on("click", function(){
+    let textoBuscar = $("#txtbuscar").val();
+    buscarProd(textoBuscar, 0);
+});
+
+function buscarProd(textoBuscar = "", lugar = 0){
+    // console.log(textoBuscar, lugar)
+    textoBuscar = textoBuscar.toLowerCase();
+    
+    
+    let lstprod = [];
+    
+    lstProductos.forEach(e=>{
+        if ((e.name.toLowerCase()).indexOf(textoBuscar)>-1 || (e.description.toLowerCase()).indexOf(textoBuscar)>-1 || (e.productcode.toLowerCase()).indexOf(textoBuscar)>-1 || (e.barcode.toLowerCase()).indexOf(textoBuscar)>-1){
+            lstprod.push(e);
+        }
+    });
+
+    
+    if (lugar == 1 || lstprod.length==1){
+        let idproduct = "";
+        if (lstprod.length==1){
+            idproduct = lstprod[0].idproduct;
+            $("#idproduct").val(idproduct);
+            loadData();
+            habilitarBusqueda(false);
+        } else{
+            $("#txtbuscar").val(textoBuscar);
+            gridApi2.setGridOption("rowData", lstprod);
+            habilitarBusqueda(true);
+        }
+    } else {
+        $("#txtbuscar").val(textoBuscar);
+        gridApi2.setGridOption("rowData", lstprod);
+        habilitarBusqueda(true);
+    }
+
+}
+
+
+function estructuraGridBusqueda(){
+    gridOptions2 = {
+        rowStyle: { background: 'white' },
+        getRowStyle: params => {
+            if (params.node.rowIndex % 2 !== 0) {
+                return { background: '#f9f9f9' };
+            }
+        },
+        rowData: [],
+        deltaSort: true,
+        pagination: true,
+        paginationPageSize: 50,
+        paginationPageSizeSelector: [5, 10,20, 30, 40, 50, 100, 200, 300, 1000],
+        rowSelection: 'single',
+        rowHeight: 40,
+        tooltipInteraction: true,
+        defaultColDef: {
+            flex: 1,
+            minWidth: 50,
+            filter: true,
+            sortable: false,
+            resizable: false,
+            floatingFilter: false,
+            wrapText: true,
+            suppressSizeToFit: true,
+            autoHeaderHeight: true,
+            suppressAutoSize: true,
+            enableCellChangeFlash: true,
+            autoHeight: true,
+        },
+        autoSizeStrategy: {
+            // type: 'fitCellContents'
+        },
+        getRowId: (params) => {
+            return params.data.barcode;
+        },
+        onRowClicked: (event) => {
+            dataSelected2 = event.data;
+            idSelect2 = event.data.barcode;
+            idSelectName2 = event.data.name;
+            habilitarBotones2(true);
+        },
+        columnDefs: [
+            {
+                headerName: "Codigo",
+                headerTooltip: "Codigo",
+                flex: 1, 
+                field: "barcode",
+                sortable: true, 
+                cellClass: "text-start",
+            },
+            {
+                headerName: "Nombre",
+                headerTooltip: "Nombre del Producto",
+                flex: 3, 
+                field: "name",
+                cellClass: "text-start",
+                sort: "asc",
+                sortIndex: 1, 
+                sortable: true, 
+            },
+            {
+                headerName: "Linea",
+                headerTooltip: "Linea",
+                flex: 2, 
+                field: "line",
+                cellClass: "text-start",
+                sortable: true, 
+            },
+            {
+                headerName: "Categoria",
+                headerTooltip: "Categoria",
+                flex: 2, 
+                field: "category",
+                cellClass: "text-start",
+                sortable: true, 
+            },
+            {
+                headerName: "Stock",
+                headerTooltip: "Stock",
+                flex: 1, 
+                field: "stock",
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                type: "rightAligned",
+            },
+            {
+                headerName: "Costo",
+                headerTooltip: "Costo",
+                flex: 1, 
+                field: "cost",
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                type: "rightAligned",
+            },
+            {
+                headerName: "PVP",
+                headerTooltip: "PVP",
+                flex: 1, 
+                field: "price",
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                type: "rightAligned",
+            }
+        ]
+    }
+
+    const myGridElement1 = document.querySelector("#myGridP");
+    gridApi2 = agGrid.createGrid(myGridElement1, gridOptions2);
+    // gridApi2.sizeColumnsToFit();
+}
+
+
+function habilitarBusqueda(opc = false){
+    if (opc){
+        $("#formDivP1").addClass("hide");
+        $("#formDivP2").removeClass("hide");
+        // $("#btmSave").addClass("hide");
+        // $("#btmCancel").addClass("hide");
+    } else {
+        $("#formDivP1").removeClass("hide");
+        $("#formDivP2").addClass("hide");
+        // $("#btmSave").removeClass("hide");
+        // $("#btmCancel").removeClass("hide");
+        $("#btnSeleccionar").addClass("disabled");
+        $("#buscarP").val("");
+
+    }
+}
+
+function habilitarBotones2(opc = false){
+    if (opc ){
+        $("#btnSeleccionar").removeClass("disabled");
+        $("#btnSeleccionar").removeClass("btn-secondary");
+        $("#btnSeleccionar").addClass("btn-info");
+    } else {
+        $("#btnSeleccionar").addClass("disabled");
+        $("#btnSeleccionar").removeClass("btn-info");
+        $("#btnSeleccionar").addClass("btn-secondary");
+    }
+}
+
+$("#btnSeleccionar").on("click", function(){
+    habilitarBusqueda(false);
+    buscarProd(idSelect2, 1);
+});
+
+$("#btnCancelaBusqueda").on("click", function(){
+    habilitarBusqueda(false)
+});

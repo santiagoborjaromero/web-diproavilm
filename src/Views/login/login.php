@@ -3,7 +3,7 @@
         <div class="d-none d-md-block col-md-3  imagenGranja"></div>
         <div class="col-12 col-md-9 texto mt-3">
             <div class="col-12 col-md-7">
-                <h3 class="special t20 bold" id="nameApp"></h3>
+                <h3 class="specialXX t20 bold" id="nameApp"></h3>
                 <span id="versionApp"></span>
                 <br>
                 <br>
