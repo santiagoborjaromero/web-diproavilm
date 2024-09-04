@@ -118,7 +118,7 @@ ul>li{
 }
 
 .header{
-    background-color: #fff;
+    background-color: #ffffff;
     min-height: var(--size-header) ;
     height: var(--size-header) ;
 }

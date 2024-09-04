@@ -1,11 +1,11 @@
 <div class="row bg-gray-lights p-2 border-down bg-light sticky">
-    <div class="col-12 col-md-4  mt-1">
+    <div class="col-12 col-md-2  mt-1">
         <span>
             <i id="TitleIcon" class="mr-2 box"></i>
             <span class="t20" id="Title"></span>
         </span>
     </div>
-    <div class="col-12 col-md-8 text-end" id="btmDivs">
+    <div class="col-12 col-md-10 text-end" id="btmDivs">
         <span id="divW">
             <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
                 <i class="fa fa-plus"></i>
@@ -42,10 +42,26 @@
             <i class="fas fa-reply"></i>
             Cancelar
         </button>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-print"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="PDF" href="javascript_void(0)">PDF</a></li>
+                <li><a class="dropdown-item" href="#">CSV</a></li>
+                <!-- <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+            </ul>
+        </div>
+
     </div>
 </div>
 
-<div class="row mt-2 justify-content-md-center" >
+<div class="row mt-2 justify-content-md-center">
     <div class="col-12 col-md-11 align-items-center" id="GridDiv">
         <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
     </div>
@@ -53,7 +69,7 @@
 
 <!-- Formulario -->
 <div class="row justify-content-md-center hide" id="FormDiv">
-    <div  class="col-12 col-md-11 align-items-center bg-white round-10">
+    <div class="col-12 col-md-11 align-items-center bg-white round-10">
         <div class="row mt-5 mb-2">
             <label class="col-12 col-md-3 control-label text-end">Usuario <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
@@ -98,11 +114,11 @@
                 <i class="fas fa-question-circle " onclick="help('El estado indica si un usuario puede ingresar al sistena (activo) o no(inactivo).')"></i>
             </div>
         </div>
-        
-        
+
+
     </div>
 </div>
-    
-    
-    <script src="src/Views/users/users.js"></script>
-    <link rel="stylesheet" href="src/Views/users/users.css">
+
+
+<script src="src/Views/users/users.js"></script>
+<link rel="stylesheet" href="src/Views/users/users.css">

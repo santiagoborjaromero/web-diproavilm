@@ -577,3 +577,25 @@ function habilitarBotones(opc = false){
         }
     }
 }
+
+$("#PDF").on("click", function(event){
+    event.preventDefault();
+    console.log("PDF");
+    imprimir("Listado de Usuarios", hacerComprensible(lstUsers), 'l');
+})
+
+function hacerComprensible(array){
+    let rec = JSON.stringify(array);
+    rec = rec.replace(/iduser/g, "Usuario ID");
+    rec = rec.replace(/idrole/g, "Rol ID");
+    rec = rec.replace(/fullname/g, "Nombre");
+    rec = rec.replace(/created_at/g, "Creado");
+    rec = rec.replace(/udated_at/g, "Actualizado");
+    rec = rec.replace(/deleted_at/g, "Eliminado");
+    rec = rec.replace(/lang/g, "Idioma");
+    rec = rec.replace(/rolename/g, "Rol");
+    rec = rec.replace(/scope/g, "Permisos");
+    rec = rec.replace(/status/g, "Estado");
+    rec = rec.replace(/username/g, "Usuario");
+    return JSON.parse(rec);
+}

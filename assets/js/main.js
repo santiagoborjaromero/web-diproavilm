@@ -345,3 +345,128 @@ function numero(amount, decimals) {
 
     return amount_parts.join('.');
 }
+
+
+async function imprimir( title = 'file', data = [], orientacion = 'p'){
+    if (data.length==0){
+        sendMessage("error", "PDF", "No se puede exportar a PDF si no existen datos");
+        return;
+    }
+
+    records = formatoDatosPDF(data);
+    
+    const { jsPDF } = window.jspdf;
+    
+    var doc = new jsPDF({
+        orientation: orientacion,
+        format: 'A4',
+        unit: 'mm'
+    })
+    const imgData = await loadImage('/web6ug8/assets/images/logo.jpg');
+
+    doc.addImage(imgData, 'JPEG', 10, 10, 40, 30);
+    doc.setFontSize(18);
+    doc.text(title, 60, 20);
+    doc.setFontSize(10);
+    doc.text('Al: ' + moment().format("DD-MM-YYYY HH:mm:ss"), 60, 25);
+    
+    // cabecera = Object.keys(records[0]);
+    // const data = [
+    //     ["ID", "Producto", "Cantidad", "Precio"],
+    //     ["1", "Producto A", "100", "$10"],
+    //     ["2", "Producto B", "200", "$20"],
+    //     ["3", "Producto C", "150", "$15"],
+    // ];
+
+    // Agregar la tabla usando jsPDF-AutoTable
+    doc.autoTable({
+        startY: 50,  // Donde empieza la tabla
+        head: [records[0]],
+        body: records.slice(1),
+    });
+
+    // Número de páginas y pie de página
+    // const pageCount = doc.getNumberOfPages();
+    // for (let i = 1; i <= pageCount; i++) {
+    //     doc.setPage(i);
+    //     doc.setFontSize(10);
+    //     doc.text(`Página ${i} de ${pageCount}`, doc.internal.pageSize.getWidth() - 20, doc.internal.pageSize.getHeight() - 10);
+    //     // doc.text(`Página ${i} de ${pageCount}`, 10);
+    // }
+
+
+    doc.save(title + '.pdf');
+}
+
+
+
+
+function formatoDatosPDF(array = []){
+
+    /*
+    const data = [
+        ["ID", "Producto", "Cantidad", "Precio"],
+        ["1", "Producto A", "100", "$10"],
+        ["2", "Producto B", "200", "$20"],
+        ["3", "Producto C", "150", "$15"],
+    ];
+    */
+
+    const data = [];
+    let cabecera = Object.keys(array[0]);
+    data.push(cabecera);
+
+    let temp = [];
+    for (var i = 0; i < array.length; i++) {
+        temp = [];
+        for (var index in array[i]) {
+            temp.push(array[i][index] == null ? '' : array[i][index]);
+        }
+        data.push(temp)
+    }
+    return data;
+
+
+//    let str = '';
+
+//     for (var i = 0; i < array.length; i++) {
+//         var line = '';
+//         for (var index in array[i]) {
+//           line += array[i][index] + ',';
+//         }
+//         line.slice(0, line.Length - 1);
+//         str += line + '\r\n';
+//     }
+    
+
+
+    // const data = [];
+    // let cabecera = Object.keys(datos[0]);
+
+    // data.push(cabecera);
+
+    // let temp = [];
+    // datos.forEach(e=>{
+    //     data.push(e);
+    // })
+
+    // console.log(data)
+}
+
+
+function loadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            resolve(canvas.toDataURL('image/jpeg'));
+        };
+        img.onerror = reject;
+        img.src = url;
+    });
+}
