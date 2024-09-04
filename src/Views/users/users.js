@@ -580,22 +580,46 @@ function habilitarBotones(opc = false){
 
 $("#PDF").on("click", function(event){
     event.preventDefault();
-    console.log("PDF");
-    imprimir("Listado de Usuarios", hacerComprensible(lstUsers), 'l');
-})
+    imprimir("Listado de Usuarios", prepararArray(), 'l');
+});
 
-function hacerComprensible(array){
-    let rec = JSON.stringify(array);
-    rec = rec.replace(/iduser/g, "Usuario ID");
-    rec = rec.replace(/idrole/g, "Rol ID");
-    rec = rec.replace(/fullname/g, "Nombre");
-    rec = rec.replace(/created_at/g, "Creado");
-    rec = rec.replace(/udated_at/g, "Actualizado");
-    rec = rec.replace(/deleted_at/g, "Eliminado");
-    rec = rec.replace(/lang/g, "Idioma");
-    rec = rec.replace(/rolename/g, "Rol");
-    rec = rec.replace(/scope/g, "Permisos");
-    rec = rec.replace(/status/g, "Estado");
-    rec = rec.replace(/username/g, "Usuario");
-    return JSON.parse(rec);
+//TODO:EXPORTAR PDF Y CSV
+$("#PDF").on("click", function(event){
+    event.preventDefault();
+    imprimir("Listado de Usuarios", prepararArray(), 'l');
+});
+$("#CSV").on("click", function(event){
+    event.preventDefault();
+    exportarCSV("Listado de Usuarios", prepararArray());
+});
+
+function prepararArray(){
+    let lstR = [];
+    lstUsers.forEach(e=>{
+        lstR.push({
+            "Usuario": e.username,
+            "Nombre Completo": e.fullname,
+            "Rol": e.rolename,
+            "Permisos": e.scope,
+            "Idioma": e.lang,
+            "Estado": e.status == 0 ? "Inactivo" : "Activo",
+            "Eliminado": e.deleted_at == null ? "" : "Eliminado",
+        })
+    })
+    return lstR;
 }
+// function hacerComprensible(array){
+//     let rec = JSON.stringify(array);
+//     rec = rec.replace(/iduser/g, "Usuario ID");
+//     rec = rec.replace(/idrole/g, "Rol ID");
+//     rec = rec.replace(/fullname/g, "Nombre");
+//     rec = rec.replace(/created_at/g, "Creado");
+//     rec = rec.replace(/udated_at/g, "Actualizado");
+//     rec = rec.replace(/deleted_at/g, "Eliminado");
+//     rec = rec.replace(/lang/g, "Idioma");
+//     rec = rec.replace(/rolename/g, "Rol");
+//     rec = rec.replace(/scope/g, "Permisos");
+//     rec = rec.replace(/status/g, "Estado");
+//     rec = rec.replace(/username/g, "Usuario");
+//     return JSON.parse(rec);
+// }

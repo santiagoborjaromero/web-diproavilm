@@ -48,8 +48,8 @@
                 <i class="fas fa-print"></i>
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" id="PDF" href="javascript_void(0)">PDF</a></li>
-                <li><a class="dropdown-item" href="#">CSV</a></li>
+                <li><a class="dropdown-item" id="PDF" href="javascript:void(0)">PDF</a></li>
+                <li><a class="dropdown-item" id="CSV" href="javascript:void(0)">CSV</a></li>
                 <!-- <li><a class="dropdown-item" href="#">Something else here</a></li>
                 <li>
                     <hr class="dropdown-divider">

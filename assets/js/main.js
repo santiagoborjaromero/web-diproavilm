@@ -346,7 +346,6 @@ function numero(amount, decimals) {
     return amount_parts.join('.');
 }
 
-
 async function imprimir( title = 'file', data = [], orientacion = 'p'){
     if (data.length==0){
         sendMessage("error", "PDF", "No se puede exportar a PDF si no existen datos");
@@ -370,14 +369,6 @@ async function imprimir( title = 'file', data = [], orientacion = 'p'){
     doc.setFontSize(10);
     doc.text('Al: ' + moment().format("DD-MM-YYYY HH:mm:ss"), 60, 25);
     
-    // cabecera = Object.keys(records[0]);
-    // const data = [
-    //     ["ID", "Producto", "Cantidad", "Precio"],
-    //     ["1", "Producto A", "100", "$10"],
-    //     ["2", "Producto B", "200", "$20"],
-    //     ["3", "Producto C", "150", "$15"],
-    // ];
-
     // Agregar la tabla usando jsPDF-AutoTable
     doc.autoTable({
         startY: 50,  // Donde empieza la tabla
@@ -394,11 +385,21 @@ async function imprimir( title = 'file', data = [], orientacion = 'p'){
     //     // doc.text(`Página ${i} de ${pageCount}`, 10);
     // }
 
-
     doc.save(title + '.pdf');
 }
 
-
+function exportarCSV(filename, array = []){
+    let str = (Object.keys(array[0])).join(",") + '\r\n';
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+          line += array[i][index] + ',';
+        }
+        line.slice(0, line.Length - 1);
+        str += line + '\r\n';
+    }
+    download(filename, str);
+}
 
 
 function formatoDatosPDF(array = []){
@@ -425,34 +426,7 @@ function formatoDatosPDF(array = []){
         data.push(temp)
     }
     return data;
-
-
-//    let str = '';
-
-//     for (var i = 0; i < array.length; i++) {
-//         var line = '';
-//         for (var index in array[i]) {
-//           line += array[i][index] + ',';
-//         }
-//         line.slice(0, line.Length - 1);
-//         str += line + '\r\n';
-//     }
-    
-
-
-    // const data = [];
-    // let cabecera = Object.keys(datos[0]);
-
-    // data.push(cabecera);
-
-    // let temp = [];
-    // datos.forEach(e=>{
-    //     data.push(e);
-    // })
-
-    // console.log(data)
 }
-
 
 function loadImage(url) {
     return new Promise((resolve, reject) => {
@@ -469,4 +443,14 @@ function loadImage(url) {
         img.onerror = reject;
         img.src = url;
     });
+}
+
+
+function download(filename, textInput) {
+    var element = document.createElement('a');
+    element.setAttribute('href','data:text/csv;charset=utf-8, ' + encodeURIComponent(textInput));
+    var blob = new Blob([textInput], { type: 'text/csv;charset=utf-8;' });
+    element.setAttribute('download', filename);
+    document.body.appendChild(element);
+    element.click();
 }
