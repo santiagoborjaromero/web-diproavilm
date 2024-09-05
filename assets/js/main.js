@@ -48,7 +48,6 @@ async function loadConfig(){
                 $("#titleapp").html(config["empresa_nombre"]);
 
                 sessionSet("config", config);
-                // console.log(config)
 
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
@@ -346,7 +345,7 @@ function numero(amount, decimals) {
     return amount_parts.join('.');
 }
 
-async function imprimir( title = 'file', data = [], orientacion = 'p'){
+async function imprimir( title = 'file', data = [], orientacion = 'p', subtitle=""){
     if (data.length==0){
         sendMessage("error", "PDF", "No se puede exportar a PDF si no existen datos");
         return;
@@ -368,6 +367,14 @@ async function imprimir( title = 'file', data = [], orientacion = 'p'){
     doc.text(title, 60, 20);
     doc.setFontSize(10);
     doc.text('Al: ' + moment().format("DD-MM-YYYY HH:mm:ss"), 60, 25);
+    if (subtitle!='') {
+        subtitle = subtitle.replace(`<kbd class="bg-success mr-1">`,"")
+        subtitle = subtitle.replace(`<kbd class="bg-success mr-1">`,"")
+        subtitle = subtitle.replace(`</kbd>`,"")
+        subtitle = subtitle.replace(`</kbd>`,"")
+        subtitle = subtitle.replace(`<br>`,"")
+        doc.text(subtitle, 60, 30);
+    }
     
     // Agregar la tabla usando jsPDF-AutoTable
     doc.autoTable({
@@ -388,7 +395,7 @@ async function imprimir( title = 'file', data = [], orientacion = 'p'){
     doc.save(title + '.pdf');
 }
 
-function exportarCSV(filename, array = []){
+function exportarCSV(filename, array = [], subtitle){
     let str = (Object.keys(array[0])).join(",") + '\r\n';
     for (var i = 0; i < array.length; i++) {
         var line = '';
@@ -398,7 +405,16 @@ function exportarCSV(filename, array = []){
         line.slice(0, line.Length - 1);
         str += line + '\r\n';
     }
-    download(filename, str);
+
+    if (subtitle!='') {
+        subtitle = subtitle.replace(`<kbd class="bg-success mr-1">`,"")
+        subtitle = subtitle.replace(`<kbd class="bg-success mr-1">`,"")
+        subtitle = subtitle.replace(`</kbd>`,"")
+        subtitle = subtitle.replace(`</kbd>`,"")
+        subtitle = subtitle.replace(`<br>`,"")
+    }
+
+    download(filename, filename + "\r\n" + subtitle + "\r\n" +  str);
 }
 
 
