@@ -1,11 +1,11 @@
 <div class="row bg-gray-lights p-2 border-down bg-light sticky">
-    <div class="col-12 col-md-2  mt-1">
+    <div class="col-12 col-md-4  mt-1">
         <span>
             <i id="TitleIcon" class="mr-2 box"></i>
             <span class="t20" id="Title"></span>
         </span>
     </div>
-    <div class="col-12 col-md-10 text-end" id="btmDivs">
+    <div class="col-12 col-md-8 text-end" id="btmDivs">
         <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
             <i class="fas fa-sync-alt"></i>
             Refrescar
