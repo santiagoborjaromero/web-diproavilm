@@ -24,14 +24,14 @@
 </div>
 
 <div class="row mt-2 justify-content-md-center">
-    <div class="col-12 col-md-11 align-items-center" id="GridDiv">
+    <div class="col-12 col-md-12 align-items-center" id="GridDiv">
         <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
     </div>
 </div>
 
 <!-- Formulario -->
 <div class="row justify-content-md-center hide" id="FormDiv">
-    <div class="col-12 col-md-11 align-items-center bg-white round-10">
+    <div class="col-12 col-md-12 align-items-center bg-white round-10">
         <div class="row mt-5 mb-2">
             <label class="col-12 col-md-3 control-label text-end">Usuario <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
