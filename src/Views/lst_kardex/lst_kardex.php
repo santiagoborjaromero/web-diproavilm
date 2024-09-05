@@ -6,34 +6,7 @@
         </span>
     </div>
     <div class="col-12  col-md-8 text-end">
-        <!-- <span id="divW">
-            <button id="btmNew" class="btn btn-primary mr-1" title="Nuevo">
-                <i class="fa fa-plus"></i>
-                Nuevo
-            </button>
-            <button id="btmEdit" class="btn btn-info mr-1" title="Editar">
-                <i class="far fa-edit"></i>
-                Editar
-            </button>
-        </span> -->
-        <!-- <span id="divD">
-            <button id="btmDelete" class="btn btn-danger mr-1" title="Eliminar">
-                <i class="far fa-trash-alt"></i>
-                Eliminar
-            </button>
-        </span>
-        <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
-            <i class="fas fa-sync-alt"></i>
-            Refrescar
-        </button>
-        <button id="btmSave" class="btn btn-primary mr-2 hide" title="Guardar">
-            <i class="fas fa-save"></i>
-            Guardar
-        </button>
-        <button id="btmCancel" class="btn btn-danger mr-2 hide">
-            <i class="fas fa-reply"></i>
-            Cancelar
-        </button> -->
+        
     </div>
 </div>
 <div id="formDivP1" >
@@ -59,7 +32,7 @@
                             <td class="text-right">
                                 <div class="btn-group hide" id="btnPrint">
                                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-print"></i>
+                                        <i class="fas fa-print"></i> Exportar
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" id="PDF" href="javascript:void(0)">Exportar PDF</a></li>

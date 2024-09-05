@@ -12,7 +12,7 @@
         </button>
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-print"></i>
+                <i class="fas fa-print"></i> Exportar
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" id="PDF" href="javascript:void(0)">Exportar PDF</a></li>
