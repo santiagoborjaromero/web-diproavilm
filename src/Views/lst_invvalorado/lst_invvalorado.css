@@ -1,0 +1,23 @@
+.dash-titulo{
+    font-size: 1.5rem;
+    color: rgb(85, 85, 85);
+    font-weight: 600;
+    height: 50px !important;
+}
+.dash-valor{
+    font-size: 1.5rem;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+    background-color: white;
+}
+.dash-subtitulo{
+    font-size: 0.8rem;
+    color: rgb(85, 85, 85);
+    font-weight: 400;
+    height: 50px !important;
+}
+
+.altopermitido { 
+    max-height: 148px !important;
+    overflow-y: scroll;
+}
