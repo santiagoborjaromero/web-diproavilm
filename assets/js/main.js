@@ -348,13 +348,15 @@ function numero(amount, decimals) {
     return amount_parts.join('.');
 }
 
-async function imprimir( title = 'file', data = [], orientacion = 'p', subtitle=""){
-    if (data.length==0){
-        sendMessage("error", "PDF", "No se puede exportar a PDF si no existen datos");
-        return;
-    }
+async function imprimir( title = 'file', data = null, orientacion = 'p', subtitle="", reemplazaAL = false){
+    // if (data.length==0){
+    //     sendMessage("error", "PDF", "No se puede exportar a PDF si no existen datos");
+    //     return;
+    // }
 
-    records = formatoDatosPDF(data);
+    if (data){
+        records = formatoDatosPDF(data);
+    }
     
     const { jsPDF } = window.jspdf;
     
@@ -369,22 +371,28 @@ async function imprimir( title = 'file', data = [], orientacion = 'p', subtitle=
     doc.setFontSize(18);
     doc.text(title, 60, 20);
     doc.setFontSize(10);
-    doc.text('Al: ' + moment().format("DD-MM-YYYY HH:mm:ss"), 60, 25);
+    if (!reemplazaAL) doc.text('Al: ' + moment().format("DD-MM-YYYY HH:mm:ss"), 60, 25);
     if (subtitle!='') {
         subtitle = subtitle.replace(`<kbd class="bg-success mr-1">`,"")
         subtitle = subtitle.replace(`<kbd class="bg-success mr-1">`,"")
         subtitle = subtitle.replace(`</kbd>`,"")
         subtitle = subtitle.replace(`</kbd>`,"")
         subtitle = subtitle.replace(`<br>`,"")
-        doc.text(subtitle, 60, 30);
+        if (!reemplazaAL) {
+            doc.text(subtitle, 60, 30);
+        } else{
+            doc.text(subtitle, 60, 25);
+        }
     }
     
     // Agregar la tabla usando jsPDF-AutoTable
-    doc.autoTable({
-        startY: 50,  // Donde empieza la tabla
-        head: [records[0]],
-        body: records.slice(1),
-    });
+    if (data){
+        doc.autoTable({
+            startY: 50,  // Donde empieza la tabla
+            head: [records[0]],
+            body: records.slice(1),
+        });
+    }
 
     // Número de páginas y pie de página
     // const pageCount = doc.getNumberOfPages();

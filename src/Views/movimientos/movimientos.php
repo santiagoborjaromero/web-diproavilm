@@ -19,7 +19,11 @@
         <span id="divD">
             <button id="btmDelete" class="btn btn-danger mr-1" title="Eliminar">
                 <i class="far fa-trash-alt"></i>
-                Eliminar
+                Anular
+            </button>
+            <button id="btmReestablecer" title="Reestablecer" class="btn btn-info mr-1">
+                <i class="fas fa-notes-medical"></i>
+                Recuperar
             </button>
         </span>
         <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
@@ -34,6 +38,15 @@
             <i class="fas fa-reply"></i>
             Cancelar
         </button>
+        <div class="btn-group" id="btnPrint">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-print"></i> 
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="PDF" href="javascript:void(0)">Exportar PDF</a></li>
+                <!-- <li><a class="dropdown-item" id="CSV" href="javascript:void(0)">Exportar CSV</a></li> -->
+            </ul>
+        </div>
     </div>
 </div>
 <div  id="GridDiv">

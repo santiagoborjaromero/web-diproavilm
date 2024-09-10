@@ -98,6 +98,7 @@ async function loadData(){
                         lstTransacciones.push(e)    
                     });
                 }
+
                 gridApi.setGridOption("rowData", lstTransacciones);
 
             } else {
@@ -223,8 +224,10 @@ async function loadProductos(){
             if (resp.status && resp.status == 'ok') {
                 if (resp.message){
                     resp.message.forEach(e=>{
-                        lstProductos.push(e);
-                        $("#idproduct").append(`<option value='${e.idproduct}'>${e.name}</option>`);
+                        if (!e.deleted_at){
+                            lstProductos.push(e);
+                            $("#idproduct").append(`<option value='${e.idproduct}'>${e.name}</option>`);
+                        }
                     });
                 }
             } else {
@@ -348,6 +351,29 @@ function estructuraGrid(){
                 cellClass: "ag-header-cell-label-right", 
                 sortable: true, 
             },
+            {
+                headerName: "Estado",
+                flex: 1, 
+                field: "status",
+                filter: true,
+                cellClass: "text-start",
+                cellRenderer: (params) => {
+                    let html="";
+                    let text ="";
+                    let status = parseInt(params.value);
+                    if (status == 1){
+                        text = "Activo";
+                        cls = "fa fa-check";
+                        color = "bg-success";
+                    }else{
+                        text = "Anulado";
+                        cls = "fas fa-minus";
+                        color = "bg-danger";
+                    }
+                    html += `<kbd class='${color}'><i class="${cls}"></i></kbd> ${text}`;
+                    return html;
+                },
+            },
         ]
     }
 
@@ -456,7 +482,9 @@ function estructuraGridBusqueda(){
                 field: "price",
                 headerClass: "ag-header-cell-label-center text-center bg-header-1", 
                 type: "rightAligned",
-            }
+            },
+            
+
         ]
     }
 
@@ -539,7 +567,6 @@ function estructuraGridBusquedaBeneficiarios(){
                         text = "Empresa"
                         cls  = "bg-primary";
                     }
-                    // return `<span class='${cls}'>${type}<span>`;
                     return `<kbd class='${cls}'>${text}<kbd>`;
                 }
             },
@@ -580,14 +607,47 @@ function cleanRecords(record=null){
 
     let idmovementtype =  $("#idmovementtype").val();
     seleccionTipoMovimiento(idmovementtype);
-
-    limpiarIngresoProducto();
-    lstItems = [];
-    refreshItemData();
-    
+  
     $("#date").val( moment().format("YYYY-MM-DD") );
 
-    let idtransaction = "-1";
+    idtransaction = "-1";
+    
+    limpiarIngresoProducto();
+    refreshItemData();
+    lstItems = [];
+
+    if (record){
+
+        idtransaction = record.idtransaction;
+
+        idmovementtype = record.idmovementtype;
+        seleccionTipoMovimiento(idmovementtype);
+
+        $("#date").val(moment(record.date).format("YYYY-MM-DD"));
+        $("#idmovementtype").val(record.idmovementtype);
+        $("#numberdocument").val(record.numberdocument);
+        $("#idbeneficiary").val(record.idbeneficiary);
+        $("#reference").val(record.reference);
+
+        record.items.forEach(e=>{
+            let record = {
+                idproduct: e.idproducto,
+                barcode: e.codigobarras,
+                name: e.nombre,
+                entry:  e.asiento,
+                qty:  parseFloat(e.cantidad),
+                price:  parseFloat(e.precio),
+                total:  parseFloat(e.total)
+            }
+            lstItems.push(record);
+        });
+
+        refreshItemData();
+    
+        limpiarIngresoProducto();
+        focus("searchProduct",false);
+
+    }
 }
 
 showDivs = (que = 0) => {
@@ -597,9 +657,12 @@ showDivs = (que = 0) => {
             $("#Title").html(title);
             $("#btmNew").removeClass("hide");
             $("#btmEdit").removeClass("hide");
-            $("#btmDelete").removeClass("hide");
             $("#btmRefresh").removeClass("hide");
+            $("#btmDelete").removeClass("hide");
+            $("#btmReestablecer").removeClass("hide");
+            $("#btnPrint").removeClass("hide");
             $("#btmSave").addClass("hide");
+
             $("#btmCancel").addClass("hide");
             habilitarBotones(false);
 
@@ -613,6 +676,8 @@ showDivs = (que = 0) => {
             $("#btmEdit").addClass("hide");
             $("#btmDelete").addClass("hide");
             $("#btmRefresh").addClass("hide");
+            $("#btmReestablecer").addClass("hide");
+            $("#btnPrint").addClass("hide");
             $("#btmSave").removeClass("hide");
             $("#btmCancel").removeClass("hide");
 
@@ -749,25 +814,37 @@ $("#btmRefresh").on("click", function(){
 
 function habilitarBotones(opc = false){
     // console.log(opc, dataSelected.deleted_at);
-    if (opc && !dataSelected.deleted_at ){
-        $("#btmEdit").removeClass("disabled");
-        $("#btmEdit").removeClass("btn-secondary");
-        $("#btmEdit").addClass("btn-info");
+    if (opc ){
         
-        if (dataSelected.nusuarios==0){
-            $("#btmDelete").removeClass("disabled");
-            $("#btmDelete").removeClass("btn-secondary");
-            $("#btmDelete").addClass("btn-danger");
-        } else {
+
+        if (dataSelected && dataSelected.status == 0){
+            $("#btmReestablecer").removeClass("disabled");
+            $("#btmReestablecer").removeClass("btn-secondary");
+            $("#btmReestablecer").addClass("btn-info");
+
+            $("#btmEdit").addClass("disabled");
+            $("#btmEdit").removeClass("btn-info");
+            $("#btmEdit").addClass("btn-secondary");
+
             $("#btmDelete").addClass("disabled");
             $("#btmDelete").removeClass("btn-danger");
             $("#btmDelete").addClass("btn-secondary");
+        }else{
+            $("#btmReestablecer").addClass("disabled");
+            $("#btmReestablecer").removeClass("btn-info");
+            $("#btmReestablecer").addClass("btn-secondary");
+
+            $("#btmEdit").removeClass("disabled");
+            $("#btmEdit").removeClass("btn-secondary");
+            $("#btmEdit").addClass("btn-info");
+            
+            $("#btmDelete").removeClass("disabled");
+            $("#btmDelete").removeClass("btn-secondary");
+            $("#btmDelete").addClass("btn-danger");
         }
 
-        $("#btmReset").removeClass("disabled");
-        $("#btmReset").removeClass("btn-secondary");
-        $("#btmReset").addClass("btn-info");
-        
+        $("#btnPrint").removeClass("hide");
+
     } else {
         $("#btmEdit").addClass("disabled");
         $("#btmEdit").removeClass("btn-info");
@@ -776,10 +853,18 @@ function habilitarBotones(opc = false){
         $("#btmDelete").addClass("disabled");
         $("#btmDelete").removeClass("btn-danger");
         $("#btmDelete").addClass("btn-secondary");
+
+        if (dataSelected &&  dataSelected.status == 0){
+            $("#btmReestablecer").removeClass("disabled");
+            $("#btmReestablecer").removeClass("btn-secondary");
+            $("#btmReestablecer").addClass("btn-info");
+        }else{
+            $("#btmReestablecer").addClass("disabled");
+            $("#btmReestablecer").removeClass("btn-info");
+            $("#btmReestablecer").addClass("btn-secondary");
+        }
         
-        $("#btmReset").addClass("disabled");
-        $("#btmReset").removeClass("btn-info");
-        $("#btmReset").addClass("btn-secondary");
+        $("#btnPrint").addClass("hide");
         
     }
 }
@@ -959,7 +1044,7 @@ function habilitarBusqueda3(opc = false){
         $("#btmCancel").addClass("hide");
     } else {
         $("#formDivP1").removeClass("hide");
-        $("#formDivP2").removeClass("hide");
+        $("#formDivP2").addClass("hide");
         $("#formDivP3").addClass("hide");
         $("#btmSave").removeClass("hide");
         $("#btmCancel").removeClass("hide");
@@ -1239,3 +1324,164 @@ $("#btnBuscarP3").on("click", function(){
     let textoBuscar = $("#buscarP").val();
     buscarBene(textoBuscar, 0);
 });
+
+$("#btmDelete").on("click", function(){
+    hacerPregunta("Anular comprobante", "anular", "anularTransaction");
+});
+
+$("#btmReestablecer").on("click", function(){
+    hacerPregunta("Recuperar un comprobante anulado", "recuperar", "recuperarTransaccion");
+});
+
+function hacerPregunta(action='', keyword='', queFuncionEjecuto=''){
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        icon: 'question',
+        title: title,
+        text: `Para ${action}, debe escribir ${keyword}.`,
+        input: "text",
+        showCancelButton: true,
+        inputPlaceholder: keyword,
+        confirmButtonColor: '#f63c3a',
+        confirmButtonText: formatoTitulo(keyword),
+        cancelButtonColor: '#33a0d6',
+        cancelButtonText: 'Cancelar',
+        inputValidator: text => {
+            return new Promise(resolve => {
+              if (text.trim() !== '' && text.trim() ==  keyword) {
+                resolve('');
+              } else {
+                resolve(
+                  `Para ${action}, debe ingresar la palabra ${keyword}.`
+                );
+              }
+            });
+        }
+    }).then(res => {
+        if (res.isConfirmed) {
+            if (queFuncionEjecuto!=''){
+                eval(`realizarAccion('${queFuncionEjecuto}')`);
+            }
+        }
+    });
+}
+
+async function realizarAccion(ruta=""){
+    let method = ruta == "anularTransaction" ? "POST" : "POST";
+    let url = `${ruta}&id=${idSelect}`;
+
+    await consumirApi(method, url)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp.status && resp.status == 'ok') {
+                if (ruta == "anularTransaction"){
+                    sendMessage("success", title, `Registro ${resp.message} anulado con éxito`);
+                } else if (ruta == "recuperarTransaccion"){
+                    sendMessage("success", title, `Registro ${resp.message} recuperado con éxito`);
+                }
+                showDivs(0);
+                loadData();
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+
+}
+
+
+$("#btmEdit").on("click", async function(){
+    
+    editar(1);
+
+});
+
+async function editar(where = 1 ){
+    let method = "GET";
+    let url = `transaccionOne&id=${idSelect}`;
+    await consumirApi(method, url)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+    
+            if (resp.status && resp.status == 'ok') {
+                if (resp.message){
+                    if (where == 1){
+                        showDivs(1);
+                        cleanRecords(resp.message);
+                        $("#idtransaction").val(idSelect);
+                    } else {
+                        procesarPDF(resp.message);
+                    }
+                }
+            } else {
+                sendMessage("error", title, resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+}
+
+
+$("#PDF").on("click", function(event){
+    event.preventDefault();
+    if (dataSelected.status==1){
+        editar(0);
+    } else {
+        procesarPDF(dataSelected, false)
+    }
+});
+
+
+async function procesarPDF(record, active = true){
+        // console.log(record)
+    
+        let cabecera = `
+Fecha: ${record.date}
+Beneficiario: ${record.beneficiary_name}
+Referencia: ${record.reference}
+Total: $${numero(record.total,2)}           No. Items: ${record.nitems}            Estado: ${record.status == 1 ? 'Activo' : 'Anulado'}            
+Responsable: ${record.fullname}
+        `;
+
+        let items =null;
+        if (active){
+            items = prepararArray(record.items);
+        }
+    
+        imprimir(`${record.type} ${record.numberdocument}`, items, 'l', cabecera, true);
+
+}
+
+function prepararArray(records=[]){
+    let lstR = [];
+    records.forEach(e=>{
+        lstR.push({
+            "Codigo Barras": e.codigobarras,
+            "Nombre": e.nombre,
+            "Categoria": e.categoria,
+            "Linea": e.linea,
+            "Cantidad": e.cantidad,
+            "Precio": e.precio,
+            "Total": e.total,
+        });
+    })
+    return lstR;
+}
+
+
+

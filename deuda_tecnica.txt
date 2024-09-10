@@ -4,12 +4,14 @@
 //TODO: OK - Poner stock anterior o actual frente a lo que tiene
 //TODO: OK - Poner busqueda inteligente con beneficiarios
 //TODO: OK - Poner busqueda inteligente en kardex tambien
-//TODO: FALTA - Eliminar un comprobante de bodega y que se recalcule el stock
+//TODO: OK - Eliminar un comprobante de bodega y que se recalcule el stock
+//TODO: OK - Editar comprobante
+//TODO: OK - imprimir PDF comprobante
 //TODO: FALTA - recalculo de saldos - opcion
 //TODO: OK - REPORTES
 //TODO: OK - Analisis de rotacion
 //TODO: FALTAN - DASHBOARDS
-//TODO: FALTA - boton restablecer en benediciarios
+//TODO: OK - boton restablecer en benediciarios
 //TODO: OK - formulairo categorias
 //TODO: OK - formulairo lineas de productos
 //TODO: OK - Informacion del actual Usuario . formulario para cambiar la constraseña desde el sistema
