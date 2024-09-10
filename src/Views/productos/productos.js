@@ -84,7 +84,9 @@ async function loadLineas(){
             if (resp.status && resp.status == 'ok') {
                 if (resp.message){
                     resp.message.forEach(e=>{
-                        $("#idproductline").append(`<option value="${e.idproductline}">${e.description}</option>`)
+                        if (e.deleted_at === null){
+                            $("#idproductline").append(`<option value="${e.idproductline}">${e.description}</option>`)
+                        }
                     })
                 }
 
@@ -106,11 +108,12 @@ async function loadCategorias(){
             try {
                 resp = JSON.parse(resp);
             } catch (ex) {}
-
             if (resp.status && resp.status == 'ok') {
                 if (resp.message){
                     resp.message.forEach(e=>{
-                        $("#idproductcategory").append(`<option value="${e.idproductcategory}">${e.description}</option>`)
+                        if (e.deleted_at === null){
+                            $("#idproductcategory").append(`<option value="${e.idproductcategory}">${e.description}</option>`)
+                        }
                     })
                 }
 

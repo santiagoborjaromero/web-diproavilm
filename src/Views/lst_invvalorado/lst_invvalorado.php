@@ -23,7 +23,7 @@
 </div>
 
 <div class="row m-1 justify-content-md-center">
-    <div class="col">
+    <div class="col-6 col-md-6 col-lg-2">
         <div class="card">
             <div class="card-body text-end">
                 <div class="dash-title"><i class="far fa-chart-bar"></i> Costo</div>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="col">
+    <div class="col-6 col-md-6 col-lg-2">
         <div class="card">
             <div class="card-body text-end">
                 <div class="dash-title"><i class="far fa-chart-bar"></i> Precio</div>
@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div class="col-8" >
+    <div class="col-12 col-md-12 col-lg-8" >
     <div class="card">
             <div class="card-body altopermitido" id="dataStats">
             </div>
@@ -54,8 +54,8 @@
 </div>
 
 <div class="row mt-2 justify-content-md-center" id="GridDiv">
-    <div class="col-12 col-md-12 align-items-center">
-        <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+    <div class="col-12 col-md-12 align-items-center tablaancho" >
+        <div id="myGrid" class="ag-theme-quartz text-dark-400" style=" height: 500px; min-height: 500px;"></div>
     </div>
 </div>
 

@@ -190,7 +190,10 @@ async function selectRuta(route, args = ''){
 
     if (["mapasitio"].includes(route)){
         $("#path").html("Mapa del Sitio")
+    } else if (["userinfo"].includes(route)){
+        $("#path").html("Informacion del Usuario")
     } else {
+    
         //TODO: Breadcrumbs
         let parent = "";
         let path = [];
@@ -267,8 +270,8 @@ function sendMessageObj(type, titulo, obj){
 }
 
 //TODO: Despliegue de ayudas
-function help(message){
-    sendMessage("question", "Ayuda", message);
+function help(message, esHTML = false){
+    sendMessage("question", "Ayuda", message, esHTML);
 }
 
 //TODO: Icono girando en proceso spinner

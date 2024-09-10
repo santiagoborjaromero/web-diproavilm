@@ -1,10 +1,15 @@
 //TODO: OK - POPUP para seleccionar producto o buscar por nombre
 //TODO: OK - Que cuando elijan tipo de comprobante y luego ingresen productos se disabled para que no cambien de documento los pilas
-//TODO: FALTA - Revisar los stocks
+//TODO: OK - Revisar los stocks
 //TODO: OK - Poner stock anterior o actual frente a lo que tiene
 //TODO: OK - Poner busqueda inteligente con beneficiarios
 //TODO: OK - Poner busqueda inteligente en kardex tambien
-//TODO: FALTA - Eliminar un comprobante de bodega y que se recaulcuel el stock
+//TODO: FALTA - Eliminar un comprobante de bodega y que se recalcule el stock
 //TODO: FALTA - recalculo de saldos - opcion
-//TODO: FALTAN - REPORTES
+//TODO: OK - REPORTES
+//TODO: OK - Analisis de rotacion
 //TODO: FALTAN - DASHBOARDS
+//TODO: FALTA - boton restablecer en benediciarios
+//TODO: OK - formulairo categorias
+//TODO: OK - formulairo lineas de productos
+//TODO: OK - Informacion del actual Usuario . formulario para cambiar la constraseña desde el sistema

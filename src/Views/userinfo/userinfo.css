@@ -1,0 +1,53 @@
+.userdiv{
+    border-radius: 10px !important;
+}
+
+.user-card{
+    border-radius: 10px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    vertical-align: middle;
+    width: 100%;
+    height: 500px;
+}
+
+.userimage{
+    width: 100%;
+    background-color: #fff;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.imagen-user{
+    display: inline-flex;
+    /* font-size: 50px !important; */
+    border-radius: 50%;
+    width: 100px !important;
+    background-color: rgb(17, 122, 100);
+    color: #ffffff;
+    text-align: center;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+.userbody{
+    background-color: #f8f8f8;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border : 1px solid #dadada;
+}
+
+#nombre{
+    font-size: 2em;
+    margin-top: 20px !important;
+    padding-top: 20px !important;
+}
+
+#rol{
+    font-size: 1em;
+    font-weight: 500;
+}

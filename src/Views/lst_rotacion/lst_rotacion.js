@@ -63,6 +63,7 @@ async function loadData(record){
                     e["id"] = e.id.toString();
                     lstReport.push(e)    
                 });
+                console.log(lstReport)
                 gridApi.setGridOption("rowData", lstReport);
                 gridApi.sizeColumnsToFit();
                 $("#btnPrint").removeClass("hide");
@@ -120,14 +121,14 @@ function estructuraGrid(){
         },
         // TODO: DEterminar el indice de la tabla que viene, normalment el campo ID 
         getRowId: (params) => {
-            return params.data.id;
+            return params.data.codebar;
         },
         //TODO: Cuando se da click sobre una fila, asigna vairables para tener y poder operar como el id y toda la fila en userSelected
         onRowClicked: (event) => {
             userSelected = event.data;
-            idSelect = event.data.id;
-            idSelectName = event.data.producto;
+            idSelect = event.data.codebar;
             habilitarBotones(true);
+            verAnalisis()
         },
         //TODO: DEFINICION DE COLUMNAS
         columnDefs: [
@@ -146,7 +147,7 @@ function estructuraGrid(){
                     {
                         headerName: "Codigo",
                         flex: 1, 
-                        field: "codigo",
+                        field: "codebar",
                         filter: true,
                         cellClass: "text-start",
                         pinned: "left",
@@ -154,7 +155,7 @@ function estructuraGrid(){
                     {
                         headerName: "Producto",
                         flex: 2, 
-                        field: "producto",
+                        field: "name",
                         filter: true,
                         cellClass: "text-start",
                         sort: "asc",
@@ -164,61 +165,37 @@ function estructuraGrid(){
                 ],
             },
             {
-                headerName: 'Enero',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi1",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me1",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms1",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Febrero',
+                headerName: 'Variables',
                 headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
+                groupId: "var",
                 children:[
                     {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi2",
+                        headerName: "Stock",
+                        headerTooltip: "Stock actual",
+                        field: "stock",
                         type: "rightAligned",
                         cellClass: "text-end",
                         valueFormatter: params => numero(params.value,2)
                     },
                     {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me2",
+                        headerName: "Dias",
+                        headerTooltip: "Dias muestra",
+                        field: "dias",
+                        type: "rightAligned",
+                        cellClass: "text-end",
+                    },
+                    {
+                        headerName: "Costo Venta",
+                        headerTooltip: "Costo Venta",
+                        field: "costoventa",
                         type: "rightAligned",
                         cellClass: "text-end",
                         valueFormatter: params => numero(params.value,2)
                     },
                     {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms2",
+                        headerName: "Promedio",
+                        headerTooltip: "Promedio",
+                        field: "promedio",
                         type: "rightAligned",
                         cellClass: "text-end",
                         valueFormatter: params => numero(params.value,2)
@@ -226,388 +203,28 @@ function estructuraGrid(){
                 ]
             },
             {
-                headerName: 'Marzo',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi3",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me3",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms3",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Abril',
+                headerName: 'Rotacion',
                 headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
+                groupId: "var",
                 children:[
                     {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi4",
+                        headerName: "Rotacion",
+                        headerTooltip: "Rotacion",
+                        field: "rotacion",
                         type: "rightAligned",
                         cellClass: "text-end",
                         valueFormatter: params => numero(params.value,2)
                     },
                     {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me4",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms4",
+                        headerName: "Rotacion Dias",
+                        headerTooltip: "Rotacion en dias",
+                        field: "rotaciondias",
                         type: "rightAligned",
                         cellClass: "text-end",
                         valueFormatter: params => numero(params.value,2)
                     },
                 ]
             },
-            {
-                headerName: 'Mayo',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi5",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me5",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms5",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Junio',
-                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi6",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me6",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms6",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Julio',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi7",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me7",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms7",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Agosto',
-                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi8",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me8",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms8",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Septiembre',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi9",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me9",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms9",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Octubre',
-                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi10",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me10",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms10",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Noviembre',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi11",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me11",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms11",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Diciembre',
-                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "mi12",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "me12",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "ms12",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Totales',
-                headerClass: "ag-header-cell-label-center text-center bg-header", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "totali",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "totale",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "totals",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: 'Promedio',
-                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
-                groupId: "Comp",
-                children:[
-                    {
-                        headerName: "Ingreso",
-                        headerTooltip: "Ingreso",
-                        field: "promedioi",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Egreso",
-                        headerTooltip: "Egreso",
-                        field: "promedioe",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Saldo",
-                        headerTooltip: "Saldo",
-                        field: "promedios",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                ]
-            },
-            {
-                headerName: "Ratio",
-                headerTooltip: "Ratio",
-                field: "ratio",
-                type: "rightAligned",
-                cellClass: "text-end",
-                pinned: "left",
-                valueFormatter: params => numero(params.value,2)
-            },
-            
-
         ]
     }
 
@@ -735,6 +352,24 @@ function habilitarBotones(opc = false){
 
         }
     }
+
+    
+}
+
+
+function verAnalisis(){
+    userSelected
+
+    let html = `
+        <strong class="bold text-success">Rotación</strong> de <b>${userSelected.rotacion}</b> en <b>${userSelected.dias}</b> días.<br>
+        Esto significa que, en un periodo de <b>${userSelected.dias}</b> días, el producto ha rotado (o se ha vendido y repuesto) 
+        aproximadamente <b>${userSelected.rotacion}</b> veces. <br><br>
+        
+        <strong class="bold text-success">Rotación por días</strong> de <b>${userSelected.dias}</b><br>
+        Este número sugiere que, al ritmo actual de ventas, el inventario tardaría aproximadamente <b>${userSelected.dias}</b> días en 
+        agotarse por completo, lo que representa el tiempo que tomaría hacer una rotación completa del stock.
+    `;
+    $("#analisis").html(html)
 }
 
 //TODO:EXPORTAR PDF Y CSV
@@ -744,79 +379,23 @@ $("#PDF").on("click", function(event){
 });
 $("#CSV").on("click", function(event){
     event.preventDefault();
-    exportarCSV("Analisis de Rotacion", prepararArray(2));
+    exportarCSV("Analisis de Rotacion", prepararArray(2), "");
 });
 
 function prepararArray(opc){
     let lstR = [];
     lstReport.forEach(e=>{
-        if (opc==1){
-
-            lstR.push({
-                "ID": e.id,
-                "Codigo": e.codigo,
-                "Producto": e.producto,
-                "Meses": e.meses,
-                "Total Ingresos": e.totali,
-                "Total Egresos": e.totale,
-                "Total Saldo": e.totals,
-                "Promedio ingresos": e.promedioi,
-                "Promedio egresos": e.promedioe,
-                "Promedio saldo": e.promedios,
-                "Ratio": e.ratio
-            })
-        }else{
-            lstR.push({
-                "id": e.id,
-                "codigo": e.codigo,
-                "producto": e.producto,
-                "ingreso_enero": e.mi1,
-                "egreso_enero": e.me1,
-                "saldo_enero": e.ms1,
-                "ingreso_febrero": e.mi2,
-                "egreso_febrero": e.me2,
-                "saldo_febrero": e.ms2,
-                "ingreso_marzo": e.mi3,
-                "egreso_marzo": e.me3,
-                "saldo_marzo": e.ms3,
-                "ingreso_abril": e.mi4,
-                "egreso_abril": e.me4,
-                "saldo_abril": e.ms4,
-                "ingreso_mayo": e.mi5,
-                "egreso_mayo": e.me5,
-                "saldo_mayo": e.ms5,
-                "ingreso_junio": e.mi6,
-                "egreso_junio": e.me6,
-                "saldo_junio": e.ms6,
-                "ingreso_julio": e.mi7,
-                "egreso_julio": e.me7,
-                "saldo_julio": e.ms7,
-                "ingreso_agosto": e.mi8,
-                "egreso_agosto": e.me8,
-                "saldo_agosto": e.ms8,
-                "ingreso_septiembre": e.mi9,
-                "egreso_septiembre": e.me9,
-                "saldo_septiembre": e.ms9,
-                "ingreso_octubre": e.mi10,
-                "egreso_octubre": e.me10,
-                "saldo_octubre": e.ms10,
-                "ingreso_noviembre": e.mi11,
-                "egreso_noviembre": e.me11,
-                "saldo_noviembre": e.ms11,
-                "ingreso_diciembre": e.mi12,
-                "egreso_diciembre": e.me12,
-                "saldo_diciembre": e.ms12,
-                "meses": e.meses,
-                "total_ingresos": e.totali,
-                "total_egresos": e.totale,
-                "total_saldo": e.totals,
-                "promedio_ingresos": e.promedioi,
-                "promedio_egresos": e.promedioe,
-                "promedio_saldo": e.promedios,
-                "ratio": e.ratio
-            })
-
-        }
+        lstR.push({
+            "ID": e.id,
+            "Codigo": e.codebar,
+            "Producto": e.name,
+            "Stock": e.stock,
+            "Dias": e.dias,
+            "Costo Venta": e.costoventa,
+            "Promedio": e.promedio,
+            "Rotacion": e.rotacion,
+            "Rotacion Dias": e.rotaciondias,
+        });
     })
     return lstR;
 }
@@ -831,4 +410,13 @@ $("#btnBuscar").on("click", function(){
         fecha_fin: dfin
     }
     loadData(params);
+});
+
+$("#btnInfo").on("click", function(){
+    let htmlAyuda = `
+        <kbd class="bg-success">KPI</kbd><br>
+        <strong>Rotación de Productos</strong> <br>
+        El análisis de rotación de inventario mide la velocidad con la que un producto se vende y se repone en un periodo determinado.
+    `;
+    help(htmlAyuda, true);
 });

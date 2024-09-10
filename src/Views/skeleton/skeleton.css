@@ -56,11 +56,7 @@
 }
 
 
-@media (max-width: 450px) {
-    .divmenu{
-        display: hide;
-    }
-}
+
 
 
 ul>li{
@@ -174,4 +170,24 @@ ul>li{
 .bg-header-2{
     border-left: 1px solid var(--background-body);
     
+}
+
+
+
+@media (max-width: 450px) {
+    .divmenu{
+        display: hide !important;
+    }
+}
+
+
+#inicialUsuario{
+    border-radius: 50%;
+    border: 1px solid #ff0202d3;
+    background-color: #ff0202d3;
+    color: #fff;
+    padding-bottom: 3px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: 1.5em;
 }

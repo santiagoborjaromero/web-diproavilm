@@ -110,14 +110,6 @@ async function loadData(){
                 gridApi.setGridOption("rowData", lstProductos);
                 gridApi.sizeColumnsToFit();
                 
-                // console.log(lstProductos)
-                console.log(categoria)
-                console.log(linea)
-
-                // let acumcategoriacosto = 0;
-                // let acumcategoriaventa = 0;
-                // let acumlineacosto = 0;
-                // let acumlineaventa = 0;
 
                 let html =`
                     <span class="bold text-uppercase t12">Total por Categoria </span><hr>
@@ -167,22 +159,6 @@ async function loadData(){
 
                 $("#acumcosto").html("$ " + numero(acumcosto,2));
                 $("#acumventa").html("$ " + numero(acumventa,2));
-                // $("#acumcategoriacosto").html("$ " + numero(acumcategoriacosto,2));
-                // $("#acumcategoriaventa").html("$ " + numero(acumcategoriaventa,2));
-                // $("#acumlineacosto").html("$ " + numero(acumlineacosto,2));
-                // $("#acumlineaventa").html("$ " + numero(acumlineaventa,2));
-
-                /*
-                <div class="card">
-                    <div class="card-body text-end">
-                        <div class="dash-title"><i class="far fa-chart-bar"></i> Costo y Categoria</div>
-                        <div class="dash-valor" id="acumcategoriacosto">$ 0.00</div>
-                        <div class="dash-subtitulo">Inventario valorado por costo y categoria del producto</div>
-                        <!-- <kbd class="">KPI</kbd> -->
-                    </div>
-                </div>
-                */
-
 
                 $("#dataStats").html(html);
             } else {

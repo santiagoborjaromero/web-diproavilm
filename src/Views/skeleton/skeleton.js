@@ -13,6 +13,7 @@ if (!scopeUser.includes("D")) permisosBorrado = false;
 $("#nameApp").html(config.appname);
 $("#versionApp").html(config.version);
 $("#nombreUsuario").html(user.fullname);
+$("#inicialUsuario").html((user.username).substring(0,1));
 
 cargaMenu();
 
@@ -74,5 +75,4 @@ $("#btnSalir").on("click", function(){
     proccessCleanMemory();
     window.location.reload();
 });
-
 

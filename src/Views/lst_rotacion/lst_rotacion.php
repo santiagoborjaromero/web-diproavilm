@@ -6,10 +6,9 @@
         </span>
     </div>
     <div class="col-12 col-md-8 text-end" id="btmDivs">
-        <!-- <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
-            <i class="fas fa-sync-alt"></i>
-            Refrescar
-        </button> -->
+        <button id="btnInfo" class="btn btn-light mr-2" title="Más Información">
+            <i class="fas fa-info-circle t25"></i>
+        </button>
         <div class="btn-group hide" id="btnPrint">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-print"></i> Exportar
@@ -23,26 +22,9 @@
     </div>
 </div>
 
-<!-- <div class="row mt-2 justify-content-md-center bg-white rounded-10 p-2">
-    <div class="col-12 col-md-12 align-items-center" id="GridDiv">
-        <button class="btn btn-light">2024</button>
-        <button class="btn btn-light">Trimestre 1</button>
-        <button class="btn btn-light">Trimestre 2</button>
-        <button class="btn btn-light">Trimestre 3</button>
-    </div>
-</div> -->
-
 <div class="row m-1 justify-content-md-center">
     <div class="col-12 col-md-12 align-items-center bg-white round-10 pb-4">
         <table class="tables mt-3">
-            <!-- <thead>
-                <tr>
-                    <th>Fecha Desde</th>
-                    <th>Fecha Hasta</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead> -->
             <tbody>
                 <tr>
                     <td>
@@ -60,12 +42,6 @@
                             Buscar
                         </button>
                     </td>
-                    <td class="p-3" width="60%">
-                        <i class="fas fa-info-circle"></i>
-                        KPI. Rotación de Productos<br>
-                        Es el indicador de rendimiento que monitorea el stock y evalúa la disponibilidad del mismo a partir de la correcta clasificación de la mercancía en el almacén por su nivel de demanda.<br>
-                        Tasa de rotación de inventario = Costo de mercancía vendida / promedio de inventario.
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -74,8 +50,13 @@
 
 
 <div class="row mt-2 justify-content-md-center">
-    <div class="col-12 col-md-12 align-items-center" id="GridDiv">
+    <div class="col-12 col-md-9 align-items-center" id="GridDiv">
         <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+    </div>
+    <div class="col-12 col-md-3" >
+        <i class="fas fa-search-dollar t20"></i>
+        <strong class="t20 bold">Analisis </strong><br>
+        <div id="analisis" class="align-items-justify"></div>
     </div>
 </div>
 
