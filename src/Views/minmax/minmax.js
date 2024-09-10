@@ -19,7 +19,7 @@ setTimeout(function(){
 },800)
 
 //TODO: Variables enceradas
-lstReport = [];
+lstMinMax = [];
 lstRoles = [];
 userSelected = {};
 
@@ -43,6 +43,7 @@ if (permisosBorrado){
 }
 
 async function loadData(record){
+    $("#btnPrint").addClass("hide");
     showLoading("Cargando");
 
     habilitarBotones(false);
@@ -56,17 +57,21 @@ async function loadData(record){
                 resp = JSON.parse(resp);
             } catch (ex) {}
 
-            lstReport = [];
+            lstMinMax = [];
             
             if (resp.status && resp.status == 'ok') {
                 resp.message.forEach( e => {
-                    e["id"] = e.id.toString();
-                    lstReport.push(e)    
+                    e["idproduct"] = e.idproduct.toString();
+                    e["minimo"] = Math.round(e.rotacion);
+                    e["maximo"] =  Math.round(e.stock < e.rotacion ? ((e.rotacion / e.rotaciondias) * e.dias) : e.stock);
+                    // e["maximo"] =  Math.round((e.rotacion / e.rotaciondias) * e.dias);
+                    lstMinMax.push(e)    
                 });
-                // console.log(lstReport)
-                gridApi.setGridOption("rowData", lstReport);
+                // console.log(lstMinMax)
+                gridApi.setGridOption("rowData", lstMinMax);
                 gridApi.sizeColumnsToFit();
-                $("#btnPrint").removeClass("hide");
+                // $("#btnPrint").removeClass("hide");
+                $("#btmAplicar").removeClass("hide");
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));
             }
@@ -117,18 +122,18 @@ function estructuraGrid(){
             autoHeight: true,
         },
         autoSizeStrategy: {
-            type: 'fitCellContents'
+            // type: 'fitCellContents'
         },
         // TODO: DEterminar el indice de la tabla que viene, normalment el campo ID 
         getRowId: (params) => {
-            return params.data.codebar;
+            return params.data.idproduct;
         },
         //TODO: Cuando se da click sobre una fila, asigna vairables para tener y poder operar como el id y toda la fila en userSelected
         onRowClicked: (event) => {
             userSelected = event.data;
-            idSelect = event.data.codebar;
+            idSelect = event.data.idproduct;
             habilitarBotones(true);
-            verAnalisis()
+            // verAnalisis()
         },
         //TODO: DEFINICION DE COLUMNAS
         columnDefs: [
@@ -137,20 +142,19 @@ function estructuraGrid(){
                 headerClass: "ag-header-cell-label-center text-center bg-header-1", 
                 groupId: "Comp",
                 children:[
-                    // {
-                    //     headerName: "ID",
-                    //     flex: 1, 
-                    //     field: "id",
-                    //     filter: false,
-                    //     cellClass: "text-start",
-                    // },
+                    {
+                        headerName: "ID",
+                        flex: 1, 
+                        field: "idproduct",
+                        filter: false,
+                        cellClass: "text-start",
+                    },
                     {
                         headerName: "Codigo",
                         flex: 1, 
                         field: "codebar",
                         filter: true,
                         cellClass: "text-start",
-                        pinned: "left",
                     },
                     {
                         headerName: "Producto",
@@ -160,7 +164,7 @@ function estructuraGrid(){
                         cellClass: "text-start",
                         sort: "asc",
                         sortIndex: 1, 
-                        pinned: "left",
+                        // pinned: "left",
                     },
                 ],
             },
@@ -177,29 +181,7 @@ function estructuraGrid(){
                         cellClass: "text-end",
                         valueFormatter: params => numero(params.value,2)
                     },
-                    {
-                        headerName: "Dias",
-                        headerTooltip: "Dias muestra",
-                        field: "dias",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                    },
-                    {
-                        headerName: "Costo Venta",
-                        headerTooltip: "Costo Venta",
-                        field: "costoventa",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
-                    {
-                        headerName: "Promedio",
-                        headerTooltip: "Promedio",
-                        field: "promedio",
-                        type: "rightAligned",
-                        cellClass: "text-end",
-                        valueFormatter: params => numero(params.value,2)
-                    },
+                 
                 ]
             },
             {
@@ -207,6 +189,13 @@ function estructuraGrid(){
                 headerClass: "ag-header-cell-label-center text-center bg-header-1", 
                 groupId: "var",
                 children:[
+                    // {
+                    //     headerName: "Dias",
+                    //     headerTooltip: "Dias muestra",
+                    //     field: "dias",
+                    //     type: "rightAligned",
+                    //     cellClass: "text-end",
+                    // },
                     {
                         headerName: "Rotacion",
                         headerTooltip: "Rotacion",
@@ -221,6 +210,31 @@ function estructuraGrid(){
                         field: "rotaciondias",
                         type: "rightAligned",
                         cellClass: "text-end",
+                        valueFormatter: params => numero(params.value,2)
+                    },
+                ]
+            },
+            {
+                headerName: 'Stock Calculado Sugerido',
+                headerClass: "ag-header-cell-label-center text-center bg-header-1", 
+                groupId: "var",
+                children:[
+                    {
+                        headerName: "Minimo",
+                        headerTooltip: "Minimo",
+                        field: "minimo",
+                        type: "rightAligned",
+                        cellClass: "text-end bg-info",
+                        editable: true,
+                        valueFormatter: params => numero(params.value,2)
+                    },
+                    {
+                        headerName: "Maximo",
+                        headerTooltip: "Maximo",
+                        field: "maximo",
+                        type: "rightAligned",
+                        cellClass: "text-end bg-info",
+                        editable: true,
                         valueFormatter: params => numero(params.value,2)
                     },
                 ]
@@ -352,9 +366,9 @@ function habilitarBotones(opc = false){
 
         }
     }
-
-    
 }
+
+
 
 
 function verAnalisis(){
@@ -375,26 +389,26 @@ function verAnalisis(){
 //TODO:EXPORTAR PDF Y CSV
 $("#PDF").on("click", function(event){
     event.preventDefault();
-    imprimir("Analisis de Rotacion", prepararArray(1), 'l');
+    imprimir(title, prepararArray(1), 'l');
 });
 $("#CSV").on("click", function(event){
     event.preventDefault();
-    exportarCSV("Analisis de Rotacion", prepararArray(2), "");
+    exportarCSV("Calculo de Minimos y Maximos", prepararArray(2), "");
 });
 
 function prepararArray(opc){
     let lstR = [];
-    lstReport.forEach(e=>{
+    lstMinMax.forEach(e=>{
         lstR.push({
             "ID": e.id,
             "Codigo": e.codebar,
             "Producto": e.name,
             "Stock": e.stock,
             "Dias": e.dias,
-            "Costo Venta": e.costoventa,
-            "Promedio": e.promedio,
             "Rotacion": e.rotacion,
             "Rotacion Dias": e.rotaciondias,
+            "Stock Minimo": e.minimo,
+            "Stock Maximo": e.maximo
         });
     })
     return lstR;
@@ -414,9 +428,59 @@ $("#btnBuscar").on("click", function(){
 
 $("#btnInfo").on("click", function(){
     let htmlAyuda = `
-        <kbd class="bg-success">KPI</kbd><br>
-        <strong>Rotación de Productos</strong> <br>
-        El análisis de rotación de inventario mide la velocidad con la que un producto se vende y se repone en un periodo determinado.
+        Puede editar directamente stock minimo y máximo dando doble click sobre cada celda.
     `;
     help(htmlAyuda, true);
 });
+
+
+$("#btmAplicar").on("click", function(){
+    save();
+});
+
+
+async function save(){
+    showLoading("Guardando");
+
+    let params = {data:[]};
+    lstMinMax.forEach(e=>{
+        if (isNaN(e.minimo)) e.minimo = 1;
+        if (isNaN(e.maximo)) e.maximo = 1;
+        params.data.push({
+            idproduct: parseInt(e.idproduct),
+            stock_min: e.minimo,
+            stock_max: e.maximo
+        });
+    });
+
+    let method = "POST";
+    let url = `saveStockMinMax`;
+
+    await consumirApi(method, url, params)
+        .then( resp=>{
+            closeLoading();
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            if (resp){
+                if (resp.status && resp.status == 'ok') {
+                    sendMessage("success", title, resp.message);
+                    $("#btmAplicar").addClass("hide");
+                    $("#btnPrint").removeClass("hide");
+
+                } else {
+                    sendMessage("error", title, resp.message || JSON.stringify(resp));
+                }
+            } else {
+                sendMessage("error", title, "La respuesta es nula");
+            }
+
+        })
+        .catch( err => {
+            closeLoading();
+            console.log("ERR", err);
+            sendMessage("error", title, JSON.stringify(err.responseText));
+        });
+
+}

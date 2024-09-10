@@ -7,7 +7,7 @@
 //TODO: OK - Eliminar un comprobante de bodega y que se recalcule el stock
 //TODO: OK - Editar comprobante
 //TODO: OK - imprimir PDF comprobante
-//TODO: FALTA - recalculo de saldos - opcion
+//TODO: FALTA - Recalculo de saldos - opcion
 //TODO: OK - REPORTES
 //TODO: OK - Analisis de rotacion
 //TODO: FALTAN - DASHBOARDS
@@ -15,3 +15,6 @@
 //TODO: OK - formulairo categorias
 //TODO: OK - formulairo lineas de productos
 //TODO: OK - Informacion del actual Usuario . formulario para cambiar la constraseña desde el sistema
+//TODO: OK - Calculo de stock minimo y maximo
+//TODO: FALTA - Proveedores por producto
+//TODO: 90% - Alertas & Notificaciones

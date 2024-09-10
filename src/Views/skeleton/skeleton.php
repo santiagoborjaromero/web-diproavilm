@@ -3,8 +3,11 @@
         <div class="col-6 col-sm-4 col-md-3 logohead"><img id="logo" src="logo.png" alt="Logo" /></div>
         <div class="col-6 col-sm-4 col-md-6 t25 mt-3 text-center" id="nameApp"></div>
         <div class="col-6 col-sm-4 col-md-3 text-end diviconos">
-            <!-- <button id="btnNot" class="btn btn-white t20 text-secondary bold" title="Notificaciones"><i class="fa fa-bell"></i></button> -->
-            <button id="btnUserInfo" onclick="selectRuta('userinfo')" class="btn btn-white  text-secondary bold" title="Informacion del Usuario">
+            <button id="btnNot" onclick="selectRuta('noti')" class="btn btn-white t20 text-danger bold hide parpadeaXX" title="Alertas & Notificaciones">
+                <i class="fa fa-bell"></i>
+                <badge id="numNoti">0</badge>
+            </button>
+            <button id="btnUserInfo" onclick="selectRuta('userinfo')" class="btn btn-white text-secondary bold" title="Informacion del Usuario">
                 <!-- <i class="fas fa-user t20"></i> <span id="nombreUsuario"></span> -->
                 <span id="inicialUsuario"></span>  <span id="nombreUsuario"></span> 
             </button>

@@ -403,7 +403,7 @@ function estructuraGridMenu(){
                         cls  = "bold";
                         html = `<span class="${cls}"> <i class="${ico} t16"></i> ${params.data.name}</span>`;
                     } else{
-                        html = `<span class="">└─ <i class="${ico} t16"></i> ${params.data.name}</span>`;
+                        html = `<span class="">└─ <i class="${ico} t16"></i> ${params.data.name}</span><span class="text-danger bold">${params.data.status==0 || params.data.deleted_at !== null ? '(Eliminado)' : ''}</span>`;
                     }
                     return  html;
                 }

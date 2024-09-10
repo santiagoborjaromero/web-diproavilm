@@ -187,11 +187,14 @@ function proccessCleanMemory(){
 //TODO Seleccion de rutas. 
 async function selectRuta(route, args = ''){
     sessionSet("route", route);
+    getAlerts();
 
     if (["mapasitio"].includes(route)){
-        $("#path").html("Mapa del Sitio")
+        $("#path").html("Mapa del Sitio");
     } else if (["userinfo"].includes(route)){
-        $("#path").html("Informacion del Usuario")
+        $("#path").html("Informacion del Usuario");
+    } else if (["noti"].includes(route)){
+        $("#path").html("Alertas & Notificaciones");
     } else {
     
         //TODO: Breadcrumbs
@@ -220,6 +223,35 @@ async function selectRuta(route, args = ''){
     controller = `src/Controllers/BaseController.php?cont=${route}&args=${args}`;
     $("#divbody").load(controller)
 }
+
+async function getAlerts(){
+    let metodo = "GET";
+    let url = "alertas";
+    await consumirApi(metodo, url)
+        .then( resp=>{
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {}
+
+            // console.log(resp)
+
+            if (resp.status && resp.status == 'ok') {
+                if (resp.message){
+                    if (resp.message.length>0){
+                        $("#btnNot").removeClass("hide");
+                        $("#numNoti").html(resp.message.length);
+                    }
+                }
+            } else {
+                sendMessage("error", "Alertas", resp.message || JSON.stringify(resp));
+            }
+        })
+        .catch( err => {
+            console.log("ERR", err);
+            sendMessage("error", "Alertas", JSON.stringify(err.responseText));
+        });
+}
+
 
 //TODO: Funcion generica para despliegue de mensajes (POPUP)
 function sendMessage(type, titulo, message, textishtml = false, width="900px"){
