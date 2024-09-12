@@ -72,7 +72,22 @@ function cargaMenu(){
 }
 
 $("#btnSalir").on("click", function(){
-    proccessCleanMemory();
-    window.location.reload();
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        icon: 'question',
+        title: config.appname,
+        text: `Desea salir del sistema`,
+        showCancelButton: true,
+        confirmButtonColor: '#f63c3a',
+        confirmButtonText: "Salir",
+        cancelButtonColor: '#33a0d6',
+        cancelButtonText: 'Cancelar',
+    }).then(res => {
+        if (res.isConfirmed) {
+            proccessCleanMemory();
+            window.location.reload();
+        }
+    });
 });
 

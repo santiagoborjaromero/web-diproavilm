@@ -34,7 +34,7 @@
     padding: 0;
     margin: 0;
 }
-.divmenu{
+/* #divmenu{
     min-height: 100vh;
     background-color: rgb(170, 170, 170);
     overflow-x: none;
@@ -45,7 +45,7 @@
     padding-top: 10px;
     margin: 0;
     font-size: 0.9rem;
-}
+} */
 .divcuerpo{
     background-color: #c6f3f3;
     min-height: 100vh;
@@ -79,14 +79,7 @@ ul>li{
     background-color: #dadada;
 }
 
-.menu{
-    background-color: #e6e6e6;
-    min-height: var(--size-menu) ;
-    height: var(--size-menu) ;
-    /* background-color: #f79648; */
-    box-shadow: calc(clamp(0px, var(--horiz), 2px)) calc(clamp(0px, var(--vert), 2px)) 2px calc(var(--spread)) rgba(0, 0, 0, 0.233), calc(2 * var(--horiz)) calc(2 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.20), calc(3 * var(--horiz)) calc(3 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.123), calc(5 * var(--horiz)) calc(5 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.076), calc(8 * var(--horiz)) calc(8 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.047), calc(13 * var(--horiz)) calc(13 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.028);
-    border: 1px solid rgba(0, 0, 0, 0.068);
-}
+
 
 .cs-inset {
     box-shadow: inset calc(clamp(0px, var(--horiz), 2px)) calc(clamp(0px, var(--vert), 2px)) 2px calc(var(--spread)) rgba(0, 0, 0, 0.233), inset calc(2 * var(--horiz)) calc(2 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.20), inset calc(3 * var(--horiz)) calc(3 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.123), inset calc(5 * var(--horiz)) calc(5 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.076), inset calc(8 * var(--horiz)) calc(8 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.047), inset calc(13 * var(--horiz)) calc(13 * var(--vert)) calc(var(--blur)) calc(var(--spread)) rgba(0, 0, 0, 0.028);
@@ -128,8 +121,20 @@ ul>li{
     font-size: .9em;
 }
 
+.menu{
+    /* background-color: #effcffb2; */
+    background-color: #effcff85;
+    min-height: var(--size-menu) ;
+    height: var(--size-menu) ;
+    border: 1px solid rgba(0, 0, 0, 0.068);
+    -webkit-box-shadow: inset -11px -30px 41px -23px rgba(0,0,0,0.21);
+    -moz-box-shadow: inset -11px -30px 41px -23px rgba(0,0,0,0.21);
+    box-shadow: inset -11px -30px 41px -23px rgba(0,0,0,0.21);
+}
+
 .screen{
-    background-color: var(--background-body);
+    /* background-color: var(--background-body); */
+    background-color: #effcff85;
     min-height: var(--size-screen) ;
     height: var(--size-screen) ;
     /* padding-top: 10px; */
@@ -141,6 +146,7 @@ ul>li{
 #divmenu{
     z-index: 9999;
 }
+
 .sticky {
     position: -webkit-sticky;
     position: sticky;

@@ -454,7 +454,7 @@ $("#btmDelete").on("click", function(){
 });
 
 $("#btmReset").on("click", function(){
-    hacerPregunta("Resetear la clave de un usuario", "resetear", "resetearclave");
+    hacerPregunta("Restablecer la clave de un usuario", "restablecer", "resetearclave");
 });
 
 $("#btmUpUser").on("click", function(){

@@ -13,11 +13,11 @@
             </button>
             <button id="btmReset" title="Resetear contraseña" class="btn btn-info mr-1">
                 <i class="fas fa-recycle"></i>
-                Resetear
+                Restablecer 
             </button>
             <button id="btmUpUser" title="Reestablecer Usuario eliminado" class="btn btn-info mr-1">
                 <i class="fas fa-user-injured"></i>
-                Reestablecer
+                Recuperar
             </button>
             <button id="btmEdit" class="btn btn-info mr-1" title="Editar">
                 <i class="far fa-edit"></i>

@@ -17,4 +17,5 @@
 //TODO: OK - Informacion del actual Usuario . formulario para cambiar la constraseña desde el sistema
 //TODO: OK - Calculo de stock minimo y maximo
 //TODO: FALTA - Proveedores por producto
-//TODO: 90% - Alertas & Notificaciones
+//TODO: OK - Alertas & Notificaciones
+//TODO: OK - Pregunta al salir

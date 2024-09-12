@@ -180,8 +180,16 @@ function estructuraGrid(){
                 headerName: "Fecha",
                 field: "fecha",
                 cellClass: "text-start",
+                wrapText: false
                 // sort: "asc",
                 // sortIndex: 1, 
+            },
+            {
+                flex:2,    
+                headerName: "Beneficiario",
+                field: "beneficiario",
+                cellClass: "text-start",
+                wrapText: false
             },
             {
                 headerName: "AS",
@@ -597,6 +605,7 @@ function prepararArray(){
     lstKardex.forEach(e=>{
         lstR.push({
             "Fecha": e.fecha,
+            "Beneficiario": e.beneficiario,
             "Asiento": e.asiento == 'I' ? 'Ingreso' : 'Egreso',
             "Tipo Comprobante": e.tipo_comprobante,
             "Documento": e.numero_documento,

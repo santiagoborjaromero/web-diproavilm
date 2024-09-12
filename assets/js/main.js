@@ -438,7 +438,7 @@ async function imprimir( title = 'file', data = null, orientacion = 'p', subtitl
     doc.save(title + '.pdf');
 }
 
-function exportarCSV(filename, array = [], subtitle){
+function exportarCSV(filename, array = [], subtitle = ''){
     let str = (Object.keys(array[0])).join(",") + '\r\n';
     for (var i = 0; i < array.length; i++) {
         var line = '';
