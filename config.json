@@ -1,7 +1,7 @@
 {
     "appname": "Software de Gestión de Almacén",
     "version": "0.0.2-alpha",
-    "webpath": "http://localhost/web6ug8/",
-    "apipath": "http://localhost/api6ug8/",
+    "webpath": "http://web6ug8.diproavilm.com/",
+    "apipath": "http://api6ug8.diproavilm.com/",
     "timezone": "America/Guayaquil"
 }
