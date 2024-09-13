@@ -13,6 +13,7 @@ $("#DivForm").removeClass("modal-form");
 
 // Variables Globales
 let apiPathBase = "";
+let webPathBase = "";
 let config = {};
 let prefijoDocumentacion = "";
 
@@ -22,6 +23,7 @@ fetch('config.json')
     .then((json) => {
         config = json;
         apiPathBase = config.apipath + "?ruta=";
+        webPathBase = config.webpath;
     });
 
 //TODO: carga tabla config
@@ -397,9 +399,10 @@ async function imprimir( title = 'file', data = null, orientacion = 'p', subtitl
         format: 'A4',
         unit: 'mm'
     })
-    const imgData = await loadImage('/web6ug8/assets/images/logo.jpg');
-
-    doc.addImage(imgData, 'JPEG', 10, 10, 40, 30);
+    try{
+        const imgData = await loadImage(webPathBase + 'assets/images/logo.jpg');
+        doc.addImage(imgData, 'JPEG', 10, 10, 40, 30);
+    }catch(err){}
     doc.setFontSize(18);
     doc.text(title, 60, 20);
     doc.setFontSize(10);
