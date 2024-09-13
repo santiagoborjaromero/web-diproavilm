@@ -4,15 +4,16 @@ $("#versionApp").html(config.version);
 
 
 $("#btnLogin").on("click", async function(){
+    sendLogin();
+});
 
+async function sendLogin(){
     //Validacion
     let username = $.trim($("#username").val());
     let password = $.trim($("#password").val());
 
     let error = false;
     let errMsg = "";
-
-    
 
     if (!error && username == ""){
         errMsg = "Debe ingresar el nombre del usuario";
@@ -79,7 +80,7 @@ $("#btnLogin").on("click", async function(){
         });
     
 
-});
+}
 
 
 $("#btnChange").on("click", () => {
@@ -87,4 +88,16 @@ $("#btnChange").on("click", () => {
     $("#mainPage").load(pagina);
 });
 
+
+$("#username").keypress(function ($event) {
+    if ($event.keyCode==13){
+        $("#password").focus();
+    }
+});
+
+$("#password").keypress(function ($event) {
+    if ($event.keyCode==13){
+        sendLogin();
+    }
+});
 
