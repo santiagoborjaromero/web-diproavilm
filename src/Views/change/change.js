@@ -112,9 +112,11 @@ function leyenda() {
     $("#fortalezaPasswordDesc").html(html);
 }
 
-
 $("#btnCambio").on("click", async function(){
+    cambiarPass();
+});
 
+async function cambiarPass(){
     //Validacion
     let username = $.trim($("#username").val());
     let password_old = $.trim($("#password_old").val());
@@ -194,12 +196,30 @@ $("#btnCambio").on("click", async function(){
             console.log(err);
             // sendMessage(err, "{{Title}}");
         });
-});
-
+}
 
 $("#btnReturn").on("click", () => {
     let pagina = `src/Views/login/login.php`;
     $("#mainPage").load(pagina);
 });
 
-
+$("#username").keypress(function($event){
+    if ($event.keyCode == 13){
+        $("#password_old").focus();
+    }
+});
+$("#password_old").keypress(function($event){
+    if ($event.keyCode == 13){
+        $("#password_new").focus();
+    }
+});
+$("#password_new").keypress(function($event){
+    if ($event.keyCode == 13){
+        $("#password_confirmacion").focus();
+    }
+});
+$("#password_confirmacion").keypress(function($event){
+    if ($event.keyCode == 13){
+        cambiarPass();
+    }
+});
