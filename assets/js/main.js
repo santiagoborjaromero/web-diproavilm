@@ -18,7 +18,7 @@ let config = {};
 let prefijoDocumentacion = "";
 
 //TODO: carga el archiv config
-fetch('config.json')
+fetch('anything.papajhons')
     .then((response) => response.json())
     .then((json) => {
         config = json;
