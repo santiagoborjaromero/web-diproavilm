@@ -78,16 +78,12 @@ async function sendLogin(){
             console.log(err);
             // sendMessage(err, "{{Title}}");
         });
-    
-
 }
-
 
 $("#btnChange").on("click", () => {
     let pagina = `src/Views/change/change.php`;
     $("#mainPage").load(pagina);
 });
-
 
 $("#username").keypress(function ($event) {
     if ($event.keyCode==13){
@@ -100,4 +96,5 @@ $("#password").keypress(function ($event) {
         sendLogin();
     }
 });
+
 
