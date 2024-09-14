@@ -41,6 +41,7 @@ fetch('anything.papajhons')
         config = json;
         apiPathBase = config.apipath + "?ruta=";
         webPathBase = config.webpath;
+        
     });
 
 //TODO: carga tabla config
@@ -403,6 +404,7 @@ async function imprimir( title = 'file', data = null, orientacion = 'p', subtitl
         unit: 'mm'
     })
     try{
+        console.log(webPathBase)
         const imgData = await loadImage(webPathBase + 'assets/images/logo.jpg');
         doc.addImage(imgData, 'JPEG', 10, 10, 40, 30);
     }catch(err){}
