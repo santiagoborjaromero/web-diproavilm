@@ -97,8 +97,11 @@ function leyenda() {
     $("#fortalezaPasswordDesc").html(html);
 }
 
-
 $("#btnEstablecer").on("click", async function(){
+    establecerClave();
+});
+
+async function establecerClave(){
     //Validacion
     let username = $.trim($("#username").val());
     let password_new = $.trim($("#password_new").val());
@@ -131,7 +134,6 @@ $("#btnEstablecer").on("click", async function(){
         errMsg = "La contraseña nueva y la confirmación deben ser iguales";
         error = true;
     }
-
 
     let fuerza = chkPasswordStrength(password_new);
 
@@ -177,11 +179,27 @@ $("#btnEstablecer").on("click", async function(){
         });
     
 
-});
+}
 
 $("#btnReturn").on("click", () => {
     let pagina = `src/Views/login/login.php`;
     $("#mainPage").load(pagina);
 });
 
+$("#username").keypress(function($event){
+    if ($event.keyCode == 13){
+        $("#password_new").focus();
+    }
+});
 
+$("#password_new").keypress(function($event){
+    if ($event.keyCode == 13){
+        $("#password_confirmacion").focus();
+    }
+});
+
+$("#password_confirmacion").keypress(function($event){
+    if ($event.keyCode == 13){
+        establecerClave();
+    }
+});
