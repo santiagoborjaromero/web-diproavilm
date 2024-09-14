@@ -44,6 +44,7 @@ fetch('anything.papajhons')
 
 //TODO: carga tabla config
 async function loadConfig(){
+    console.log("Cargando CFG")
     var metodo = "GET";
     var url = "config";
 
@@ -77,15 +78,15 @@ async function loadConfig(){
         });
 }
 
-
-$("#spinner").addClass("hide");
-
 function initial(){
+
+
     //TODO:Verificar si tiene iniciado la session
     var logueado = sessionGet("logged");
     var page = "";
     if (logueado){
         page = "skeleton";
+        loadConfig();
     }else{
         page = "login";
     }
@@ -104,9 +105,11 @@ function initial(){
     }
 
     //TODO: getconfig
-    loadConfig();
-
+    
 }
+
+
+$("#spinner").addClass("hide");
 
 //TODO Funcion que permite consumir recursos ajax resp api sin token, para rutas de logueo
 function consumirApiWT(method, url, params = null) {
