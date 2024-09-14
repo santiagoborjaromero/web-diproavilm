@@ -12,7 +12,7 @@ $("#spinner").removeClass("rotate_div");
 $("#DivForm").removeClass("modal-form");
 
 // Variables Globales
-var apiPathBase = "";
+apiPathBase = "";
 var webPathBase = "";
 let config = {};
 let prefijoDocumentacion = "";
