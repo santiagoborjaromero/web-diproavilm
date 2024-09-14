@@ -16,6 +16,22 @@ apiPathBase = "";
 var webPathBase = "";
 var config = {};
 var prefijoDocumentacion = "";
+var apiToken = '';
+lstMenu = [];
+var gridOptions = {};
+var gridApi;
+var idSelect ="";
+var idSelectName ="";
+var dataSelected;
+var gridOptions2 = {};
+var gridApi2;
+var idSelect2 ="";
+var idSelectName2 ="";
+var dataSelected2;
+var lstUsers = [];
+var scopeUser = "";
+var title = "";
+
 
 //TODO: carga el archiv config
 fetch('anything.papajhons')
@@ -63,23 +79,6 @@ async function loadConfig(){
 
 
 $("#spinner").addClass("hide");
-
-var apiToken = '';
-lstMenu = [];
-var gridOptions = {};
-var gridApi;
-var idSelect ="";
-var idSelectName ="";
-var dataSelected;
-var gridOptions2 = {};
-var gridApi2;
-var idSelect2 ="";
-var idSelectName2 ="";
-var dataSelected2;
-var lstUsers = [];
-var scopeUser = "";
-var title = "";
-
 
 function initial(){
     //TODO:Verificar si tiene iniciado la session
