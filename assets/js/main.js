@@ -1,12 +1,12 @@
-// document.addEventListener("readystatechange", function () {
-// 	switch (document.readyState) {
-// 		case "complete":
-//             break;
-//         }
-//     });
-setTimeout(function(){
-    initial();
-},800)
+document.addEventListener("readystatechange", function () {
+	switch (document.readyState) {
+		case "complete":
+            setTimeout(function(){
+                initial();
+            },800)
+            break;
+        }
+    });
     
 $("#spinner").removeClass("rotate_div");
 $("#DivForm").removeClass("modal-form");
