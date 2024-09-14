@@ -43,9 +43,38 @@ fetch('anything.papajhons')
         
     });
 
+function initial(){
+
+
+    //TODO:Verificar si tiene iniciado la session
+    var logueado = sessionGet("logged");
+    var page = "";
+    if (logueado){
+        page = "skeleton";
+        loadConfig();
+    }else{
+        page = "login";
+    }
+    var pagina = `src/Views/${page}/${page}.php`;
+    $("#mainPage").load(pagina);
+
+    //TODO: Proceso de refresco y analisis de el path donde se encuentra, si  no se encuentra en login es decir cuando este logueado
+    if (!["login"].includes(page)){
+        setTimeout(function(){
+            var ruta = sessionGet("route");
+            if (!ruta){
+                ruta = lstMenu[0].child[0].route;
+            }
+            selectRuta(ruta);
+        },1000)
+    }
+
+    //TODO: getconfig
+    
+}
+
 //TODO: carga tabla config
 async function loadConfig(){
-    console.log("Cargando CFG");
     var metodo = "GET";
     var url = "config";
 
@@ -77,36 +106,6 @@ async function loadConfig(){
             console.log("ERR", err);
             sendMessage("error", title, JSON.stringify(err.responseText));
         });
-}
-
-function initial(){
-
-
-    //TODO:Verificar si tiene iniciado la session
-    var logueado = sessionGet("logged");
-    var page = "";
-    if (logueado){
-        page = "skeleton";
-        loadConfig();
-    }else{
-        page = "login";
-    }
-    var pagina = `src/Views/${page}/${page}.php`;
-    $("#mainPage").load(pagina);
-
-    //TODO: Proceso de refresco y analisis de el path donde se encuentra, si  no se encuentra en login es decir cuando este logueado
-    if (!["login"].includes(page)){
-        setTimeout(function(){
-            var ruta = sessionGet("route");
-            if (!ruta){
-                ruta = lstMenu[0].child[0].route;
-            }
-            selectRuta(ruta);
-        },1000)
-    }
-
-    //TODO: getconfig
-    
 }
 
 
