@@ -1,4 +1,4 @@
 .htaccess
 anything.papajhons
-
-log/
+log/*.log
+changelog.md

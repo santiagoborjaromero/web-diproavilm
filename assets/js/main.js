@@ -14,8 +14,8 @@ $("#DivForm").removeClass("modal-form");
 // Variables Globales
 apiPathBase = "";
 var webPathBase = "";
-let config = {};
-let prefijoDocumentacion = "";
+var config = {};
+var prefijoDocumentacion = "";
 
 //TODO: carga el archiv config
 fetch('anything.papajhons')
@@ -28,8 +28,8 @@ fetch('anything.papajhons')
 
 //TODO: carga tabla config
 async function loadConfig(){
-    let metodo = "GET";
-    let url = "config";
+    var metodo = "GET";
+    var url = "config";
 
     await consumirApiWT(metodo, url)
         .then( resp=>{
@@ -64,39 +64,39 @@ async function loadConfig(){
 
 $("#spinner").addClass("hide");
 
-let apiToken = '';
+var apiToken = '';
 lstMenu = [];
-let gridOptions = {};
-let gridApi;
-let idSelect ="";
-let idSelectName ="";
-let dataSelected;
-let gridOptions2 = {};
-let gridApi2;
-let idSelect2 ="";
-let idSelectName2 ="";
-let dataSelected2;
-let lstUsers = [];
-let scopeUser = "";
-let title = "";
+var gridOptions = {};
+var gridApi;
+var idSelect ="";
+var idSelectName ="";
+var dataSelected;
+var gridOptions2 = {};
+var gridApi2;
+var idSelect2 ="";
+var idSelectName2 ="";
+var dataSelected2;
+var lstUsers = [];
+var scopeUser = "";
+var title = "";
 
 
 function initial(){
     //TODO:Verificar si tiene iniciado la session
-    let logueado = sessionGet("logged");
-    let page = "";
+    var logueado = sessionGet("logged");
+    var page = "";
     if (logueado){
         page = "skeleton";
     }else{
         page = "login";
     }
-    let pagina = `src/Views/${page}/${page}.php`;
+    var pagina = `src/Views/${page}/${page}.php`;
     $("#mainPage").load(pagina);
 
     //TODO: Proceso de refresco y analisis de el path donde se encuentra, si  no se encuentra en login es decir cuando este logueado
     if (!["login"].includes(page)){
         setTimeout(function(){
-            let ruta = sessionGet("route");
+            var ruta = sessionGet("route");
             if (!ruta){
                 ruta = lstMenu[0].child[0].route;
             }
@@ -160,15 +160,15 @@ function decryptKey(text){
 //TODO Funcion que permite establecer la session por session storage
 function sessionSet(key = "", value = null){
     if (key == "") return;
-    let text = encryptKey(JSON.stringify(value));
+    var text = encryptKey(JSON.stringify(value));
     sessionStorage.setItem(key, text);
 }
 //TODO Funcion que permite traer la informacion guardada en la session storage
 function sessionGet(key = ""){
-    let conv = null;
+    var conv = null;
     try{
         if (key == "") return null;
-        let text = sessionStorage.getItem(key);
+        var text = sessionStorage.getItem(key);
         if (text !== undefined){
             conv = JSON.parse(decryptKey(text));
         }
@@ -200,10 +200,10 @@ async function selectRuta(route, args = ''){
     } else {
     
         //TODO: Breadcrumbs
-        let parent = "";
-        let path = [];
-        let objMenu = [];
-        let title = "";
+        var parent = "";
+        var path = [];
+        var objMenu = [];
+        var title = "";
     
         lstMenu.forEach( e => {
             parent = e.name;
@@ -227,8 +227,8 @@ async function selectRuta(route, args = ''){
 }
 
 async function getAlerts(){
-    let metodo = "GET";
-    let url = "alertas";
+    var metodo = "GET";
+    var url = "alertas";
     await consumirApi(metodo, url)
         .then( resp=>{
             try {
@@ -286,7 +286,7 @@ function sendMessage(type, titulo, message, textishtml = false, width="900px"){
 }
 
 function sendMessageObj(type, titulo, obj){
-    let html = "<table class='table table-striped'>";
+    var html = "<table class='table table-striped'>";
     if (obj.hasOwnProperty("code")) html += `<tr><th width="20%" class="text-end">Codigo</th><td class="text-start">${obj.code}</td></tr>` ;
     if (obj.hasOwnProperty("file")) html += `<tr><th class="text-end">Archivo</th><td class="text-start">${obj.file}</td></tr>` ;
     if (obj.hasOwnProperty("line")) html += `<tr><th class="text-end">Linea</th><td class="text-start">${obj.line}</td></tr>` ;
@@ -332,9 +332,9 @@ function closeLoading(){
 }
 
 function formatoTitulo(text) {
-    let palabras = text.split("");
-    let convertirPalabra = "";
-    let aplicarMayuscula = true;
+    var palabras = text.split("");
+    var convertirPalabra = "";
+    var aplicarMayuscula = true;
     palabras.forEach(e=>{
         if (aplicarMayuscula && e != " "){
             aplicarMayuscula = false;
@@ -431,7 +431,7 @@ async function imprimir( title = 'file', data = null, orientacion = 'p', subtitl
 
     // Número de páginas y pie de página
     // const pageCount = doc.getNumberOfPages();
-    // for (let i = 1; i <= pageCount; i++) {
+    // for (var i = 1; i <= pageCount; i++) {
     //     doc.setPage(i);
     //     doc.setFontSize(10);
     //     doc.text(`Página ${i} de ${pageCount}`, doc.internal.pageSize.getWidth() - 20, doc.internal.pageSize.getHeight() - 10);
@@ -442,7 +442,7 @@ async function imprimir( title = 'file', data = null, orientacion = 'p', subtitl
 }
 
 function exportarCSV(filename, array = [], subtitle = ''){
-    let str = (Object.keys(array[0])).join(",") + '\r\n';
+    var str = (Object.keys(array[0])).join(",") + '\r\n';
     for (var i = 0; i < array.length; i++) {
         var line = '';
         for (var index in array[i]) {
@@ -476,10 +476,10 @@ function formatoDatosPDF(array = []){
     */
 
     const data = [];
-    let cabecera = Object.keys(array[0]);
+    var cabecera = Object.keys(array[0]);
     data.push(cabecera);
 
-    let temp = [];
+    var temp = [];
     for (var i = 0; i < array.length; i++) {
         temp = [];
         for (var index in array[i]) {
