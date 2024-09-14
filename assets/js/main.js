@@ -1,19 +1,19 @@
-document.addEventListener("readystatechange", function () {
-	switch (document.readyState) {
-		case "complete":
-			setTimeout(function(){
-				initial();
-			},800)
-			break;
-	}
-});
-
+// document.addEventListener("readystatechange", function () {
+// 	switch (document.readyState) {
+// 		case "complete":
+//             break;
+//         }
+//     });
+setTimeout(function(){
+    initial();
+},800)
+    
 $("#spinner").removeClass("rotate_div");
 $("#DivForm").removeClass("modal-form");
 
 // Variables Globales
-let apiPathBase = "";
-let webPathBase = "";
+var apiPathBase = "";
+var webPathBase = "";
 let config = {};
 let prefijoDocumentacion = "";
 
