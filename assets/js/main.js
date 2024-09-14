@@ -37,6 +37,7 @@ var title = "";
 fetch('anything.papajhons')
     .then((response) => response.json())
     .then((json) => {
+        console.log("PPJNS");
         config = json;
         apiPathBase = config.apipath + "?ruta=";
         webPathBase = config.webpath;
