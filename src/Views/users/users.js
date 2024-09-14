@@ -319,6 +319,7 @@ showDivs = (que = 0) => {
             $("#btmEdit").removeClass("hide");
             $("#btmDelete").removeClass("hide");
             $("#btmRefresh").removeClass("hide");
+            $("#btnPrint").removeClass("hide");
             $("#btmReset").removeClass("hide");
             $("#btmUpUser").removeClass("hide");
             $("#btmSave").addClass("hide");
@@ -335,6 +336,7 @@ showDivs = (que = 0) => {
             $("#btmEdit").addClass("hide");
             $("#btmDelete").addClass("hide");
             $("#btmRefresh").addClass("hide");
+            $("#btnPrint").addClass("hide");
             $("#btmReset").addClass("hide");
             $("#btmUpUser").addClass("hide");
             $("#btmSave").removeClass("hide");

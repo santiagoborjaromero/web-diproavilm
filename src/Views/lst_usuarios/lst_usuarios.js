@@ -290,6 +290,7 @@ showDivs = (que = 0) => {
             $("#btmRefresh").removeClass("hide");
             $("#btmReset").removeClass("hide");
             $("#btmUpUser").removeClass("hide");
+            $("#btnPrint").removeClass("hide");
             $("#btmSave").addClass("hide");
             $("#btmCancel").addClass("hide");
             habilitarBotones(false);
@@ -303,6 +304,7 @@ showDivs = (que = 0) => {
             $("#btmNew").addClass("hide");
             $("#btmEdit").addClass("hide");
             $("#btmDelete").addClass("hide");
+            $("#btnPrint").addClass("hide");
             $("#btmRefresh").addClass("hide");
             $("#btmReset").addClass("hide");
             $("#btmUpUser").addClass("hide");
@@ -338,6 +340,10 @@ function habilitarBotones(opc = false){
         $("#btmReset").removeClass("disabled");
         $("#btmReset").removeClass("btn-secondary");
         $("#btmReset").addClass("btn-info");
+
+        $("#btnPrint").removeClass("disabled");
+        $("#btnPrint").removeClass("btn-secondary");
+        $("#btnPrint").addClass("btn-info");
         
         if (userSelected.deleted_at){
             $("#btmUpUser").removeClass("disabled");
@@ -360,6 +366,10 @@ function habilitarBotones(opc = false){
         $("#btmReset").addClass("disabled");
         $("#btmReset").removeClass("btn-info");
         $("#btmReset").addClass("btn-secondary");
+        
+        $("#btnPrint").addClass("disabled");
+        $("#btnPrint").removeClass("btn-info");
+        $("#btnPrint").addClass("btn-secondary");
         
         if (userSelected.deleted_at){
             $("#btmUpUser").removeClass("disabled");
