@@ -79,7 +79,9 @@ async function loadDiccionario(){
             if (resp.status && resp.status == 'ok') {
                 lstDictionario = resp.message;
                 lstDictionario.forEach( e => {
-                    $("#menurun").append(`<option selected value="${e.menu}">${e.menu}</option>`)
+                    if (!e.deleted_at){
+                        $("#menurun").append(`<option selected value="${e.menu}">${e.menu}</option>`)
+                    }
                 });
             } else {
                 sendMessage("error", title, resp.message || JSON.stringify(resp));

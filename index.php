@@ -11,7 +11,7 @@
   * @created 2024-07-24
   * @license version Alfa
   */
-session_start();
+// session_start();
 
 // error_reporting(E_ALL);
 

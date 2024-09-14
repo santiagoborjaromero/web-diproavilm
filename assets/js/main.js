@@ -37,7 +37,6 @@ var title = "";
 fetch('anything.papajhons')
     .then((response) => response.json())
     .then((json) => {
-        console.log("PPJNS");
         config = json;
         apiPathBase = config.apipath + "?ruta=";
         webPathBase = config.webpath;
@@ -46,7 +45,7 @@ fetch('anything.papajhons')
 
 //TODO: carga tabla config
 async function loadConfig(){
-    console.log("Cargando CFG")
+    console.log("Cargando CFG");
     var metodo = "GET";
     var url = "config";
 
@@ -404,7 +403,6 @@ async function imprimir( title = 'file', data = null, orientacion = 'p', subtitl
         unit: 'mm'
     })
     try{
-        console.log(webPathBase)
         const imgData = await loadImage(webPathBase + 'assets/images/logo.jpg');
         doc.addImage(imgData, 'JPEG', 10, 10, 40, 30);
     }catch(err){}
