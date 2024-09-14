@@ -9,8 +9,8 @@
         <button id="btmRefresh" class="btn btn-success mr-2" title="Refrescar">
             <i class="fas fa-sync-alt"></i>
             Refrescar
-        </button>
-        <div class="btn-group">
+        </button> 
+        <div class="btn-group" id="btnPrint">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-print"></i> Exportar
             </button>
