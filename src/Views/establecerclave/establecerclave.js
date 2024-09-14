@@ -177,8 +177,6 @@ async function establecerClave(){
             console.log(err);
             // sendMessage(err, "{{Title}}");
         });
-    
-
 }
 
 $("#btnReturn").on("click", () => {
