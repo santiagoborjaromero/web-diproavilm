@@ -388,3 +388,8 @@ body{
 }
 
 
+.gridwidth{
+    min-width: 800px !important;
+    overflow-y: none;
+    overflow-x: auto;
+}

@@ -63,8 +63,10 @@
 </div>
 
 <div class="row mt-2 justify-content-md-center" id="GridDiv">
-    <div class="col-12 col-md-11 align-items-center">
-        <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+    <div class="col-12 col-md-11 align-items-center ">
+        <div class="gridwidth">
+            <div id="myGrid" class="ag-theme-quartz text-dark-400" style="height: 500px; min-height: 500px;"></div>
+        </div>
     </div>
 </div>
 
