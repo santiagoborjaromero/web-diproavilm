@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="row p-1 header">
-        <div class="col-6 col-sm-4 col-md-3 logohead"><img id="logo" src="logo.png" alt="Logo" /></div>
-        <div class="col-6 col-sm-4 col-md-6 t25 mt-3 text-center" id="nameApp"></div>
-        <div class="col-6 col-sm-4 col-md-3 text-end diviconos">
+        <div class="d-none d-lg-block col-lg-3 logohead"><img id="logo" src="logo.png" alt="Logo" /></div>
+        <div class="d-none d-lg-block col-lg-6 t25 mt-3 text-center" id="nameApp"></div>
+        <div class="col-12 col-lg-3 text-end diviconos">
             <button id="btnNot" onclick="selectRuta('noti')" class="btn btn-white t20 text-danger bold hide parpadeaXX" title="Alertas & Notificaciones">
                 <i class="fa fa-bell"></i>
                 <badge id="numNoti">0</badge>
@@ -15,7 +15,10 @@
         </div>
     </div>
     <div class="row menu">
-        <div class="col-12 col-md-12" id="divmenu"></div>
+        <div class="d-none d-md-block col-md-12" id="divmenu"></div>
+        <div class="col-12 d-ls-none " id="divmenus">
+            <i onclick="showMenu()" class="fa fa-bars mt-2 cursor bold" alt="Menu Principal"></i>
+        </div>
     </div>
     <div class="row ">
         <div class="col-12 col-md-12 breadcrumbs bg-light">
@@ -34,6 +37,16 @@
         </div>
     </div>
 </div>
+
+<div id="MenuAuxDiv" class="menuaux p-3 hide">
+    <h5>Menu de Opciones</h5>
+    <span class="closebtn"><i class="fa fa-times"></i></span>
+    <div id="menuAux">
+        
+    </div>
+</div>
+
+
 
 <script src="src/Views/skeleton/skeleton.js"></script>
 <link rel="stylesheet" href="src/Views/skeleton/skeleton.css">

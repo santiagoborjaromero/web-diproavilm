@@ -193,6 +193,8 @@ async function selectRuta(route, args = ''){
     sessionSet("route", route);
     getAlerts();
 
+    $("#MenuAuxDiv").addClass("hide");
+
     if (["mapasitio"].includes(route)){
         $("#path").html("Mapa del Sitio");
     } else if (["userinfo"].includes(route)){

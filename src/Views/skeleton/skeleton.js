@@ -21,6 +21,8 @@ cargaMenu();
 function cargaMenu(){
     lstMenu = [];
     let html = `<ul class="nav nav-pills">`;
+    let html2 = ``;
+
 
     menu.forEach( e => {
         e["child"] = [];
@@ -44,6 +46,10 @@ function cargaMenu(){
                     <i class="${e.icon} mr-2 text-secondary"></i><span>${e.name}</span>
                 </a>
             </li>`;
+            html2 = `
+                <a href="javascript:void(0)" onclick="selectRuta('${e.route}')">
+                    <i class="${e.icon} mr-2 text-secondary"></i><span> ${e.name}</span>
+                </a>`;
         } else{
             html += `
                 <li class="nav-item dropdown ">
@@ -54,20 +60,34 @@ function cargaMenu(){
                     </a>
                     <ul class="dropdown-menu">
                 `;
+
+            html2 += `<i class="${e.icon} mr-2 text-secondary"></i><span class="bold">${e.name}</span><br>`;
+
+
             e.child.forEach(c => {
                 html += `<li>
                     <a class="dropdown-item" href="javascript: void(0)" onclick="selectRuta('${c.route}')">
                         <i class="${c.icon} mr-2 text-secondary t12"></i><span>${c.name}</span>
                     </a>
-                </li>`
+                </li>`;
+
+                html2 += `
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="item-menu" href="javascript: void(0)" onclick="selectRuta('${c.route}')">
+                        <i class="${c.icon} mr-2 text-secondary t12"></i><span>${c.name}</span>
+                    </a><br>
+                `;
             });
             html +=`</ul></li>`;
+
+            
         }
     });
 
     html += `</ul>`;
 
     $("#divmenu").html(html);
+    $("#menuAux").html(html2);
     
 }
 
@@ -90,4 +110,13 @@ $("#btnSalir").on("click", function(){
         }
     });
 });
+
+function showMenu(){
+    $("#MenuAuxDiv").removeClass("hide");
+}
+
+$(".closebtn").on("click", function(){
+    $("#MenuAuxDiv").addClass("hide");
+});
+
 

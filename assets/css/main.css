@@ -160,22 +160,6 @@ body{
 }
 
 
-
-@media (max-width: 450px) {
-    .login-screen{
-        width: 85vw !important;
-        /* width: 100%; */
-    }
-}
-
-@media (min-width: 2000px)  {
-    .login-screen{
-        width: 1000px !important;
-        font-size: 2em;
-        /* width: 100%; */
-    }
-}
-
 .box { 
     border-radius: 15%;
     border: 1px dashed #696969;
@@ -290,6 +274,9 @@ body{
     overflow-x: auto;
 }
 
+.cursor{
+    cursor: pointer;
+}
 
 .parpadea {
     animation-name: parpadeo;
@@ -322,7 +309,9 @@ body{
   }
   
 
+
 @media (max-width: 450px) {
+    
     .divmenu{
         display: hide !important;
     }
@@ -341,6 +330,11 @@ body{
 
     #nombreUsuario{
         display: hide !important;
+    }
+
+    .login-screen{
+        width: 85vw !important;
+        /* width: 100%; */
     }
 
 }
@@ -363,3 +357,34 @@ body{
     }
 
 }
+
+@media (min-width: 781px) and (max-width: 1083px) {
+    .logohead, #logo{
+        display: hide !important;
+        width: 150px !important;
+        margin-top: 10px;
+    }
+
+    #nameApp{
+        font-size: .9em;
+        font-weight: 600;
+        text-align: start !important;
+    }
+
+    #nombreUsuario{
+        display: hide !important;
+    }
+
+}
+
+
+
+@media (min-width: 2000px)  {
+    .login-screen{
+        width: 1000px !important;
+        font-size: 2em;
+        /* width: 100%; */
+    }
+}
+
+

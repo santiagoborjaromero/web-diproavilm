@@ -180,13 +180,6 @@ ul>li{
 
 
 
-@media (max-width: 450px) {
-    .divmenu{
-        display: hide !important;
-    }
-}
-
-
 #inicialUsuario{
     border-radius: 50%;
     border: 1px solid #137e81d3;
@@ -197,3 +190,36 @@ ul>li{
     padding-right: 9px;
     font-size: 1.5em;
 }
+
+
+.menuaux{
+    position: fixed;
+    /* display: flex; */
+    top:0;
+    left: 0;
+    background-color: #fff;
+    border-right: 1px solid #e6e6e6;
+    width: 350px;
+    height: 100vh;
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+.closebtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.item-menu{
+    text-decoration: none;
+    color: #002039;
+    border-bottom: 3px solid #fff;
+}
+.item-menu:hover{
+    text-decoration: none;
+    color: #002039;
+    background-color: #dddddd;
+    border-bottom: 3px solid #c5c5c5;
+}
+
