@@ -85,6 +85,11 @@ $("#btnChange").on("click", () => {
     $("#mainPage").load(pagina);
 });
 
+$("#btnEstablecerClave, #btnEstablecerClave2").on("click", () => {
+    let pagina = `src/Views/establecerclave/establecerclave.php`;
+    $("#mainPage").load(pagina);
+});
+
 $("#username").keypress(function ($event) {
     if ($event.keyCode==13){
         $("#password").focus();
