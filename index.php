@@ -101,8 +101,9 @@ date_default_timezone_set ($config["timezone"]);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/json-viewer-js/dist/json-viewer.css">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/json-viewer-js/dist/json-viewer.css"> -->
   <script src="https://pfau-software.de/json-viewer/dist/iife/index.js"></script>
+  <!-- <script src="https://unpkg.com/@alenaksu/json-viewer@2.0.0/dist/json-viewer.bundle.js"></script> -->
 
 
   <script src="assets/js/main.js"></script>
