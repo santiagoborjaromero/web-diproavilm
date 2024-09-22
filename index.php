@@ -105,8 +105,12 @@ date_default_timezone_set ($config["timezone"]);
   <script src="https://pfau-software.de/json-viewer/dist/iife/index.js"></script>
   <!-- <script src="https://unpkg.com/@alenaksu/json-viewer@2.0.0/dist/json-viewer.bundle.js"></script> -->
 
+  <!-- chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Numeros a letras -->
+  <script src="assets/js/numeroALetras.js"></script>
 
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/numeroALetras.js"></script>
 </body>
 </htm>
