@@ -24,7 +24,7 @@
         </button> -->
     </div>
 </div>
-
+<!-- 
 <div class="row mt-1">
     <div class="col">
         <div class="card">
@@ -38,19 +38,11 @@
                 <button class="btn btn-light mr-1">Junio</button>
                 <button class="btn btn-light mr-1">Julio</button>
                 <button class="btn btn-light mr-1">Agosto</button>
-                <!-- <div class="row">
-                    <label class="col-12 col-md-1 control-label text-end mt-2">Año</label>
-                    <div class="col-12 col-md-2">
-                        <select class="form-control">
-                            <option value="2024">2024</option>
-                        </select>
-                    </div>
-                </div> -->
             </div>
         </div>
 
     </div>
-</div>
+</div> -->
 <!-- 
     objetivo de ventas
     consecución de objetivos
@@ -66,13 +58,17 @@
  -->
 
 <div class="row mt-2">
+    <div class="form-group">
+        <iframe id="grafana" src="" class="framebashboards"></iframe>
+    </div>
+
+    <!-- 
     <div class="col">
         <div class="card">
             <div class="card-body text-end">
                 <div class="dash-title"><i class="far fa-chart-bar"></i> Ventas</div>
                 <div class="dash-valor">$ 0.00</div>
                 <div class="dash-subtitulo">Egresos de almacen por ventas</div>
-                <!-- <kbd class="">KPI</kbd> -->
             </div>
         </div>
     </div>
@@ -121,7 +117,7 @@
             </div>
         </div>
     </div>
- 
+    -->
   
 </div>
 

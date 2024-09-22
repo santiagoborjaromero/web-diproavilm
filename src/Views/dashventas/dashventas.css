@@ -16,3 +16,13 @@
     font-weight: 400;
     height: 50px !important;
 }
+
+.framebashboards{
+    width: 100%;
+    min-height: 3000px;
+    background-color: #fff;
+}
+
+.panel{
+    background-color: #f6f6f6;
+}
