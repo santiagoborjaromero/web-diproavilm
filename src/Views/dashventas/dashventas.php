@@ -12,6 +12,7 @@
 
 <div class="row mt-2">
     <div class="form-group">
+    <canvas id="myChart"></canvas>
         <iframe id="grafana" src="" class="framebashboards"></iframe>
     </div>
 </div>

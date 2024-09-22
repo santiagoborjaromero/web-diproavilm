@@ -7,7 +7,8 @@ title = ruta.name;
 $("#Title").html(title);
 $("#TitleIcon").addClass(ruta.icon);
 
-loadData();
+// loadData();
+buscar();
 // goDash();
 
 function goDash(){
@@ -18,47 +19,47 @@ function goDash(){
 }
 
 
-async function loadData(params){
-    showLoading("Cargando");
+// async function loadData(params=[]){
+//     showLoading("Cargando");
 
-    let params = {
-        fecha_ini: "2024-01-01",
-        fecha_fin: "2024-12-31",
-    }
+//     let params = {
+//         fecha_ini: "2024-01-01",
+//         fecha_fin: "2024-12-31",
+//     }
 
-    // habilitarBotones(false);
+//     // habilitarBotones(false);
 
-    let metodo = "GET";
-    let url = "lstmovgeneral";
-    await consumirApi(metodo, url, params)
-        .then( resp=>{
-            closeLoading();
-            try {
-                resp = JSON.parse(resp);
-            } catch (ex) {}
+//     let metodo = "GET";
+//     let url = "lstmovgeneral";
+//     await consumirApi(metodo, url, params)
+//         .then( resp=>{
+//             closeLoading();
+//             try {
+//                 resp = JSON.parse(resp);
+//             } catch (ex) {}
 
-            if (resp.status && resp.status == 'ok') {
-                lstData = resp.message;
+//             if (resp.status && resp.status == 'ok') {
+//                 lstData = resp.message;
 
-                // if (resp.message){
-                //     resp.message.forEach( e => {
-                //         e["idaudit"] = e.idaudit.toString();
-                //         lstData.push(e)    
-                //     });
-                // }
+//                 // if (resp.message){
+//                 //     resp.message.forEach( e => {
+//                 //         e["idaudit"] = e.idaudit.toString();
+//                 //         lstData.push(e)    
+//                 //     });
+//                 // }
                 
-                // console.log(lstAudit)
+//                 // console.log(lstAudit)
 
-            } else {
-                sendMessage("error", title, resp.message || JSON.stringify(resp));
-            }
-        })
-        .catch( err => {
-            closeLoading();
-            console.log("ERR", err);
-            sendMessage("error", title, JSON.stringify(err.responseText));
-        });
-}
+//             } else {
+//                 sendMessage("error", title, resp.message || JSON.stringify(resp));
+//             }
+//         })
+//         .catch( err => {
+//             closeLoading();
+//             console.log("ERR", err);
+//             sendMessage("error", title, JSON.stringify(err.responseText));
+//         });
+// }
 
 function buscar(){
     const ctx = document.getElementById('myChart');
