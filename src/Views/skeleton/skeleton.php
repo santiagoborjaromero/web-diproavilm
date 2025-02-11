@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row p-1 header">
-        <div class="d-none d-lg-block col-lg-3 logohead"><img id="logo" src="logo.png" alt="Logo" /></div>
+        <div class="d-none d-lg-block col-lg-3 logohead"><img id="logo" src="logo.jpg" alt="Logo" width="80"/> Diproavilm Cia. Ltda.</div>
         <div class="d-none d-lg-block col-lg-6 t25 mt-3 text-center" id="nameApp"></div>
         <div class="col-12 col-lg-3 text-end diviconos">
             <button id="btnNot" onclick="selectRuta('noti')" class="btn btn-white t20 text-danger bold hide parpadeaXX" title="Alertas & Notificaciones">

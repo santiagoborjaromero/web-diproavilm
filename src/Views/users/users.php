@@ -102,7 +102,7 @@
                 </select>
             </div>
         </div>
-        <div class="row mb-5">
+        <div class="row mb-2">
             <label class="col-12 col-md-3 control-label text-end">Estado <sup class="text-danger" title="Requerido">*</sup></label>
             <div class="col-12 col-md-3">
                 <select id="status" class="form-control">
@@ -112,6 +112,15 @@
             </div>
             <div class="col-6 col-md-1 text-start t18">
                 <i class="fas fa-question-circle " onclick="help('El estado indica si un usuario puede ingresar al sistena (activo) o no(inactivo).')"></i>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <label class="col-12 col-md-3 control-label text-end">Acceso app móvil ?<sup class="text-danger" title="Requerido">*</sup></label>
+            <div class="col-12 col-md-3">
+                <select id="idrole" class="form-control">
+                    <option selected value="1">Si</option>
+                    <option value="0">No</option>
+                </select>
             </div>
         </div>
 

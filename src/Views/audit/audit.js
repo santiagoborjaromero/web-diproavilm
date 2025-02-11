@@ -139,6 +139,13 @@ function estructuraGrid(){
                 cellClass: "text-start",
             },
             {
+                headerName: "App",
+                flex: 1, 
+                field: "app",
+                filter: true,
+                cellClass: "text-start",
+            },
+            {
                 headerName: "Responsable",
                 flex: 2, 
                 field: "fullname",

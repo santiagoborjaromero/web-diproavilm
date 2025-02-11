@@ -393,3 +393,15 @@ body{
     overflow-y: none;
     overflow-x: auto;
 }
+
+
+.bordered{
+    border-radius: 10px;
+}
+
+.pbox { 
+    padding: 18px !important;
+    /* margin: 1px;  */
+    /* padding-top: 10px !important;
+    padding-bottom: 10px !important; */
+}

@@ -361,12 +361,12 @@ function verAnalisis(){
     userSelected
 
     let html = `
-        <strong class="bold text-success">Rotación</strong> de <b>${userSelected.rotacion}</b> en <b>${userSelected.dias}</b> días.<br>
-        Esto significa que, en un periodo de <b>${userSelected.dias}</b> días, el producto ha rotado (o se ha vendido y repuesto) 
+        <strong class="bold text-success">Rotación</strong> de <b>${userSelected.rotacion}</b> en <b>${userSelected.rotaciondias}</b> días.<br>
+        Esto significa que, en un periodo de <b>${userSelected.rotaciondias}</b> días, el producto ha rotado (o se ha vendido y repuesto) 
         aproximadamente <b>${userSelected.rotacion}</b> veces. <br><br>
         
-        <strong class="bold text-success">Rotación por días</strong> de <b>${userSelected.dias}</b><br>
-        Este número sugiere que, al ritmo actual de ventas, el inventario tardaría aproximadamente <b>${userSelected.dias}</b> días en 
+        <strong class="bold text-success">Rotación por días</strong> de <b>${userSelected.rotaciondias}</b><br>
+        Este número sugiere que, al ritmo actual de ventas, el inventario tardaría aproximadamente <b>${userSelected.rotaciondias}</b> días en 
         agotarse por completo, lo que representa el tiempo que tomaría hacer una rotación completa del stock.
     `;
     $("#analisis").html(html)

@@ -17,5 +17,5 @@
 </div>
 
 
-<script src="src/Views/dashventas/dashventas.js"></script>
-<link rel="stylesheet" href="src/Views/dashventas/dashventas.css">
+<script src="src/Views/dashcompras/dashcompras.js"></script>
+<link rel="stylesheet" href="src/Views/dashcompras/dashcompras.css">

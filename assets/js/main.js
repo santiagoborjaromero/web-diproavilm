@@ -231,6 +231,7 @@ async function selectRuta(route, args = ''){
 }
 
 async function getAlerts(){
+    $("#btnNot").addClass("hide");
     var metodo = "GET";
     var url = "alertas";
     await consumirApi(metodo, url)

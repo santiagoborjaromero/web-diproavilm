@@ -10,7 +10,7 @@
 //TODO: OK - Recalculo de saldos - opcion en cada operacion
 //TODO: OK - REPORTES
 //TODO: OK - Analisis de rotacion
-//TODO: 50% - DASHBOARDS
+//TODO: OK - DASHBOARDS
 //TODO: OK - boton restablecer en benediciarios
 //TODO: OK - formulairo categorias
 //TODO: OK - formulairo lineas de productos
