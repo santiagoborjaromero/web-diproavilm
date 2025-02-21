@@ -1,32 +1,32 @@
-![6UG8](logo6UG8.jpg)
-### # 6UG8 (Sexto Semestre Grupo 8)
-# WEB APP
+![7AG8](logo7AG8.jpg)
+### # 7UG8 (Septimo Semestre Grupo 8)
+# App Web Diproavilm
 
 **UNIVERSIDAD REGIONAL AUTÓNOMA DE LOS ANDES 
 “UNIANDES”** <br>
 >FACULTAD DE SISTEMAS MERCANTILES <br>
 CARRERA DE INGENIERÍA DE SOFTWARE <br>
-SEXTO SEMESTRE <br>
+SEPTIMO SEMESTRE <br>
 MODALIDAD: ON LINE
 
 ## Integrantes
 >Hugo Alfredo Herrera Villalva <br>
 Jaime Santiago Borja Romero <br>
 Jorge Luis López Romo <br>
-Joel Darío Brito Parra <br>
-Ricardo Josué Vaca Miño <br>
 
+![](https://img.shields.io/badge/NOV-2024-green) 
+![](https://img.shields.io/badge/ABR-2025-red) 
 
 ## Aplicacion Web 
 ## Lenguajes de programacion utilizados
 
-![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![](https://img.shields.io/badge/PHP-8.1.10-blue) 
+![](https://img.shields.io/badge/HTML-5-blue) 
+![](https://img.shields.io/badge/CSS-3-blue) 
+![](https://img.shields.io/badge/Bootstrap-5.3.3-blue) 
+![](https://img.shields.io/badge/Lang-Javascript-yellow) 
+![](https://img.shields.io/badge/JQuery-3.7.1-blue) 
 
-## Lenguajes de marcado y estilo
-
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
 ## Cómo configurar?
 
