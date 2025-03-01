@@ -122,7 +122,7 @@ async function logout(){
                 resp = JSON.parse(resp);
             } catch (ex) {
             }
-            console.log(resp)
+            // console.log(resp)
             if (resp.status && resp.status == 'ok') {
                 proccessCleanMemory();
                 window.location.reload();
