@@ -108,29 +108,26 @@ $("#btnSalir").on("click", function(){
     }).then(res => {
         if (res.isConfirmed) {
             logout();
-            
         }
     });
 });
 
 
 async function logout(){
-
     metodo = "POST";
     url = "logout";
-
-    await consumirApiWT(metodo, url, null)
+    await consumirApi(metodo, url, null)
         .then(resp => {
             try {
                 resp = JSON.parse(resp);
             } catch (ex) {
             }
-
-            if (resp.status && resp.status == 'error') {
-                sendMessage("error", "Autorizacion", resp.message)
-            } else {
+            console.log(resp)
+            if (resp.status && resp.status == 'ok') {
                 proccessCleanMemory();
                 window.location.reload();
+            } else {
+                sendMessage("error", "Autorizacion", resp.message)
             }
         })
         .catch(err => {

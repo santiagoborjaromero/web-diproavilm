@@ -57,7 +57,14 @@ Acceso a la base de datos `./api6ug8/anything.papajhons`
 }
 ```
 
-
+Comando para obtener logs para documentar
+```
+git log --pretty=format:"%cs|%H|%s" > "C:\santiago\Personal\UNIANDES\SOF07A\Integrador\Doumentacion\Commits\IONIC\2025 03 01 logs en linea.csv"
+```
+Completo
+```
+git log > "C:\santiago\Personal\UNIANDES\SOF07A\Integrador\Doumentacion\Commits\IONIC\2025 03 01 completo.csv"
+```
 
 
 
