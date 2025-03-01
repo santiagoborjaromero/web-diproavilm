@@ -107,11 +107,36 @@ $("#btnSalir").on("click", function(){
         cancelButtonText: 'Cancelar',
     }).then(res => {
         if (res.isConfirmed) {
-            proccessCleanMemory();
-            window.location.reload();
+            logout();
+            
         }
     });
 });
+
+
+async function logout(){
+
+    metodo = "POST";
+    url = "logout";
+
+    await consumirApiWT(metodo, url, null)
+        .then(resp => {
+            try {
+                resp = JSON.parse(resp);
+            } catch (ex) {
+            }
+
+            if (resp.status && resp.status == 'error') {
+                sendMessage("error", "Autorizacion", resp.message)
+            } else {
+                proccessCleanMemory();
+                window.location.reload();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
 function showMenu(){
     $("#MenuAuxDiv").removeClass("hide");
