@@ -31,6 +31,8 @@ var dataSelected2;
 var lstUsers = [];
 var scopeUser = "";
 var title = "";
+let sky = "7PToGGTJ71knRd86WF39wfj619qewnbZ";
+let siv  = "q24nxK63oYShfXwU";
 
 
 //TODO: carga el archiv config
@@ -83,9 +85,10 @@ async function loadConfig(){
             try {
                 resp = JSON.parse(resp);
             } catch (ex) {}
-            
+
             if (resp.status && resp.status == 'ok') {
                 resp.message.forEach(e=>{
+                    
                     eval(`config["${e.variable}"] = '${e.vvalue}'`);
                 });
 
@@ -95,7 +98,6 @@ async function loadConfig(){
                 }
                 prefijoDocumentacion = config.prefijo_documentacion;
                 $("#titleapp").html(config["empresa_nombre"]);
-
                 sessionSet("config", config);
 
             } else {
@@ -113,12 +115,21 @@ $("#spinner").addClass("hide");
 
 //TODO Funcion que permite consumir recursos ajax resp api sin token, para rutas de logueo
 function consumirApiWT(method, url, params = null) {
+    let data = params;
+    if (["POST", "PUT"].includes(method)){
+        data ={
+            data: convertResponse(JSON.stringify(params))
+        }
+    }
+    // console.log("Send", method, url, data)
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `${apiPathBase}${url}`,
             type: method,
-            data: params,
+            data: data,
             success: function (resp, status, xhr) {
+                resp.message = (convertRequest(resp.message))
+                // console.log("Response", JSON.stringify(resp))
                 resolve(resp);
             }
         })
@@ -129,6 +140,14 @@ function consumirApiWT(method, url, params = null) {
 }
 //TODO Funcion que permite consumir recursos ajax resp api con token
 function consumirApi(method, url, params = null) {
+    // console.log("Send Before", params)
+    let data = params;
+    if (["POST", "PUT"].includes(method)){
+        data ={
+            data: convertResponse(JSON.stringify(params))
+        }
+    }
+    // console.log("Send", method, url, data)
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `${apiPathBase}${url}`,
@@ -137,8 +156,10 @@ function consumirApi(method, url, params = null) {
                 "Authorization": "Bearer " + apiToken,
                 "Content-Type": "application/json"
             },
-            data: params,
+            data: data,
             success: function (resp, status, xhr) {
+                resp.message = (convertRequest(resp.message))
+                // console.log("Response", JSON.stringify(resp))
                 resolve(resp);
             }
         })
@@ -149,16 +170,59 @@ function consumirApi(method, url, params = null) {
 }
 
 //TODO Funcion que permite encriptar texto
-function encryptKey(text){
-    var encrypted = CryptoJS.AES.encrypt(text, "y91ooeN3Vbx7iCkUpJXP5Xvek");
-    return encrypted.toString();
-}
+function encryptKey(value){
+    // var encrypted = CryptoJS.AES.encrypt(text, $ky, 0, $iv);
+    // return encrypted.toString();
+    var key = CryptoJS.enc.Utf8.parse(sky);
+    var iv = CryptoJS.enc.Utf8.parse(siv);
+    var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value.toString()), key,
+    {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+
+    let res = encrypted.toString()
+    return res;
+  }
+
+
 //TODO Funcion que permite desencriptar texto
-function decryptKey(text){
-    var bytes  = CryptoJS.AES.decrypt(text, "y91ooeN3Vbx7iCkUpJXP5Xvek");
-    var decrypted = bytes.toString(CryptoJS.enc.Utf8);
-    return decrypted;
+function decryptKey(value){
+    // var bytes  = CryptoJS.AES.decrypt(text, $ky, 0, $iv);
+    // var decrypted = bytes.toString(CryptoJS.enc.Utf8);
+    // return decrypted;
+    var key = CryptoJS.enc.Utf8.parse(sky);
+    var iv = CryptoJS.enc.Utf8.parse(siv);
+    var decrypted = CryptoJS.AES.decrypt(value, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+
+    let dec = decrypted.toString(CryptoJS.enc.Utf8);
+    return dec
 }
+
+
+function convertRequest(value){
+    let desencriptado = null;
+    try{
+      let base64 = atob(value);
+      desencriptado = JSON.parse(decryptKey(base64))
+    }catch(ex){
+      console.log(ex)
+    }
+    return desencriptado
+  }
+
+function convertResponse(value){
+     let encriptado = encryptKey(value);
+    let base64 = btoa(encriptado);
+    return base64;
+}
+
+
 //TODO Funcion que permite establecer la session por session storage
 function sessionSet(key = "", value = null){
     if (key == "") return;
