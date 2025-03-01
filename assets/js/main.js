@@ -12,6 +12,9 @@ $("#spinner").removeClass("rotate_div");
 $("#DivForm").removeClass("modal-form");
 
 // Variables Globales
+
+
+
 apiPathBase = "";
 var webPathBase = "";
 var config = {};
@@ -40,9 +43,10 @@ fetch('anything.papajhons')
     .then((response) => response.json())
     .then((json) => {
         config = json;
+        config.appname =  "Software de Gestión de Almacén";
+        config.version = "2.0.0";
         apiPathBase = config.apipath + "?ruta=";
         webPathBase = config.webpath;
-        
     });
 
 function initial(){
