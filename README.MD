@@ -38,8 +38,8 @@ bot6ug8 -> Bot <br>
 Configurar la localizacion `./web6ug8/anything.papajhons`
 ```c
 {
-    "webpath": "http://localhost/web6ug8/",
-    "apipath": "http://localhost/api6ug8/",
+    "webpath": "http://localhost/web/",
+    "apipath": "http://localhost/api/",
 }
 ```
 
