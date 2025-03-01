@@ -1,4 +1,6 @@
 //TODO: Definir variables globales para el sistema
+
+
 let user = sessionGet("user");
 let menu = user.menu;
 apiToken = sessionGet("token");
