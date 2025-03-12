@@ -145,11 +145,12 @@ function consumirApiWT(method, url, params = null) {
 //TODO Funcion que permite consumir recursos ajax resp api con token
 function consumirApi(method, url, params = null) {
     let data = params;
-    if (params && ["POST", "PUT"].includes(method)){
+    if (params){
         data ={
             data: convertResponse(JSON.stringify(params))
         }
     }
+
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `${apiPathBase}${url}`,

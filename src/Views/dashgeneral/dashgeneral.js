@@ -28,10 +28,10 @@ async function loadData(){
 
     let params = {
         fecha_ini: "2024-01-01",
-        fecha_fin: "2024-12-31",
+        fecha_fin: moment().format("YYYY-MM-DD")
     }
 
-    let metodo = "GET";
+    let metodo = "POST";
     let url = "movgeneral";
     await consumirApi(metodo, url, params)
         .then( resp=>{
