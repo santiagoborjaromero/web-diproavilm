@@ -41,7 +41,7 @@
                 <small>Derechos de Copia &copy;, DIPROAVILM Cia. Ltda., 2024</small><br>
                 <br>
                 <sub class="text-secondary bold">Power by </sub>
-                <img src="logo.png" width="150">
+                <img src="logo7AG8.jpg" width="150">
 
             </div>
         </div>
