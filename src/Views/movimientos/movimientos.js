@@ -80,7 +80,7 @@ async function loadData(){
         fecha_fin: dfin
     }
     
-    let metodo = "GET";
+    let metodo = "POST";
     let url = "transaccionesFiltro";
     await consumirApi(metodo, url, params)
         .then( resp=>{
