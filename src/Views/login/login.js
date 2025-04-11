@@ -39,8 +39,11 @@ async function sendLogin(){
     metodo = "POST";
     url = "login";
 
+    showLoading("Verificando Usuario");
+
     await consumirApiWT(metodo, url, record)
         .then(resp => {
+            closeLoading();
             try {
                 resp = JSON.parse(resp);
             } catch (ex) {
@@ -75,6 +78,7 @@ async function sendLogin(){
             }
         })
         .catch(err => {
+            closeLoading();
             console.log(err);
             // sendMessage(err, "{{Title}}");
         });

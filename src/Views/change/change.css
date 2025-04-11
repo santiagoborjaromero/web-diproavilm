@@ -1,11 +1,12 @@
-.imagenGranja{
-    height: 100vh;
-    background-image: url("../../../assets/images/granja.jpg");
-    background-position: middle left;
-    background-size: cover;
-    background-color: #00a3ff;
-    overflow: hidden;
-}
+/* .imagenGranja{
+    position: fixed;
+    top: auto;
+    left: 0;
+    height: 200px;
+    width: 100vw;
+    background-image: url("../../../assets/images/back.jpg");
+    z-index: 0;
+} */
 
 .texto{
     display: flex;

@@ -13,7 +13,8 @@
   */
 // session_start();
 
-// error_reporting(E_ALL);
+// error_reporting(0);
+
 
 $jsonString = file_get_contents(__DIR__."/anything.papajhons");
 $config = json_decode($jsonString, true);

@@ -93,8 +93,8 @@ function setValores(find = '', valor){
 function leyenda() {
     let html = "";
     let elem;
+    html += "<div class='row t12 mt-2'>";
     arrSecurity.forEach( e => {
-        html += "<div class='row t12 mt-2'>";
             if (typeof(e.value) === "string"){
                 elem = e.value;
             } else {
@@ -104,10 +104,10 @@ function leyenda() {
                     elem  = "<i class='far fa-times-circle text-danger'></i>";
                 }
             }
-            html += `<div class='col-6'>${e.caption}</div>`;
-            html += `<div class='col-6'>${elem}</div>`;
-        html += "</div>";
+            html += `<div class='col-3'>${e.caption}</div>`;
+            html += `<div class='col-3'>${elem}</div>`;
     });
+    html += "</div>";
     // console.log(html);
     $("#fortalezaPasswordDesc").html(html);
 }

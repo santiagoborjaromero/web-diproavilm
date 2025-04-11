@@ -1,18 +1,8 @@
-.imagenGranja{
-    height: 100vh;
-    background-image: url("../../../assets/images/granja.jpg");
-    background-position: middle left;
-    background-size: cover;
-    background-color: #00a3ff;
-    overflow: hidden;
-}
-
 .texto{
     display: flex;
     vertical-align: middle;
     align-items: center;
 }
-
 
 
 .barra{

@@ -43,8 +43,8 @@ fetch('anything.papajhons')
     .then((response) => response.json())
     .then((json) => {
         config = json;
-        config.appname =  "Software de Gestión de Almacén";
-        config.version = "2.0.0";
+        config.appname =  "Gestión de Almacén";
+        config.version = "v.2.1.1";
         apiPathBase = config.apipath + "?ruta=";
         webPathBase = config.webpath;
     });

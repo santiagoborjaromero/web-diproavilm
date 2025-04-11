@@ -22,7 +22,7 @@
     --orange: #ff950a;
     --gray-light: #ebebeb;
     /* --background-body: #e0e0e0; */
-    --background-body: #e0e0e0;
+    --background-body: #fff;
 
     --blur: 1.9599999999999997px;
     --spread: -1.4px;
@@ -47,7 +47,7 @@ body{
     font-family: "Inter", sans-serif;
     font-weight: 300;
     font-style: normal;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     padding: 0;
     margin: 0;
 }
@@ -61,6 +61,7 @@ body{
 }
 
 .text-oficial { color: var(--azul-oficial)}
+.bg-white{background-color: #fff;}
 
 .btn-primary {background-color: var(--primary) !important; border: var(--primary); }
 .btn-primary:hover { opacity: 0.80; }
@@ -119,6 +120,7 @@ body{
 .pt-5{padding-top: 20px;}
 
 .t10 {font-size: 10px;}
+.t11 {font-size: 11px;}
 .t12 {font-size: 12px;}
 .t14 {font-size: 14px;}
 .t16 {font-size: 16px;}
@@ -136,6 +138,17 @@ body{
 .t90 {font-size: 90px;}
 .t100 {font-size: 100px;}
 
+.bbody{
+    display: flex;
+    flex-direction: column;
+    /* background-color: #f0ca8d; */
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
 
 .login-container{
     display: flex;
@@ -146,7 +159,36 @@ body{
     justify-content: center;
 }
 
+.login-form{
+    background-color: #fff;
+    width: 500px;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 1;
+    box-shadow: 2px -1px 8px -3px rgba(0,0,0,0.34) inset;
+    -webkit-box-shadow: 2px -1px 8px -3px rgba(0,0,0,0.34) inset;
+    -moz-box-shadow: 2px -1px 8px -3px rgba(0,0,0,0.34) inset;
+}
 
+.inputlogin{
+    border: 0;
+    /* border-bottom: 1px solid #a9a9a9; */
+}
+
+
+.pull-left{
+    text-align: start;
+    justify-content: left;
+    align-items: start;
+}
+
+.boton-horizontal{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}
 
 .login-screen{
     /* width: 500px; */
@@ -337,6 +379,11 @@ body{
         /* width: 100%; */
     }
 
+    
+    .login-form{
+        width: 90vw;
+    }
+
 }
 
 @media (min-width: 451px) and (max-width: 780px) {
@@ -387,13 +434,11 @@ body{
     }
 }
 
-
 .gridwidth{
     min-width: 800px !important;
     overflow-y: none;
     overflow-x: auto;
 }
-
 
 .bordered{
     border-radius: 10px;
@@ -405,3 +450,18 @@ body{
     /* padding-top: 10px !important;
     padding-bottom: 10px !important; */
 }
+
+
+.imagenGranja{
+    position: fixed;
+    display: flex;
+    top: calc(50vh - 150px);
+    left: 0;
+    width: 100vw;
+    height: 300px;
+    background-image: url("../../assets/images/back.jpg");
+    opacity: .5;
+    z-index: 0;
+}
+
+
